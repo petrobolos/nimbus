@@ -25,3 +25,5 @@ Homestead.json
 .idea/
 public/css/
 public/js/
+
+.php-cs-fixer.cache
