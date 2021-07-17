@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class)->name('pages.home');
+Route::get('/faqs', FaqController::class)->name('pages.faqs');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', fn () => view('dashboard'));
+});
 
 require __DIR__.'/auth.php';
