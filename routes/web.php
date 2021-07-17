@@ -19,7 +19,7 @@ Route::get('/', HomeController::class)->name('pages.home');
 Route::get('/faqs', FaqController::class)->name('pages.faqs');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', fn () => view('dashboard'));
+    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 });
 
 require __DIR__.'/auth.php';
