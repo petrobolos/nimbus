@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Pages\FaqController;
+use App\Http\Controllers\Pages\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
