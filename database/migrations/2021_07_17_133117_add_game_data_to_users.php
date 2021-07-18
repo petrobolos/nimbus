@@ -11,9 +11,11 @@ return new class extends Migration {
             $table
                 ->string('username')
                 ->unique()
+                ->default('')
                 ->after('name');
             $table
                 ->date('date_of_birth')
+                ->nullable()
                 ->after('email');
             $table
                 ->dateTime('last_signed_in')

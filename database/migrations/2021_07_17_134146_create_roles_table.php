@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +22,13 @@ return new class extends Migration {
                 ->nullable();
             $table->timestamps();
         });
+
+        // Seed roles into the database, especially necessary for testing.
+        if (Role::count() === 0) {
+            Artisan::call('db:seed', [
+                '--class' => RoleSeeder::class,
+            ]);
+        }
     }
 
     public function down(): void
