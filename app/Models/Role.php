@@ -40,6 +40,10 @@ class Role extends Model
         'description',
     ];
 
+    protected $casts = [
+        'key' => 'integer',
+    ];
+
     /**
      * A role belongs to numerous users.
      *
