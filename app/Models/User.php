@@ -63,6 +63,16 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function role(): HasOne
     {
-        return $this->hasOne(Role::class);
+        return $this->hasOne(Role::class, 'key', 'role_id');
+    }
+
+    /**
+     * Returns true if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role?->key === Role::ADMIN;
     }
 }

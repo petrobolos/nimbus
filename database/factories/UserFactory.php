@@ -29,7 +29,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->firstName(),
             'role_id' => $this->faker->randomKey(Role::ROLES),
             'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
@@ -40,6 +40,34 @@ class UserFactory extends Factory
             'preferred_locale' => 'en',
             'last_signed_in' => now(),
         ];
+    }
+
+    /**
+     * Indicate that the model should be an administrator.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role_id' => Role::ADMIN,
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the model should not be an administrator.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function notAnAdmin(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role_id' => $this->faker->numberBetween(Role::PLAYER, Role::PREMIUM_PLAYER),
+            ];
+        });
     }
 
     /**
