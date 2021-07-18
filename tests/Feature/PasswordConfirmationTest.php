@@ -3,18 +3,15 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\TestCaseWithDatabase;
 
 /**
  * Class PasswordConfirmationTest
  *
  * @package Tests\Feature
  */
-final class PasswordConfirmationTest extends TestCase
+final class PasswordConfirmationTest extends TestCaseWithDatabase
 {
-    use RefreshDatabase;
-
     public function test_confirm_password_screen_can_be_rendered(): void
     {
         /** @var \App\Models\User $user */

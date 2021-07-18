@@ -4,18 +4,15 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\TestCaseWithDatabase;
 
 /**
  * Class AuthenticationTest
  *
  * @package Tests\Feature
  */
-final class AuthenticationTest extends TestCase
+final class AuthenticationTest extends TestCaseWithDatabase
 {
-    use RefreshDatabase;
-
     public function test_login_screen_can_be_rendered(): void
     {
         $response = $this->get('/login');

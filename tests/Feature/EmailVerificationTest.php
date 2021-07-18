@@ -5,20 +5,17 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
-use Tests\TestCase;
+use Tests\TestCaseWithDatabase;
 
 /**
  * Class EmailVerificationTest
  *
  * @package Tests\Feature
  */
-final class EmailVerificationTest extends TestCase
+final class EmailVerificationTest extends TestCaseWithDatabase
 {
-    use RefreshDatabase;
-
     public function test_email_verification_screen_can_be_rendered(): void
     {
         /** @var \App\Models\User $user */

@@ -3,18 +3,15 @@
 namespace Tests\Feature;
 
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\TestCaseWithDatabase;
 
 /**
  * Class RegistrationTest
  *
  * @package Tests\Feature
  */
-final class RegistrationTest extends TestCase
+final class RegistrationTest extends TestCaseWithDatabase
 {
-    use RefreshDatabase;
-
     public function test_registration_screen_can_be_rendered(): void
     {
         $response = $this->get('/register');
