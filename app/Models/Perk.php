@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Perk
+ *
+ * @package App\Models
+ */
 class Perk extends Model
 {
     use HasFactory;

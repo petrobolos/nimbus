@@ -6,6 +6,11 @@ use App\Models\Race;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
+/**
+ * Class RaceSeeder
+ *
+ * @package Database\Seeders
+ */
 class RaceSeeder extends Seeder
 {
     /**
