@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Perk
@@ -29,4 +30,24 @@ class Perk extends Model
         self::TYPE_PHYSICAL_IMMUNITY,
         self::TYPE_SPECIAL_IMMUNITY,
     ];
+
+    /**
+     * A perk has a race that it is for.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function for(): BelongsTo
+    {
+        return $this->belongsTo(Race::class, 'for_race');
+    }
+
+    /**
+     * A perk has a race that it is against.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function against(): BelongsTo
+    {
+        return $this->belongsTo(Race::class, 'against_race');
+    }
 }

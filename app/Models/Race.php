@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Race
@@ -35,4 +36,34 @@ class Race extends Model
         self::RACE_FRIEZA,
         self::RACE_GOD_OF_DESTRUCTION,
     ];
+
+    /**
+     * Return fighters with this race.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function fighters(): HasMany
+    {
+        return $this->hasMany(Fighter::class, 'race_id');
+    }
+
+    /**
+     * Return perks that belong to this race.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function perksFor(): HasMany
+    {
+        return $this->hasMany(Perk::class, 'for_race');
+    }
+
+    /**
+     * Return perks that target this race.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function perksAgainst(): HasMany
+    {
+        return $this->hasMany(Perk::class, 'against_race');
+    }
 }
