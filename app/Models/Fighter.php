@@ -34,7 +34,7 @@ class Fighter extends Model
      */
     public function lastForm(): BelongsTo
     {
-        return $this->belongsTo(Fighter::class, 'last_form_id');
+        return $this->belongsTo(__CLASS__, 'last_form_id');
     }
 
     /**
@@ -44,7 +44,7 @@ class Fighter extends Model
      */
     public function nextForms(): HasMany
     {
-        return $this->hasMany(Fighter::class, 'last_form_id');
+        return $this->hasMany(__CLASS__, 'last_form_id');
     }
 
     /**
