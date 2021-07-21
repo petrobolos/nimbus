@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\FighterAbility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Ability
@@ -26,4 +28,18 @@ class Ability extends Model
         self::TYPE_SPECIAL,
         self::TYPE_RECOVERY
     ];
+
+    /**
+     * An ability belongs to many fighters.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function fighters(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Fighter::class, FighterAbility::class)
+            ->withPivot('fighter_id', 'ability_id')
+            ->as(__FUNCTION__)
+            ->withTimestamps();
+    }
 }

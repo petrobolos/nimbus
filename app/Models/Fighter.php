@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\FighterAbility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -16,6 +18,20 @@ use Illuminate\Support\Collection;
 class Fighter extends Model
 {
     use HasFactory;
+
+    /**
+     * A fighter will belong to many abilities.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function abilities(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Ability::class, FighterAbility::class)
+            ->withPivot('fighter_id', 'ability_id')
+            ->as(__FUNCTION__)
+            ->withTimestamps();
+    }
 
     /**
      * A fighter belongs to a single race.
