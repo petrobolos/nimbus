@@ -20,7 +20,7 @@ class AbilitySeeder extends Seeder
     public function run(): void
     {
         if (Fighter::count() !== 0) {
-            // Generate
+            // Generate a set number of abilities for each fighter.
             foreach (Fighter::all() as $fighter) {
                 $abilities = Ability::factory(self::NUMBER_OF_ABILITIES_PER_FIGHTER)->create();
 
