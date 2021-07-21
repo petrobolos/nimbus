@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Ability;
 use App\Models\Fighter;
+use App\Models\Pivots\FighterAbility;
 use App\Models\Race;
 use Tests\TestCaseWithDatabase;
 
@@ -13,6 +15,20 @@ use Tests\TestCaseWithDatabase;
  */
 final class FighterTest extends TestCaseWithDatabase
 {
+    public function test_a_fighter_can_retrieve_their_abilities(): void
+    {
+        $fighter = Fighter::factory()->create();
+        $ability = Ability::factory()->create();
+
+        FighterAbility::factory()->create([
+            'fighter_id' => $fighter->id,
+            'ability_id' => $ability->id,
+        ]);
+
+        self::assertInstanceOf(Ability::class, $fighter->abilities->first());
+        self::assertEquals($ability->id, $fighter->abilities->first()->id);
+    }
+
     public function test_a_fighter_can_retrieve_their_race(): void
     {
         $fighter = Fighter::factory()->create();
