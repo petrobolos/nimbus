@@ -5,6 +5,11 @@ namespace Tests\Unit\Traits;
 use App\Models\User;
 use Tests\TestCaseWithDatabase;
 
+/**
+ * Class BannableTest
+ *
+ * @package Tests\Unit\Traits
+ */
 final class BannableTest extends TestCaseWithDatabase
 {
     public function test_a_users_ban_status_can_be_determined(): void

@@ -5,6 +5,11 @@ namespace Tests\Unit\Traits;
 use App\Models\User;
 use Tests\TestCaseWithDatabase;
 
+/**
+ * Class MutableTest
+ *
+ * @package Tests\Unit\Traits
+ */
 final class MutableTest extends TestCaseWithDatabase
 {
     public function test_a_users_mute_status_can_be_determined(): void
