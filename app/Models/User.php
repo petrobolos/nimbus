@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\Bannable;
+use App\Traits\Mutable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -15,7 +17,9 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use Bannable;
     use HasFactory;
+    use Mutable;
     use Notifiable;
 
     /**
@@ -32,6 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'preferred_locale',
         'meta',
         'last_signed_in',
+        'banned_until',
+        'muted_until',
     ];
 
     /**
@@ -53,6 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_of_birth' => 'date',
         'email_verified_at' => 'datetime',
         'last_signed_in' => 'datetime',
+        'banned_until' => 'datetime',
+        'muted_until' => 'datetime',
         'meta' => 'array',
     ];
 

@@ -14,11 +14,6 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = User::class;
 
     /**
@@ -39,11 +34,13 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'preferred_locale' => 'en',
             'last_signed_in' => now(),
+            'banned_until' => null,
+            'muted_until' => null,
         ];
     }
 
     /**
-     * Indicate that the model should be an administrator.
+     * Indicate that the user should be an administrator.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -57,7 +54,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the model should not be an administrator.
+     * Indicate that the user should not be an administrator.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -71,7 +68,49 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user should be banned.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function banned(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'banned_until' => now()->addWeek(),
+           ];
+        });
+    }
+
+    /**
+     * Indicate that the user should be permanently banned.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function permabanned(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'banned_until' => config('game.bans.permaban_date'),
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the user should be muted.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function muted(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'muted_until' => now()->addWeek(),
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the user's email address should be unverified.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
