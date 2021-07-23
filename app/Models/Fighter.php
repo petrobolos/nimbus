@@ -19,6 +19,47 @@ class Fighter extends Model
 {
     use HasFactory;
 
+    public const IMPORT_SHEET = 'game/Fighters.xlsx';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'code',
+        'race_id',
+        'is_boss',
+        'last_form_id',
+        'hp',
+        'sp',
+        'attack',
+        'defense',
+        'speed',
+        'special',
+        'spirit',
+        'description',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_boss' => 'boolean',
+        'hp' => 'integer',
+        'sp' => 'integer',
+        'attack' => 'integer',
+        'defense' => 'integer',
+        'speed' => 'integer',
+        'special' => 'integer',
+        'spirit' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     /**
      * A fighter will belong to many abilities.
      *
