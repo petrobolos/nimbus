@@ -17,6 +17,8 @@ class Ability extends Model
     use HasFactory;
 
     public const IMPORT_SHEET = 'game/Abilities.xlsx';
+    public const IMPORT_SHEET_DATA = 'Abilities';
+    public const IMPORT_SHEET_PIVOT = 'Assignment';
 
     public const MIN_COST = 0;
     public const MAX_COST = 10;
