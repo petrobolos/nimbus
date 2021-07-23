@@ -18,8 +18,7 @@ return new class extends Migration {
             $table
                 ->boolean('is_boss')
                 ->default(false);
-            $table->unsignedBigInteger('hp')
-                ->default(0);
+            $table->unsignedBigInteger('hp')->default(0);
             $table->unsignedBigInteger('attack')->default(0);
             $table->unsignedBigInteger('defense')->default(0);
             $table->unsignedBigInteger('speed')->default(0);
