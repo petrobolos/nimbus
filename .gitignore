@@ -1,5 +1,6 @@
 /vendor/
 node_modules/
+/static/
 npm-debug.log
 yarn-error.log
 
@@ -27,3 +28,4 @@ public/css/
 public/js/
 
 .php-cs-fixer.cache
+.DS_Store
