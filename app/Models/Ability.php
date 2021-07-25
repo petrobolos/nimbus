@@ -30,7 +30,7 @@ class Ability extends Model
     public const TYPES = [
         self::TYPE_PHYSICAL,
         self::TYPE_SPECIAL,
-        self::TYPE_RECOVERY
+        self::TYPE_RECOVERY,
     ];
 
     /**

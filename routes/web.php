@@ -15,15 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', HomeController::class)->name('pages.home');
-Route::get('/faqs', FaqController::class)->name('pages.faqs');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
-});
-
-require __DIR__.'/auth.php';
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', HomeController::class)->name('pages.home');
+    Route::get('faqs', FaqController::class)->name('pages.faqs');
+});
+
+Route::middleware(['auth'])->group(function () {
+    //
+});

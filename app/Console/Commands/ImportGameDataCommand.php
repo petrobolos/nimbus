@@ -46,12 +46,10 @@ class ImportGameDataCommand extends Command
 
             if ($exception instanceof ValidationException) {
                 foreach ($exception->failures() as $failure) {
-                    var_dump(
-                        $failure->row(),
-                        $failure->attribute(),
-                        $failure->errors(),
-                        $failure->values()
-                    );
+                    $this->output->info($failure->row());
+                    $this->output->info($failure->attribute());
+                    $this->output->info($failure->errors());
+                    $this->output->info($failure->values());
                 }
             } else {
                 $this->output->error($exception->getMessage());

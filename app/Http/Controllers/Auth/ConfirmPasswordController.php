@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\ConfirmsPasswords;
 class ConfirmPasswordController extends Controller
 {
     /*
-    |--------------------------------------------------------------------------
+    |------------pages.home--------------------------------------------------------------
     | Confirm Password Controller
     |--------------------------------------------------------------------------
     |

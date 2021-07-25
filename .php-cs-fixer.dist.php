@@ -1,14 +1,17 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
     ->in(__DIR__)
     ->exclude(['application/cache', 'application/views', 'system', 'vendor'])
     ->name('*.php')
-    ->notName('*.twig')
+    ->notName('*.blade.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-$config = new PhpCsFixer\Config();
+$config = new Config();
 
 return $config->setRules([
     '@PSR2' => true,

@@ -17,6 +17,6 @@ class FaqController extends Controller
      */
     public function __invoke(): View
     {
-        return view('pages.faqs');
+        return view('home');
     }
 }
