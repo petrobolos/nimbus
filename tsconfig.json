@@ -8,7 +8,7 @@
         "skipLibCheck": true
     },
     "include": [
-        "resources/js/**/*"
+      "resources/ts/**/*"
     ],
     "exclude": [
         "node_modules",
