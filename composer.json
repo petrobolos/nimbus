@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0",
         "ext-pdo": "*",
+        "daux/daux.io": "^0.16.2",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -39,6 +40,10 @@
         }
     },
     "scripts": {
+        "test": "@php artisan test",
+        "lint": "./vendor/bin/php-cs-fixer fix --config=.php_cs -v",
+        "tlint": "./vendor/bin/tlint",
+        "docs": "./vendor/bin/daux generate",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
