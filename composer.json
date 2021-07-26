@@ -6,17 +6,20 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-gd": "*",
         "ext-pdo": "*",
-        "daux/daux.io": "^0.16.2",
+        "ext-zip": "*",
+        "beyondcode/laravel-websockets": "^1.12.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
+        "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3",
+        "laravel/ui": "^v3.0.0",
         "maatwebsite/excel": "^3.1"
     },
     "require-dev": {
+        "daux/daux.io": "^0.16.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -24,8 +27,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
-        "roave/security-advisories": "dev-latest",
-        "tightenco/tlint": "^6.0"
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
