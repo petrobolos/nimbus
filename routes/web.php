@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Pages\FaqController;
+use App\Http\Controllers\Pages\FeedController;
 use App\Http\Controllers\Pages\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,12 @@ Auth::routes();
 Route::middleware(['guest'])->group(function () {
     Route::get('/', HomeController::class)->name('pages.home');
     Route::get('faqs', FaqController::class)->name('pages.faqs');
+
+    Route::name('game.')->group(function () {
+        //
+    });
 });
 
 Route::middleware(['auth'])->group(function () {
-    //
+    Route::get('feed', FeedController::class)->name('pages.feed');
 });

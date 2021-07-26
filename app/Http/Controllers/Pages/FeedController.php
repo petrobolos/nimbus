@@ -6,17 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
 /**
- * Class FaqController
+ * Class FeedController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Pages
  */
-class FaqController extends Controller
+class FeedController extends Controller
 {
     /**
      * @return \Illuminate\View\View
      */
     public function __invoke(): View
     {
-        return view('pages.faqs');
+        return view('pages.feed.index');
     }
 }
