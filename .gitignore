@@ -29,3 +29,4 @@ public/js/
 
 .php-cs-fixer.cache
 .DS_Store
+.code-workspace
