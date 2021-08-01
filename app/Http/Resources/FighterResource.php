@@ -11,7 +11,7 @@ class FighterResource extends JsonResource
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
@@ -26,12 +26,8 @@ class FighterResource extends JsonResource
             'special' => $this->special,
             'spirit' => $this->special,
             'description' => $this->description,
-            'race' => [
-                'id' => $this->race->id,
-                'name' => $this->race->name,
-                'code' => $this->race->code,
-            ],
-            'last_form' => $this->last_form_id ? self::toArray($this->lastForm) : null,
+            'race' => new RaceResource($this->whenLoaded('race')),
+            'last_form' => new FighterResource($this->whenLoaded('lastForm')),
             'abilities' => AbilitiesCollection::collection($this->abilities),
         ];
     }

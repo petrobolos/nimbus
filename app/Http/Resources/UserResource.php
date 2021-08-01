@@ -29,12 +29,10 @@ class UserResource extends JsonResource
             'last_signed_in' => $this->last_signed_in,
             'muted_until' => $this->muted_until,
             'banned_until' => $this->banned_until,
+            'is_muted' => $this->isMuted(),
+            'is_banned' => $this->isBanned(),
             'meta' => $this->meta,
-            'role' => [
-                'id' => $this->role->id,
-                'key' => $this->role->key,
-                'name' => $this->role->name,
-            ],
+            'role' => new RoleResource($this->whenLoaded('role')),
         ];
     }
 }

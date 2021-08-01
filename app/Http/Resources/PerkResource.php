@@ -21,16 +21,8 @@ class PerkResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'for' => [
-                'id' => $this->for_race->id,
-                'name' => $this->for_race->name,
-                'code' => $this->for_race->code
-            ],
-            'against' => [
-                'id' => $this->against_race->id,
-                'name' => $this->against_race->name,
-                'code' => $this->against_race->code
-            ],
+            'for' => new RaceResource($this->whenLoaded('for')),
+            'against' => new RaceResource($this->whenLoaded('against')),
             'type' => $this->type,
             'description' => $this->description,
         ];
