@@ -74,6 +74,16 @@ class User extends Authenticatable
     }
 
     /**
+     * A user has stats attached.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function stats(): HasOne
+    {
+        return $this->hasOne(Stat::class);
+    }
+
+    /**
      * Returns true if the user is an administrator.
      *
      * @return bool
