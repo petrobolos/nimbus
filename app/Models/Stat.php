@@ -24,7 +24,7 @@ class Stat extends Model
     public const RATING_GRANDMASTER = 'grandmaster';
 
     public const RATINGS = [
-        self::RATING_BRONZE => 0,
+        self::RATING_BRONZE => 1000,
         self::RATING_SILVER => 1100,
         self::RATING_GOLD => 1500,
         self::RATING_PLATINUM => 1800,
