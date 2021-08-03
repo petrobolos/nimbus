@@ -4,7 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Fighter */
+/**
+ * Class FighterResource
+ *
+ * @mixin \App\Models\Fighter
+ * @package App\Http\Resources
+ */
 class FighterResource extends JsonResource
 {
     /**
