@@ -6,6 +6,11 @@ use App\Models\Stat;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * Class StatFactory
+ *
+ * @package Database\Factories
+ */
 class StatFactory extends Factory
 {
     protected $model = Stat::class;
