@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Player;
 use App\Models\Role;
+use App\Models\Stat;
 use App\Models\User;
 use Tests\TestCaseWithDatabase;
 
@@ -18,6 +20,20 @@ final class UserTest extends TestCaseWithDatabase
         $user = User::factory()->create();
 
         self::assertInstanceOf(Role::class, $user->role);
+    }
+
+    public function test_user_can_return_their_stats(): void
+    {
+        $user = User::factory()->create();
+
+        self::assertInstanceOf(Stat::class, $user->stats);
+    }
+
+    public function test_a_user_can_return_their_player(): void
+    {
+        $user = User::factory()->create();
+
+        self::assertInstanceOf(Player::class, $user->player);
     }
 
     public function test_is_admin_will_return_true_if_the_given_user_is_an_administrator(): void

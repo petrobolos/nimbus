@@ -84,6 +84,32 @@ class User extends Authenticatable
     }
 
     /**
+     * A user has an associated player.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function player(): HasOne
+    {
+        return $this->hasOne(Player::class);
+    }
+
+    /**
+     * Generate the necessary additional models depended upon by this model.
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        Stat::create([
+            'user_id' => $this->id,
+        ]);
+
+        Player::create([
+            'user_id' => $this->id,
+        ]);
+    }
+
+    /**
      * Returns true if the user is an administrator.
      *
      * @return bool
