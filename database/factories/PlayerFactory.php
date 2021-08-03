@@ -30,4 +30,14 @@ class PlayerFactory extends Factory
             'fighter_id_3' => static fn (): int => Fighter::factory()->create()->id,
         ];
     }
+
+    /**
+     * Indicate that the player should be lacking a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function cpu(): Factory
+    {
+        return $this->state(fn () => ['user_id' => null]);
+    }
 }

@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('players', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id')->nullable()->unique();
             $table->unsignedBigInteger('fighter_id_1')->nullable();
             $table->unsignedBigInteger('fighter_id_2')->nullable();
             $table->unsignedBigInteger('fighter_id_3')->nullable();

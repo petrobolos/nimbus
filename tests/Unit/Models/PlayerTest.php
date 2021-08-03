@@ -46,4 +46,12 @@ final class PlayerTest extends TestCaseWithDatabase
     {
         self::assertInstanceOf(Fighter::class, $this->player->thirdFighter);
     }
+
+    public function test_player_can_tell_whether_its_cpu_controlled_or_not(): void
+    {
+        /** @var \App\Models\Player $aiPlayer */
+        $aiPlayer = Player::factory()->cpu()->make();
+
+        self::assertTrue($aiPlayer->isCPU());
+    }
 }

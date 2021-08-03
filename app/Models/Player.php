@@ -80,4 +80,14 @@ class Player extends Model
     {
         return $this->belongsTo(Fighter::class, 'fighter_id_3');
     }
+
+    /**
+     * The player is an AI-controlled player if there's no attached user.
+     *
+     * @return bool
+     */
+    public function isCPU(): bool
+    {
+        return $this->user === null;
+    }
 }
