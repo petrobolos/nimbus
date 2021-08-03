@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Stat;
+use App\Models\User;
 use Closure;
 use Tests\TestCaseWithDatabase;
 
@@ -26,6 +27,13 @@ final class StatTest extends TestCaseWithDatabase
         $stats = $factory();
 
         self::assertEquals($rating, $stats->rating);
+    }
+
+    public function test_stats_can_retrieve_their_associated_user(): void
+    {
+        $stats = Stat::factory()->create();
+
+        self::assertInstanceOf(User::class, $stats->user);
     }
 
     /**
