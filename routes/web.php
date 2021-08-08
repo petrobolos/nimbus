@@ -23,7 +23,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('faqs', FaqController::class)->name('pages.faqs');
 
     Route::name('game.')->group(function () {
-        //
+        Route::get('game', '\App\Http\Controllers\GamesController@index')->name('show');
     });
 });
 
