@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resources;
 
-use App\Models\Perk;
+use App\Http\Controllers\Controller;
+use App\Models\Fighter;
 use Illuminate\Http\Request;
 
-class PerksController extends Controller
+class FightersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class PerksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Perk $perk
+     * @param Fighter $fighter
      * @return \Illuminate\Http\Response
      */
-    public function show(Perk $perk)
+    public function show(Fighter $fighter)
     {
         //
     }
@@ -52,10 +53,10 @@ class PerksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Perk $perk
+     * @param Fighter $fighter
      * @return \Illuminate\Http\Response
      */
-    public function edit(Perk $perk)
+    public function edit(Fighter $fighter)
     {
         //
     }
@@ -64,10 +65,10 @@ class PerksController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Perk $perk
+     * @param Fighter $fighter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perk $perk)
+    public function update(Request $request, Fighter $fighter)
     {
         //
     }
@@ -75,10 +76,10 @@ class PerksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Perk $perk
+     * @param Fighter $fighter
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Perk $perk)
+    public function destroy(Fighter $fighter)
     {
         //
     }

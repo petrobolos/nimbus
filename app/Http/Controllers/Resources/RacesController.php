@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resources;
 
+use App\Http\Controllers\Controller;
 use App\Models\Race;
 use Illuminate\Http\Request;
 

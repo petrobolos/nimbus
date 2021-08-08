@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resources;
 
-use App\Models\Fighter;
+use App\Http\Controllers\Controller;
+use App\Models\Stat;
 use Illuminate\Http\Request;
 
-class FightersController extends Controller
+class StatsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class FightersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Fighter $fighter
+     * @param Stat $stat
      * @return \Illuminate\Http\Response
      */
-    public function show(Fighter $fighter)
+    public function show(Stat $stat)
     {
         //
     }
@@ -52,10 +53,10 @@ class FightersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Fighter $fighter
+     * @param Stat $stat
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fighter $fighter)
+    public function edit(Stat $stat)
     {
         //
     }
@@ -64,10 +65,10 @@ class FightersController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Fighter $fighter
+     * @param Stat $stat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fighter $fighter)
+    public function update(Request $request, Stat $stat)
     {
         //
     }
@@ -75,10 +76,10 @@ class FightersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Fighter $fighter
+     * @param Stat $stat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fighter $fighter)
+    public function destroy(Stat $stat)
     {
         //
     }

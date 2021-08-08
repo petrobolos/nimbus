@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resources;
 
-use App\Models\Stat;
+use App\Http\Controllers\Controller;
+use App\Models\Perk;
 use Illuminate\Http\Request;
 
-class StatsController extends Controller
+class PerksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class StatsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Stat $stat
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function show(Stat $stat)
+    public function show(Perk $perk)
     {
         //
     }
@@ -52,10 +53,10 @@ class StatsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Stat $stat
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stat $stat)
+    public function edit(Perk $perk)
     {
         //
     }
@@ -64,10 +65,10 @@ class StatsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Stat $stat
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stat $stat)
+    public function update(Request $request, Perk $perk)
     {
         //
     }
@@ -75,10 +76,10 @@ class StatsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Stat $stat
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Stat $stat)
+    public function destroy(Perk $perk)
     {
         //
     }
