@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resources;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ability;
 use Illuminate\Http\Request;
 
 /**
  * Class AbilitiesController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Resources
  */
 class AbilitiesController extends Controller
 {
