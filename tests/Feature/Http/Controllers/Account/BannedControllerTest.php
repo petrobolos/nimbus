@@ -39,4 +39,15 @@ final class BannedControllerTest extends TestCaseWithDatabase
 
         $response->assertRedirect();
     }
+
+    public function test_banned_page_is_not_viewable_by_users_without_a_ban(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('account.banned'));
+
+        $response->assertRedirect();
+    }
 }
