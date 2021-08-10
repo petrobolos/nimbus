@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ability;
+use App\Models\Race;
 use Illuminate\Http\Request;
 
-/**
- * Class AbilitiesController
- *
- * @package App\Http\Controllers\Resources
- */
-class AbilitiesController extends Controller
+class RaceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,10 +42,10 @@ class AbilitiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Ability $ability
+     * @param Race $race
      * @return \Illuminate\Http\Response
      */
-    public function show(Ability $ability)
+    public function show(Race $race)
     {
         //
     }
@@ -58,10 +53,10 @@ class AbilitiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Ability $ability
+     * @param Race $race
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ability $ability)
+    public function edit(Race $race)
     {
         //
     }
@@ -70,10 +65,10 @@ class AbilitiesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Ability $ability
+     * @param Race $race
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ability $ability)
+    public function update(Request $request, Race $race)
     {
         //
     }
@@ -81,10 +76,10 @@ class AbilitiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Ability $ability
+     * @param Race $race
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ability $ability)
+    public function destroy(Race $race)
     {
         //
     }

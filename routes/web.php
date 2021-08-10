@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Pages\FaqController;
 use App\Http\Controllers\Pages\FeedController;
 use App\Http\Controllers\Pages\HomeController;
-use App\Http\Controllers\Resources\AbilitiesController;
+use App\Http\Controllers\Resources\AbilityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +58,6 @@ Route::middleware(['auth', 'unbanned'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::resource('abilities', AbilitiesController::class);
+        Route::resource('abilities', AbilityController::class);
     });
 });

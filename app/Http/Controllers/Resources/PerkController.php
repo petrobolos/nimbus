@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
-use App\Models\Race;
+use App\Models\Perk;
 use Illuminate\Http\Request;
 
-class RacesController extends Controller
+class PerkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +42,10 @@ class RacesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Race $race
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function show(Race $race)
+    public function show(Perk $perk)
     {
         //
     }
@@ -53,10 +53,10 @@ class RacesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Race $race
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Race $race)
+    public function edit(Perk $perk)
     {
         //
     }
@@ -65,10 +65,10 @@ class RacesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Race $race
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Race $race)
+    public function update(Request $request, Perk $perk)
     {
         //
     }
@@ -76,10 +76,10 @@ class RacesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Race $race
+     * @param Perk $perk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Race $race)
+    public function destroy(Perk $perk)
     {
         //
     }
