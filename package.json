@@ -37,6 +37,7 @@
     },
     "dependencies": {
         "laravel-echo": "^1.11.0",
-        "pusher-js": "^7.0.3"
+        "pusher-js": "^7.0.3",
+        "vue-property-decorator": "^9.1.2"
     }
 }

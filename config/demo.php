@@ -6,6 +6,12 @@ return [
     'session_key' => 'demo_last_played',
     'completion_key' => 'demo_complete',
 
+    'player_roster' => [
+        'kid_goku',
+        'krillin',
+        'tien',
+    ],
+
     'roster' => [
         Difficulty::HARD => [
             'kid_goku',

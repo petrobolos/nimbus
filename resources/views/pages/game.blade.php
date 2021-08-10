@@ -4,6 +4,6 @@
 
 @section('content')
     <div class="container">
-        <game-component></game-component>
+        <game-component :game="{{ json_encode($game) }}"></game-component>
     </div>
 @endsection

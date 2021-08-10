@@ -26,5 +26,10 @@
 </template>
 
 <script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
+@Component
+export default class GameComponent extends Vue {
+    @Prop({ required: true }) readonly game!: Object;
+}
 </script>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\BannedController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Pages\DemoController;
 use App\Http\Controllers\Pages\FaqController;
 use App\Http\Controllers\Pages\FeedController;
 use App\Http\Controllers\Pages\HomeController;
@@ -27,6 +28,10 @@ Auth::routes();
 Route::middleware(['guest'])->group(function () {
     Route::get('/', HomeController::class)->name('pages.home');
     Route::get('faqs', FaqController::class)->name('pages.faqs');
+
+    Route::prefix('demo')->name('demo.')->group(function () {
+        Route::get('', DemoController::class)->name('show');
+    });
 });
 
 /*

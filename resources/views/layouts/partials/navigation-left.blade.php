@@ -1,6 +1,6 @@
 <ul class="navbar-nav mr-auto">
     @guest
-        <x-nav-link :href="'#'">
+        <x-nav-link :href="route('demo.show')">
             <strong>{{ __('Play Demo!') }}</strong>
         </x-nav-link>
         <x-nav-link :href="'#'">
