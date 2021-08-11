@@ -15,6 +15,16 @@ class Player extends Model
 {
     use HasFactory;
 
+    public const FIGHTER_FIRST = 1;
+    public const FIGHTER_SECOND = 2;
+    public const FIGHTER_THIRD = 3;
+
+    public const FIGHTERS = [
+        self::FIGHTER_FIRST,
+        self::FIGHTER_SECOND,
+        self::FIGHTER_THIRD,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
