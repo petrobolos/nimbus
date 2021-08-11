@@ -20,18 +20,13 @@ class UserResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
             'username' => $this->username,
-            'email' => $this->email,
-            'date_of_birth' => $this->date_of_birth,
             'preferred_locale' => $this->preferred_locale,
             'last_signed_in' => $this->last_signed_in,
             'muted_until' => $this->muted_until,
             'banned_until' => $this->banned_until,
             'is_muted' => $this->isMuted(),
             'is_banned' => $this->isBanned(),
-            'meta' => $this->meta,
             'role' => new RoleResource($this->whenLoaded('role')),
         ];
     }
