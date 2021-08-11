@@ -25,6 +25,7 @@ class PlayerResource extends JsonResource
             'fighter_id_1' => $this->fighter_id_1,
             'fighter_id_2' => $this->fighter_id_2,
             'fighter_id_3' => $this->fighter_id_3,
+            'current_fighter' => $this->current_fighter,
             'firstFighter' => new FighterResource($this->whenLoaded('firstFighter')),
             'secondFighter' => new FighterResource($this->whenLoaded('secondFighter')),
             'thirdFighter' => new FighterResource($this->whenLoaded('thirdFighter')),

@@ -35,6 +35,7 @@ class Player extends Model
         'fighter_id_1',
         'fighter_id_2',
         'fighter_id_3',
+        'current_fighter',
     ];
 
     /**
@@ -47,6 +48,7 @@ class Player extends Model
         'fighter_id_1' => 'integer',
         'fighter_id_2' => 'integer',
         'fighter_id_3' => 'integer',
+        'current_fighter' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

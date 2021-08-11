@@ -28,6 +28,7 @@ class PlayerFactory extends Factory
             'fighter_id_1' => static fn (): int => Fighter::factory()->create()->id,
             'fighter_id_2' => static fn (): int => Fighter::factory()->create()->id,
             'fighter_id_3' => static fn (): int => Fighter::factory()->create()->id,
+            'current_fighter' => $this->faker->randomElement(Player::FIGHTERS),
         ];
     }
 
