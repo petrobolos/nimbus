@@ -3,12 +3,12 @@
         <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-header">
-                    Opponent
+                    <span>{{ gameType }}: <strong>Game {{ this.game.id }}</strong></span>
                 </div>
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Opponent">
+                <img :src="currentImage" :alt="this.opponent !== null ? this.opponent.name : 'Opponent'" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">Opponent</h5>
-                    <p class="card-text">Description</p>
+                    <h5 class="card-title">{{ this.opponent !== null ? this.opponent.name : 'Opponent' }}</h5>
+                    <p class="card-text">{{ this.opponent !== null ? this.opponent.description : 'Description' }}</p>
                 </div>
             </div>
             <game-stats-component></game-stats-component>
@@ -27,9 +27,78 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { GameInterface } from "../../interfaces/game.interface";
+import { FighterInterface } from "../../interfaces/fighter.interface";
 
 @Component
 export default class GameComponent extends Vue {
-    @Prop({ required: true }) readonly game!: Object;
+    @Prop({ required: true }) readonly game!: GameInterface;
+
+    private static readonly GAME_SP: string = 'VS AI';
+    private static readonly GAME_RANKED: string = 'Ranked Multiplayer';
+    private static readonly GAME_MP: string = 'Multiplayer;'
+
+    private fighter : FighterInterface | null = null;
+    private opponent : FighterInterface | null = null;
+    private currentImage : string = '';
+
+    mounted() {
+        this.fighter = this.game.firstPlayer.firstFighter;
+        this.opponent = this.game.secondPlayer.firstFighter;
+        this.currentImage = this.buildImageUrl(this.opponent.code);
+    }
+
+    get gameType(): string {
+        if (this.game.against_ai) {
+            return GameComponent.GAME_SP;
+        }
+
+        if (this.game.ranked) {
+            return GameComponent.GAME_RANKED;
+        }
+
+        return GameComponent.GAME_MP;
+    }
+
+    /**
+     * Set the current fighter based on a numerical ID.
+     *
+     * @param {Number} fighterId
+     * @protected
+     * @return void
+     */
+    protected setCurrentFighter(fighterId: number): void {
+        let fighter : FighterInterface | null;
+
+        switch (fighterId) {
+            case 2:
+                fighter = this.game.firstPlayer.secondFighter;
+                break;
+            case 3:
+                fighter = this.game.firstPlayer.thirdFighter;
+                break;
+            default:
+                fighter = this.game.firstPlayer.firstFighter;
+                break;
+        }
+
+        if (fighter) {
+            this.fighter = fighter;
+        }
+    }
+
+    /**
+     * Build an image URL.
+     *
+     * @param {String} character
+     * @param {String|null} ability
+     * @protected
+     * @return string
+     */
+    protected buildImageUrl(character: string, ability: string | null = null): string {
+        const action = ability ?? character;
+
+        return `/images/fighters/${character}/${action}.gif`;
+    }
 }
 </script>

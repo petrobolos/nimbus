@@ -1,6 +1,6 @@
 @extends('layouts.game')
 
-@section('title', 'Game')
+@section('title', "Game {$game->id}")
 
 @section('content')
     <div class="container">
