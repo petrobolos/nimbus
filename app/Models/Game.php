@@ -56,6 +56,15 @@ class Game extends Model
     ];
 
     /**
+     * Attributes to include in the serialisations of this model.
+     *
+     * @var string[]
+     */
+    protected $appends = [
+        'time_elapsed',
+    ];
+
+    /**
      * The relationships that should be eagerly loaded.
      *
      * @var string[]
@@ -85,9 +94,18 @@ class Game extends Model
         return $this->belongsTo(Player::class, 'player_2');
     }
 
-    public function getTimeElapsedAttribute()
+    /**
+     * Get time elapsed for the current game.
+     *
+     * @return int
+     */
+    public function getTimeElapsedAttribute(): int
     {
-        return ($this->updated_at - $this->created_at);
+        if ($this->inProgress()) {
+            return now()->diffInSeconds($this->created_at);
+        }
+
+        return $this->updated_at->diffInSeconds($this->created_at);
     }
 
     /**
