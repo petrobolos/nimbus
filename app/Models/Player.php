@@ -42,6 +42,18 @@ class Player extends Model
     ];
 
     /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'firstFighter',
+        'secondFighter',
+        'thirdFighter',
+        'user',
+    ];
+
+    /**
      * Retrieve the user attached to the player.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

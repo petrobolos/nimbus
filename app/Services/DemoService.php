@@ -43,7 +43,8 @@ class DemoService
             'player_2' => $playerService->createAiPlayer($this->determineDemoTeam())->id,
             'status' => Game::STATUS_IN_PROGRESS,
             'against_ai' => true,
-        ]);
+            'ranked' => false,
+        ])->load('firstPlayer', 'secondPlayer');
     }
 
     /**

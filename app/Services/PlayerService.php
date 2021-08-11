@@ -40,7 +40,7 @@ class PlayerService
             'fighter_id_1' => $fighters[0]->id,
             'fighter_id_2' => $fighters[1]->id ?? null,
             'fighter_id_3' => $fighters[2]->id ?? null,
-        ]);
+        ])->load('firstFighter', 'secondFighter', 'thirdFighter');
     }
 
     /**

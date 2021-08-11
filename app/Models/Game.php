@@ -55,6 +55,15 @@ class Game extends Model
         'deleted_at' => 'datetime',
     ];
 
+    /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'firstPlayer',
+        'secondPlayer',
+    ];
 
     /**
      * Get the first player of the match.
