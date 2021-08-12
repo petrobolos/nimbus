@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3277b2608f86cdea6865253c0ee89f21",
+    "content-hash": "359b887588a16713b889f4e66ce7d630",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4266,6 +4266,72 @@
             "time": "2021-04-03T18:04:19+00:00"
         },
         {
+            "name": "spatie/data-transfer-object",
+            "version": "3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/data-transfer-object.git",
+                "reference": "55b7aa2de1b885f5a02c6a599695bc9331048167"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/data-transfer-object/zipball/55b7aa2de1b885f5a02c6a599695bc9331048167",
+                "reference": "55b7aa2de1b885f5a02c6a599695bc9331048167",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "illuminate/collections": "^8.36",
+                "jetbrains/phpstorm-attributes": "^1.0",
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^9.0"
+            },
+            "suggest": {
+                "phpstan/phpstan": "Take advantage of checkUninitializedProperties with \\Spatie\\DataTransferObject\\PHPstan\\PropertiesAreAlwaysInitializedExtension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DataTransferObject\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Data transfer objects with batteries included",
+            "homepage": "https://github.com/spatie/data-transfer-object",
+            "keywords": [
+                "data-transfer-object",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/data-transfer-object/issues",
+                "source": "https://github.com/spatie/data-transfer-object/tree/3.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-08-12T03:58:42+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.7",
             "source": {
@@ -6603,6 +6669,62 @@
                 }
             ],
             "time": "2021-07-23T15:55:36+00:00"
+        },
+        {
+            "name": "tailflow/castable-dto",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tailflow/castable-dto.git",
+                "reference": "33cc77ca39f67fe756101a37bd6079fad6a2557b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tailflow/castable-dto/zipball/33cc77ca39f67fe756101a37bd6079fad6a2557b",
+                "reference": "33cc77ca39f67fe756101a37bd6079fad6a2557b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "^8.0",
+                "php": ">=8.0",
+                "spatie/data-transfer-object": "^3.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tailflow\\DataTransferObjects\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksei Zarubin",
+                    "email": "alex@tailflow.org"
+                }
+            ],
+            "description": "Automatically cast JSON columns to PHP objects in Laravel using Spatie's data-transfer-object class",
+            "homepage": "https://github.com/tailflow/castable-dto",
+            "keywords": [
+                "laravel castable data transfer object",
+                "laravel castable dto",
+                "laravel castable value object",
+                "laravel data transfer object",
+                "laravel value object",
+                "tailflow"
+            ],
+            "support": {
+                "issues": "https://github.com/tailflow/castable-dto/issues",
+                "source": "https://github.com/tailflow/castable-dto"
+            },
+            "time": "2021-06-14T07:37:59+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

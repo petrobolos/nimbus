@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^v3.0.0",
         "maatwebsite/excel": "^3.1",
-        "spatie/array-functions": "^1.9"
+        "spatie/array-functions": "^1.9",
+        "tailflow/castable-dto": "^2.0"
     },
     "require-dev": {
         "daux/daux.io": "^0.16.2",
