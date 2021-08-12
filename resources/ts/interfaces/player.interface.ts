@@ -1,8 +1,7 @@
 import { FighterInterface } from "./fighter.interface";
 import { UserInterface } from "./user.interface";
 
-export interface PlayerInterface
-{
+export interface PlayerInterface {
     current_fighter: number;
     fighter_id_1: number;
     fighter_id_2: number | null;

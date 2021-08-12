@@ -1,5 +1,4 @@
-export interface UserInterface
-{
+export interface UserInterface {
     banned_until: string | null;
     is_banned: boolean;
     is_muted: boolean;

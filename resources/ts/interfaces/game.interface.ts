@@ -1,8 +1,7 @@
 import { PlayerInterface } from "./player.interface";
 import {StateInterface} from "./state.interface";
 
-export interface GameInterface
-{
+export interface GameInterface {
     against_ai: boolean;
     created_at: string;
     firstPlayer: PlayerInterface;

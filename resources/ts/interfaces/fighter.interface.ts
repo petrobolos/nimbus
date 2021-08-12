@@ -1,5 +1,4 @@
-export interface FighterInterface
-{
+export interface FighterInterface {
     abilities: object[],
     attack: number;
     code: string;
