@@ -29,6 +29,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { GameInterface } from "../../interfaces/game.interface";
 import { FighterInterface } from "../../interfaces/fighter.interface";
+import { StateInterface } from "../../interfaces/state.interface";
 
 @Component
 export default class GameComponent extends Vue {
@@ -40,11 +41,13 @@ export default class GameComponent extends Vue {
 
     private fighter : FighterInterface | null = null;
     private opponent : FighterInterface | null = null;
+    private state : StateInterface | null = null;
     private currentImage : string = '';
 
     mounted() {
         this.fighter = this.game.firstPlayer.firstFighter;
         this.opponent = this.game.secondPlayer.firstFighter;
+        this.state = this.game.state;
         this.currentImage = this.buildImageUrl(this.opponent.code);
     }
 
