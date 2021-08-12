@@ -27,6 +27,9 @@ class GameResource extends JsonResource
             'updated_at' => $this->updated_at,
             'time_elapsed' => $this->time_elapsed,
 
+            'state' => $this->state,
+            'state_hash' => $this->stateHash,
+
             'player_1' => $this->player_1,
             'player_2' => $this->player_2,
 

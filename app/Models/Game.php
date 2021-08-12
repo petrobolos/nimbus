@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Classes\State;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class Game
@@ -38,6 +40,7 @@ class Game extends Model
         'status',
         'ranked',
         'against_ai',
+        'state',
     ];
 
     /**
@@ -53,6 +56,7 @@ class Game extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'state' => State::class,
     ];
 
     /**
@@ -106,6 +110,17 @@ class Game extends Model
         }
 
         return $this->updated_at->diffInSeconds($this->created_at);
+    }
+
+    /**
+     * Get the hash for the state JSON.
+     *
+     * @throws \JsonException
+     * @return string
+     */
+    public function getStateHashAttribute(): string
+    {
+        return Hash::make(json_encode($this->state, JSON_THROW_ON_ERROR));
     }
 
     /**
