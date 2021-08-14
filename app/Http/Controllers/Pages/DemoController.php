@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GameResource;
 use App\Services\DemoService;
+use Exception;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 /**
- * Class DemoController
+ * Class DemoController.
  *
  * @package App\Http\Controllers\Pages
  */
@@ -29,13 +31,14 @@ class DemoController extends Controller
     /**
      * Starts or resumes a demo game.
      *
-     * @throws \Exception
+     * @throws Exception
      * @return \Illuminate\Contracts\View\View
      */
     public function __invoke(): View
     {
-        return view('pages.game', [
+        return view('pages.game.demo', [
             'game' => new GameResource($this->demoService->startOrResumeDemo()),
+            'difficulty' => Str::ucfirst($this->demoService->getDemoDifficulty()),
         ]);
     }
 }
