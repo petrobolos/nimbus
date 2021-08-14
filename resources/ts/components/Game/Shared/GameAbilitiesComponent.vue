@@ -21,9 +21,9 @@ import Component from "vue-class-component";
 import Vue from 'vue';
 
 @Component({
-    components: {GameAbilityComponent}
+    components: {
+        GameAbilityComponent,
+    }
 })
-export default class GameAbilitiesComponent extends Vue {
-    //
-}
+export default class GameAbilitiesComponent extends Vue {}
 </script>

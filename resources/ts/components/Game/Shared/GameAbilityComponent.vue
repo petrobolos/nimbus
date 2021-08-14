@@ -7,3 +7,10 @@
         <span class="badge bg-primary rounded-pill">Cost</span>
     </li>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+export default class GameAbilityComponent extends Vue {}
+</script>

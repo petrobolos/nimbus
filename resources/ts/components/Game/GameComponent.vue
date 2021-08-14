@@ -27,11 +27,28 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { GameInterface } from "../../interfaces/game.interface";
-import { FighterInterface } from "../../interfaces/fighter.interface";
-import { StateInterface } from "../../interfaces/state.interface";
 
-@Component
+/**
+ * Vue Components
+ */
+import GameChatComponent from './Shared/GameChatComponent.vue';
+import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
+import GameStatsComponent from './Shared/GameStatsComponent.vue';
+
+/**
+ * TypeScript interfaces
+ */
+import { GameInterface } from '../../interfaces/game.interface';
+import { FighterInterface } from '../../interfaces/fighter.interface';
+import { StateInterface } from '../../interfaces/state.interface';
+
+@Component({
+    components: {
+        'game-abilities-component': GameAbilitiesComponent,
+        'game-chat-component': GameChatComponent,
+        'game-stats-component': GameStatsComponent,
+    }
+})
 export default class GameComponent extends Vue {
     @Prop({ required: true }) readonly game!: GameInterface;
 
