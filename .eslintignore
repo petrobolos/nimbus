@@ -1,0 +1,5 @@
+webpack.mix.js
+/vendor/
+/node_modules/
+resources/ts/app.ts
+resources/ts/bootstrap.ts

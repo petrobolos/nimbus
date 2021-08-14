@@ -1,15 +1,27 @@
 {
     "extends": [
         "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
         "plugin:@typescript-eslint/recommended",
-        "airbnb",
-        "plugin:prettier/recommended"
+        "airbnb"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "prettier"],
+    "plugins": ["@typescript-eslint"],
     "rules": {
-        "prettier/prettier": "error",
+        "import/extensions": "off",
+        "camelcase": "off",
         "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/no-unused-vars": "error"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js", ".ts"],
+                "moduleDirectory": ["node_modules", "src/"]
+            }
+        }
     }
 }
