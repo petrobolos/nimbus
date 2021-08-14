@@ -8,21 +8,32 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "test": "jest"
+        "test": "jest",
+        "eslint": "eslint 'resources/**/*.ts'",
+        "eslint:fix": "eslint -fix 'resources/**/*.ts'"
     },
     "devDependencies": {
         "@types/jest": "^26.0.24",
         "@types/jquery": "^3.5.6",
         "@types/node": "^16.4.2",
+        "@typescript-eslint/eslint-plugin": "4.29.1",
+        "@typescript-eslint/parser": "4.29.1",
         "axios": "^0.21",
         "bootstrap": "^4.6.0",
         "css-loader": "^5.2.7",
+        "eslint": "7.32.0",
+        "eslint-config-airbnb": "18.2.1",
+        "eslint-config-prettier": "8.3.0",
+        "eslint-plugin-prettier": "3.4.0",
+        "husky": "7.0.1",
         "jest": "^27.0.6",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
+        "lint-staged": "11.1.2",
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.1.14",
+        "prettier": "2.3.2",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
@@ -39,5 +50,21 @@
         "laravel-echo": "^1.11.0",
         "pusher-js": "^7.0.3",
         "vue-property-decorator": "^9.1.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint-staged",
+            "pre-push": "./vendor/bin/phpunit"
+        }
+    },
+    "lint-staged": {
+        "resources/**/*.ts": [
+            "eslint --fix",
+            "git add"
+        ],
+        "app/**/*.php": [
+            "./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php",
+            "./vendor/bin/tlint"
+        ]
     }
 }

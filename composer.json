@@ -29,7 +29,8 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
-        "roave/security-advisories": "dev-latest"
+        "roave/security-advisories": "dev-latest",
+        "tightenco/tlint": "^v6.0.3"
     },
     "autoload": {
         "psr-4": {
