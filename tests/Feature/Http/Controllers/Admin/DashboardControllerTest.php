@@ -21,7 +21,7 @@ final class DashboardControllerTest extends TestCaseWithDatabase
 
     public function test_dashboard_is_not_visible_by_non_admins(): void
     {
-        $nonAdmin = User::factory()->create();
+        $nonAdmin = User::factory()->notAnAdmin()->create();
 
         $this->actingAs($nonAdmin);
 
