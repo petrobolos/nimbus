@@ -1,5 +1,5 @@
 export interface ActionInterface {
-    actor: number;
-    id: number;
-    type: string;
+  actor: number;
+  id: number;
+  type: string;
 }

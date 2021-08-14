@@ -1,6 +1,6 @@
-import {ActionInterface} from "./action.interface";
+import { ActionInterface } from './action.interface';
 
 export interface StateInterface {
-    currentPlayer: number;
-    history: ActionInterface[];
+  currentPlayer: number;
+  history: ActionInterface[];
 }
