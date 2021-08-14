@@ -12,6 +12,7 @@
                 </div>
             </div>
             <game-stats-component></game-stats-component>
+            <button @click="testSend()">Test</button>
             <game-abilities-component></game-abilities-component>
         </div>
 
@@ -27,6 +28,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import Axios from 'axios';
 
 /**
  * Vue Components
@@ -59,12 +61,19 @@ export default class GameComponent extends Vue {
     private fighter : FighterInterface | null = null;
     private opponent : FighterInterface | null = null;
     private state : StateInterface | null = null;
+    private stateHash: string = '';
     private currentImage : string = '';
 
     mounted() {
         this.fighter = this.game.firstPlayer.firstFighter;
         this.opponent = this.game.secondPlayer.firstFighter;
         this.state = this.game.state;
+        this.state.history = [{
+            actor: 1,
+            id: 1,
+            type: 'ability',
+        }];
+        this.stateHash = this.game.state_hash;
         this.currentImage = this.buildImageUrl(this.opponent.code);
     }
 
@@ -78,6 +87,18 @@ export default class GameComponent extends Vue {
         }
 
         return GameComponent.GAME_MP;
+    }
+
+    public testSend(): void {
+        Axios.put('/demo/sync', {
+            state: this.state,
+            stateHash: this.stateHash,
+            gameId: this.game.id,
+        }).then((response: any) => {
+            console.log(response);
+        }).catch((e: any) => {
+            console.error(e);
+        });
     }
 
     /**
