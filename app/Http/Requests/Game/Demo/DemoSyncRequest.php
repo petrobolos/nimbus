@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Game\Demo;
 
+use App\Rules\Game\DemoGameExistsRule;
 use App\Rules\Game\ValidPlayerNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,13 +23,13 @@ class DemoSyncRequest extends FormRequest
         return [
             'gameId' => [
                 'required',
+                'bail',
                 'integer',
-
+                new DemoGameExistsRule(),
             ],
 
             'state' => [
                 'required',
-                'bail',
                 'array',
             ],
 
@@ -52,6 +53,6 @@ class DemoSyncRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->guest();
     }
 }

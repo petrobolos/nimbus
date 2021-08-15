@@ -16,12 +16,13 @@ class DemoGameExistsRule implements Rule
      * Determine if the validation rule passes.
      *
      * @param string $attribute
-     * @param mixed $value
+     * @param int $value
      * @return bool
      */
     public function passes($attribute, $value): bool
     {
         return Game::where([
+            ['player_2', '=', null],
             ['against_ai', '=', true],
             ['id', '=', $value],
         ])->exists();

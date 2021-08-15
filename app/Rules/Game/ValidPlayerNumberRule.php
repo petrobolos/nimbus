@@ -18,7 +18,7 @@ class ValidPlayerNumberRule implements Rule
      * @param int $value
      * @return bool
      */
-    public function passes(string $attribute, int $value): bool
+    public function passes($attribute, $value): bool
     {
         return $value === 1 || $value === 2;
     }
