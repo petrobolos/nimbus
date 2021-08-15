@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Game\Demo;
 
 use App\Models\Game;
-use App\Rules\Game\DemoGameExistsRule;
+use App\Rules\Game\Demo\DemoGameExistsRule;
 use App\Rules\Game\ValidPlayerNumberRule;
 use App\Rules\Game\ValidStateHistoryRule;
 use Illuminate\Foundation\Http\FormRequest;

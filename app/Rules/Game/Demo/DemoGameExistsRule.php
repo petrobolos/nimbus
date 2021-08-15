@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules\Game;
+namespace App\Rules\Game\Demo;
 
 use App\Models\Game;
 use Illuminate\Contracts\Validation\Rule;
@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Rule;
 /**
  * Class DemoGameExists.
  *
- * @package \App\Rules\Game
+ * @package \App\Rules\Game\Demo
  */
 class DemoGameExistsRule implements Rule
 {
