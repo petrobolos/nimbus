@@ -7,20 +7,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Hash;
+use JsonException;
 
 /**
- * Class Game
+ * Class Game.
  *
  * @package App\Models
  */
 class Game extends Model
 {
     use HasFactory;
+
     use SoftDeletes;
 
     public const STATUS_IN_PROGRESS = 'in-progress';
+
     public const STATUS_CONCLUDED = 'concluded';
+
     public const STATUS_ABANDONED = 'abandoned';
 
     public const STATUSES = [
@@ -115,12 +118,12 @@ class Game extends Model
     /**
      * Get the hash for the state JSON.
      *
-     * @throws \JsonException
+     * @throws JsonException
      * @return string
      */
     public function getStateHashAttribute(): string
     {
-        return Hash::make(json_encode($this->state, JSON_THROW_ON_ERROR));
+        return createArrayHash($this->state->toArray());
     }
 
     /**
