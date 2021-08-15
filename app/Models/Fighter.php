@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
- * Class Fighter
+ * Class Fighter.
  *
  * @package App\Models
  */
@@ -58,6 +58,15 @@ class Fighter extends Model
         'spirit' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+    ];
+
+    /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'abilities',
     ];
 
     /**
@@ -126,7 +135,7 @@ class Fighter extends Model
      * @param \App\Models\Fighter $currentFighter
      * @return array
      */
-    private function traverseNodesForForms(Fighter $currentFighter): array
+    private function traverseNodesForForms(self $currentFighter): array
     {
         $fighters = [];
 

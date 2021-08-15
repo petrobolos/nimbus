@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class FighterResource
+ * Class FighterResource.
  *
  * @mixin \App\Models\Fighter
  * @package App\Http\Resources
@@ -32,8 +32,8 @@ class FighterResource extends JsonResource
             'spirit' => $this->special,
             'description' => $this->description,
             'race' => new RaceResource($this->whenLoaded('race')),
-            'last_form' => new FighterResource($this->whenLoaded('lastForm')),
-            'abilities' => AbilitiesCollection::collection($this->abilities),
+            'last_form' => new self($this->whenLoaded('lastForm')),
+            'abilities' => $this->abilities->map(static fn ($ability): AbilityResource => new AbilityResource($ability)),
         ];
     }
 }
