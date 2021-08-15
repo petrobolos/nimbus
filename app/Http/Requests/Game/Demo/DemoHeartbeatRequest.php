@@ -4,6 +4,7 @@ namespace App\Http\Requests\Game\Demo;
 
 use App\Enums\Heartbeat;
 use App\Rules\Game\Demo\DemoGameActiveInSessionRule;
+use App\Rules\Game\InProgressRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,6 +27,7 @@ class DemoHeartbeatRequest extends FormRequest
                 'required',
                 'bail',
                 'integer',
+                new InProgressRule(),
                 new DemoGameActiveInSessionRule(),
             ],
 
