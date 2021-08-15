@@ -6,13 +6,14 @@ use App\Models\Player;
 use Tailflow\DataTransferObjects\CastableDataTransferObject;
 
 /**
- * Class State
+ * Class State.
  *
  * @package App\Classes
  */
 class State extends CastableDataTransferObject
 {
     public array $history;
+
     public int $currentPlayer;
 
     /**
@@ -55,7 +56,7 @@ class State extends CastableDataTransferObject
      */
     public function hasGameStarted(): bool
     {
-        return !empty($this->history['state']);
+        return ! empty($this->history['state']);
     }
 
     /**
@@ -70,5 +71,18 @@ class State extends CastableDataTransferObject
         }
 
         return 0;
+    }
+
+    /**
+     * Compile the state array into a series of actions and players.
+     *
+     * @return array
+     */
+    public function compile(): array
+    {
+        return [
+            'currentPlayer' => $this->currentPlayer,
+            'history' => Action::convert($this->history),
+        ];
     }
 }
