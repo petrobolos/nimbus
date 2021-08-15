@@ -14,9 +14,11 @@
         "camelcase": "off",
         "no-extra-semi": "off",
         "object-curly-newline": "off",
+        "semi": "off",
         "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/no-unused-vars": "error",
-        "@typescript-eslint/no-extra-semi": "off"
+        "@typescript-eslint/no-extra-semi": "off",
+        "@typescript-eslint/no-inferrable-types": "off"
     },
     "settings": {
         "import/resolver": {
