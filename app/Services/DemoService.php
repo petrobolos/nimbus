@@ -110,6 +110,7 @@ class DemoService
      * Sets the game ID as the demo game in progress.
      *
      * @param int $gameId
+     * @return void
      */
     public function setDemoGame(int $gameId): void
     {
