@@ -3,20 +3,24 @@
 namespace App\Http\Controllers\Api\Game;
 
 use App\Http\Requests\Game\Demo\DemoSyncRequest;
+use App\Models\Game;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 
 class DemoController
 {
     public function sync(DemoSyncRequest $request): JsonResponse
     {
-        // TODO: This is just for testing
+        $stateData = $request->validated();
+        $demoGame = Game::findOrFail($stateData['gameId'] ?? null);
+
+        $demoGame->update([
+            'state' => $stateData['state'],
+            'status' => Game::STATUS_IN_PROGRESS,
+        ]);
+
         return response()->json([
-            'state' => [
-                'history' => $request->validated()['state']['history'],
-                'currentPlayer' => $request->validated()['current_player'],
-            ],
-            'stateHash' => Hash::make(json_encode($request->all()['state'], JSON_THROW_ON_ERROR)),
+            'state' => $demoGame->state,
+            'stateHash' => $demoGame->stateHash,
         ]);
     }
 }
