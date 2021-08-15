@@ -75,6 +75,8 @@ export default class GameComponent extends Vue {
         }];
         this.stateHash = this.game.state_hash;
         this.currentImage = this.buildImageUrl(this.opponent.code);
+
+        window.setInterval(this.heartbeat, 30000);
     }
 
     get gameType(): string {
@@ -98,6 +100,17 @@ export default class GameComponent extends Vue {
             console.log(response);
         }).catch((e: any) => {
             console.error(e);
+        });
+    }
+
+    public heartbeat(): void {
+        Axios.post('/demo/heartbeat', {
+            gameId: this.game.id,
+            heartbeat: 'heartbeat_demo',
+        }).then((response: any) => {
+            console.log(response);
+        }).catch((e: any) => {
+           console.error(e);
         });
     }
 
