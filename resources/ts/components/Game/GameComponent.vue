@@ -3,16 +3,16 @@
         <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-header">
-                    <span>{{ gameType }}: <strong>Game {{ this.game.id }}</strong></span>
+                    <span><strong>Game </strong></span>
                 </div>
-                <img :src="currentImage" :alt="this.opponent !== null ? this.opponent.name : 'Opponent'" class="card-img-top">
+                <img :src="currentImage" alt="" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">{{ this.opponent !== null ? this.opponent.name : 'Opponent' }}</h5>
-                    <p class="card-text">{{ this.opponent !== null ? this.opponent.description : 'Description' }}</p>
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
                 </div>
             </div>
             <game-stats-component></game-stats-component>
-            <button @click="testSend()">Test</button>
+            <button>Test</button>
             <game-abilities-component></game-abilities-component>
         </div>
 
@@ -28,21 +28,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Axios from 'axios';
+import { Action } from 'vuex-class';
+import { getModule } from 'vuex-module-decorators';
 
-/**
- * Vue Components
- */
 import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
-
-/**
- * TypeScript interfaces
- */
-import { GameInterface } from '../../interfaces/game.interface';
-import { FighterInterface } from '../../interfaces/fighter.interface';
-import { StateInterface } from '../../interfaces/state.interface';
+import GameInterface from '../../interfaces/game.interface';
+import GameModule from '../../modules/game.module';
 
 @Component({
     components: {
@@ -52,107 +45,112 @@ import { StateInterface } from '../../interfaces/state.interface';
     }
 })
 export default class GameComponent extends Vue {
-    @Prop({ required: true }) readonly game!: GameInterface;
+    @Prop({ required: true }) readonly initialGame!: GameInterface;
+
+    private store!: GameModule;
 
     private static readonly GAME_SP: string = 'VS AI';
     private static readonly GAME_RANKED: string = 'Ranked Multiplayer';
     private static readonly GAME_MP: string = 'Multiplayer;'
 
-    private fighter : FighterInterface | null = null;
-    private opponent : FighterInterface | null = null;
-    private state : StateInterface | null = null;
+    @Action
+    public initialize!: (game: GameInterface) => void;
+
     private stateHash: string = '';
     private currentImage : string = '';
 
+    created() {
+        this.startGame();
+    }
+
+
     mounted() {
-        this.fighter = this.game.firstPlayer.firstFighter;
-        this.opponent = this.game.secondPlayer.firstFighter;
-        this.state = this.game.state;
-        this.state.history = [{
-            actor: 1,
-            id: 1,
-            type: 'ability',
-        }];
-        this.stateHash = this.game.state_hash;
-        this.currentImage = this.buildImageUrl(this.opponent.code);
 
-        window.setInterval(this.heartbeat, 30000);
+        //this.currentImage = this.buildImageUrl(this.opponent.code);
+
+        // window.setInterval(this.heartbeat, 30000);
     }
 
-    get gameType(): string {
-        if (this.game.against_ai) {
-            return GameComponent.GAME_SP;
-        }
-
-        if (this.game.ranked) {
-            return GameComponent.GAME_RANKED;
-        }
-
-        return GameComponent.GAME_MP;
+    public startGame(): void {
+        // Configures initial centralised state.
+        this.store = getModule(GameModule, this.$store);
+        this.initialize(this.initialGame);
     }
 
-    public testSend(): void {
-        Axios.put('/demo/sync', {
-            state: this.state,
-            stateHash: this.stateHash,
-            gameId: this.game.id,
-        }).then((response: any) => {
-            console.log(response);
-        }).catch((e: any) => {
-            console.error(e);
-        });
-    }
+    // get gameType(): string {
+    //     if (this.game.against_ai) {
+    //         return GameComponent.GAME_SP;
+    //     }
+    //
+    //     if (this.game.ranked) {
+    //         return GameComponent.GAME_RANKED;
+    //     }
+    //
+    //     return GameComponent.GAME_MP;
+    // }
 
-    public heartbeat(): void {
-        Axios.post('/demo/heartbeat', {
-            gameId: this.game.id,
-            heartbeat: 'heartbeat_demo',
-        }).then((response: any) => {
-            console.log(response);
-        }).catch((e: any) => {
-           console.error(e);
-        });
-    }
-
-    /**
-     * Set the current fighter based on a numerical ID.
-     *
-     * @param {Number} fighterId
-     * @protected
-     * @return void
-     */
-    protected setCurrentFighter(fighterId: number): void {
-        let fighter : FighterInterface | null;
-
-        switch (fighterId) {
-            case 2:
-                fighter = this.game.firstPlayer.secondFighter;
-                break;
-            case 3:
-                fighter = this.game.firstPlayer.thirdFighter;
-                break;
-            default:
-                fighter = this.game.firstPlayer.firstFighter;
-                break;
-        }
-
-        if (fighter) {
-            this.fighter = fighter;
-        }
-    }
-
-    /**
-     * Build an image URL.
-     *
-     * @param {String} character
-     * @param {String|null} ability
-     * @protected
-     * @return string
-     */
-    protected buildImageUrl(character: string, ability: string | null = null): string {
-        const action = ability ?? character;
-
-        return `/images/fighters/${character}/${action}.gif`;
-    }
+    // public testSend(): void {
+    //     Axios.put('/demo/sync', {
+    //         state: this.state,
+    //         stateHash: this.stateHash,
+    //         gameId: this.game.id,
+    //     }).then((response: any) => {
+    //         console.log(response);
+    //     }).catch((e: any) => {
+    //         console.error(e);
+    //     });
+    // }
+    //
+    // public heartbeat(): void {
+    //     Axios.post('/demo/heartbeat', {
+    //         gameId: this.game.id,
+    //         heartbeat: 'heartbeat_demo',
+    //     }).then((response: any) => {
+    //         console.log(response);
+    //     }).catch((e: any) => {
+    //        console.error(e);
+    //     });
+    // }
+    //
+    // /**
+    //  * Set the current fighter based on a numerical ID.
+    //  *
+    //  * @param {Number} fighterId
+    //  * @protected
+    //  * @return void
+    //  */
+    // protected setCurrentFighter(fighterId: number): void {
+    //     let fighter : FighterInterface | null;
+    //
+    //     switch (fighterId) {
+    //         case 2:
+    //             fighter = this.game.firstPlayer.secondFighter;
+    //             break;
+    //         case 3:
+    //             fighter = this.game.firstPlayer.thirdFighter;
+    //             break;
+    //         default:
+    //             fighter = this.game.firstPlayer.firstFighter;
+    //             break;
+    //     }
+    //
+    //     if (fighter) {
+    //         this.fighter = fighter;
+    //     }
+    // }
+    //
+    // /**
+    //  * Build an image URL.
+    //  *
+    //  * @param {String} character
+    //  * @param {String|null} ability
+    //  * @protected
+    //  * @return string
+    //  */
+    // protected buildImageUrl(character: string, ability: string | null = null): string {
+    //     const action = ability ?? character;
+    //
+    //     return `/images/fighters/${character}/${action}.gif`;
+    // }
 }
 </script>
