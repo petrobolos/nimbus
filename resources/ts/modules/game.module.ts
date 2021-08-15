@@ -3,11 +3,7 @@ import GameInterface from '../interfaces/game.interface';
 import FighterInterface from '../interfaces/fighter.interface';
 import PlayerInterface from '../interfaces/player.interface';
 import StateInterface from '../interfaces/state.interface';
-
-type FighterUpdate = {
-  'attribute': string,
-  'value': number,
-}
+import { FighterUpdate } from '../types/fighter-update.type';
 
 @Module({ name: 'GameModule' })
 export default class GameModule extends VuexModule {
