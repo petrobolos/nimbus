@@ -1,7 +1,7 @@
-import { FighterInterface } from './fighter.interface';
-import { UserInterface } from './user.interface';
+import FighterInterface from './fighter.interface';
+import UserInterface from './user.interface';
 
-export interface PlayerInterface {
+export default interface PlayerInterface extends Record<string, unknown> {
   current_fighter: number;
   fighter_id_1: number;
   fighter_id_2: number | null;

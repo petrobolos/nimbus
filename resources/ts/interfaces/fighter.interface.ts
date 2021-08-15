@@ -1,4 +1,4 @@
-export interface FighterInterface {
+export default interface FighterInterface extends Record<string, unknown> {
   abilities: Record<string, unknown>;
   attack: number;
   code: string;

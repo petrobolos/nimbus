@@ -1,6 +1,6 @@
-import { StateInterface } from '../state.interface';
+import StateInterface from '../state.interface';
 
-export interface DemoSyncInterface {
+export default interface DemoSyncInterface extends Record<string, string|StateInterface[]> {
   state: StateInterface[];
   stateHash: string;
 }

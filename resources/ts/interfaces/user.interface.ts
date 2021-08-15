@@ -1,4 +1,4 @@
-export interface UserInterface {
+export default interface UserInterface extends Record<string, unknown> {
   banned_until: string | null;
   is_banned: boolean;
   is_muted: boolean;

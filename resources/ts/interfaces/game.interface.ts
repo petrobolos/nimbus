@@ -1,7 +1,7 @@
-import { PlayerInterface } from './player.interface';
-import { StateInterface } from './state.interface';
+import PlayerInterface from './player.interface';
+import StateInterface from './state.interface';
 
-export interface GameInterface {
+export default interface GameInterface extends Record<string, unknown>{
   against_ai: boolean;
   created_at: string;
   firstPlayer: PlayerInterface;
@@ -15,4 +15,4 @@ export interface GameInterface {
   status: string;
   time_elapsed: number;
   updated_at: string;
-}
+};

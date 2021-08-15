@@ -1,6 +1,6 @@
-import { ActionInterface } from './action.interface';
+import ActionInterface from './action.interface';
 
-export interface StateInterface {
+export default interface StateInterface extends Record<string, number|ActionInterface[]> {
   currentPlayer: number;
   history: ActionInterface[];
 }
