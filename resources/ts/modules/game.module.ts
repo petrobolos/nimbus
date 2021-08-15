@@ -4,6 +4,11 @@ import FighterInterface from '../interfaces/fighter.interface';
 import PlayerInterface from '../interfaces/player.interface';
 import StateInterface from '../interfaces/state.interface';
 
+type FighterUpdate = {
+  'attribute': string,
+  'value': number,
+}
+
 @Module({ name: 'GameModule' })
 export default class GameModule extends VuexModule {
   public game!: GameInterface;
@@ -38,46 +43,46 @@ export default class GameModule extends VuexModule {
   }
 
   @Mutation
-  public UPDATE_ACTIVE_FIGHTER(attribute: string, value: number): void {
-    if (this.getActiveFighter(this.activeFighter)[attribute] !== undefined) {
-      this.getActiveFighter(this.activeFighter)[attribute] = value;
+  public UPDATE_ACTIVE_FIGHTER(payload: FighterUpdate): void {
+    if (this.getActiveFighter(this.activeFighter)[payload.attribute] !== undefined) {
+      this.getActiveFighter(this.activeFighter)[payload.attribute] = payload.value;
     }
   }
 
   @Mutation
-  public UPDATE_ACTIVE_OPPONENT(attribute: string, value: number): void {
-    if (this.getActiveOpponent(this.activeOpponent)[attribute] !== undefined) {
-      this.getActiveOpponent(this.activeOpponent)[attribute] = value;
+  public UPDATE_ACTIVE_OPPONENT(payload: FighterUpdate): void {
+    if (this.getActiveOpponent(this.activeOpponent)[payload.attribute] !== undefined) {
+      this.getActiveOpponent(this.activeOpponent)[payload.attribute] = payload.value;
     }
   }
 
   @Action
   public initialize(game: GameInterface): void {
     if (this.game === undefined) {
-      this.context.commit('UPDATE_GAME', [game]);
-      this.context.commit('SET_ACTIVE_FIGHTER', [game.firstPlayer.firstFighter]);
-      this.context.commit('SET_ACTIVE_OPPONENT', [game.secondPlayer.firstFighter]);
+      this.context.commit('UPDATE_GAME', game);
+      this.context.commit('SET_ACTIVE_FIGHTER', game.firstPlayer.firstFighter);
+      this.context.commit('SET_ACTIVE_OPPONENT', game.secondPlayer.firstFighter);
     }
   }
 
   @Action
   public updateActiveFighter(attribute: string, value: number): void {
-    this.context.commit('SET_ACTIVE_FIGHTER', [attribute, value]);
+    this.context.commit('SET_ACTIVE_FIGHTER', { attribute, value });
   }
 
   @Action
   public updateActiveOpponent(attribute: string, value: number): void {
-    this.context.commit('SET_ACTIVE_OPPONENT', [attribute, value]);
+    this.context.commit('SET_ACTIVE_OPPONENT', { attribute, value });
   }
 
   @Action
   public updateState(state: StateInterface): void {
-    this.context.commit('UPDATE_STATE', [state]);
+    this.context.commit('UPDATE_STATE', state);
   }
 
   @Action
   public updateStateHash(stateHash: string): void {
-    this.context.commit('UPDATE_STATE_HASH', [stateHash]);
+    this.context.commit('UPDATE_STATE_HASH', stateHash);
   }
 
   /**
