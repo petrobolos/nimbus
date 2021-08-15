@@ -4,6 +4,7 @@ namespace App\Http\Requests\Game\Demo;
 
 use App\Rules\Game\DemoGameExistsRule;
 use App\Rules\Game\ValidPlayerNumberRule;
+use App\Rules\Game\ValidStateHistoryRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -36,6 +37,7 @@ class DemoSyncRequest extends FormRequest
             'state.history' => [
                 'required',
                 'array',
+                new ValidStateHistoryRule(),
             ],
 
             'state.currentPlayer' => [
