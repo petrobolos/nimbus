@@ -22,7 +22,7 @@ class DemoGameExistsRule implements Rule
     public function passes($attribute, $value): bool
     {
         return Game::where([
-            ['player_2', '=', null],
+            ['status', '=', Game::STATUS_IN_PROGRESS],
             ['against_ai', '=', true],
             ['id', '=', $value],
         ])->exists();
