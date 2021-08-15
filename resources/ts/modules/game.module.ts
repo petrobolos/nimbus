@@ -13,6 +13,36 @@ export default class GameModule extends VuexModule {
 
   public activeOpponent!: number;
 
+  public imageUrl!: string;
+
+  get getGameId(): number {
+    return this.game.id;
+  }
+
+  get getImageUrl(): string {
+    return this.imageUrl;
+  }
+
+  get getActiveFighter(): FighterInterface {
+    return GameModule.getFighter(this.game.firstPlayer, this.activeFighter);
+  }
+
+  get getActiveOpponent(): FighterInterface {
+    return GameModule.getFighter(this.game.secondPlayer, this.activeOpponent);
+  }
+
+  get getGameType(): string {
+    if (this.game.against_ai) {
+      return 'Single Player';
+    }
+
+    if (this.game.ranked) {
+      return 'Ranked Multiplayer';
+    }
+
+    return 'Multiplayer';
+  }
+
   @Mutation
   public UPDATE_GAME(game: GameInterface): void {
     this.game = game;
@@ -40,25 +70,46 @@ export default class GameModule extends VuexModule {
 
   @Mutation
   public UPDATE_ACTIVE_FIGHTER(payload: FighterUpdate): void {
-    if (this.getActiveFighter(this.activeFighter)[payload.attribute] !== undefined) {
-      this.getActiveFighter(this.activeFighter)[payload.attribute] = payload.value;
+    if (this.getActiveFighter[payload.attribute] !== undefined) {
+      this.getActiveFighter[payload.attribute] = payload.value;
     }
   }
 
   @Mutation
   public UPDATE_ACTIVE_OPPONENT(payload: FighterUpdate): void {
-    if (this.getActiveOpponent(this.activeOpponent)[payload.attribute] !== undefined) {
-      this.getActiveOpponent(this.activeOpponent)[payload.attribute] = payload.value;
+    if (this.getActiveOpponent[payload.attribute] !== undefined) {
+      this.getActiveOpponent[payload.attribute] = payload.value;
     }
+  }
+
+  @Mutation
+  public UPDATE_OPPONENT_IMAGE(url: string): void {
+    this.imageUrl = url;
   }
 
   @Action
   public initialize(game: GameInterface): void {
     if (this.game === undefined) {
-      this.context.commit('UPDATE_GAME', game);
-      this.context.commit('SET_ACTIVE_FIGHTER', game.firstPlayer.firstFighter);
-      this.context.commit('SET_ACTIVE_OPPONENT', game.secondPlayer.firstFighter);
+      this.resetGame(game);
+      this.setActiveFighter(game.firstPlayer.firstFighter);
+      this.setOppositeFighter(game.secondPlayer.firstFighter);
     }
+  }
+
+  @Action
+  public resetGame(game: GameInterface): void {
+    this.context.commit('UPDATE_GAME', game);
+  }
+
+  @Action
+  public setActiveFighter(fighter: FighterInterface): void {
+    this.context.commit('SET_ACTIVE_FIGHTER', fighter);
+  }
+
+  @Action
+  public setOppositeFighter(fighter: FighterInterface): void {
+    this.context.commit('SET_ACTIVE_OPPONENT', fighter);
+    this.updateActiveOpponentImage(null);
   }
 
   @Action
@@ -72,6 +123,16 @@ export default class GameModule extends VuexModule {
   }
 
   @Action
+  public updateActiveOpponentImage(ability: null|string): void {
+    const fighter = this.getActiveFighter.code;
+    const action = ability ?? fighter;
+
+    const url = `/images/fighters/${fighter}/${action}.gif`;
+
+    this.context.commit('UPDATE_OPPONENT_IMAGE', url);
+  }
+
+  @Action
   public updateState(state: StateInterface): void {
     this.context.commit('UPDATE_STATE', state);
   }
@@ -79,28 +140,6 @@ export default class GameModule extends VuexModule {
   @Action
   public updateStateHash(stateHash: string): void {
     this.context.commit('UPDATE_STATE_HASH', stateHash);
-  }
-
-  /**
-   * Get the current fighter used by the player.
-   *
-   * @param {Number} fighterId
-   * @protected
-   * @return {FighterInterface}
-   */
-  protected getActiveFighter(fighterId: number): FighterInterface {
-    return GameModule.getFighter(this.game.firstPlayer, fighterId);
-  }
-
-  /**
-   * Retrieve the current fighter used by the opponent.
-   *
-   * @param {Number} fighterId
-   * @protected
-   * @return {FighterInterface}
-   */
-  protected getActiveOpponent(fighterId: number): FighterInterface {
-    return GameModule.getFighter(this.game.secondPlayer, fighterId);
   }
 
   /**

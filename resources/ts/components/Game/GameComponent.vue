@@ -3,9 +3,9 @@
         <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-header">
-                    <span><strong>Game </strong></span>
+                    <span><strong>{{ store.getGameType }} | No: {{ store.getGameId }} </strong></span>
                 </div>
-                <img :src="currentImage" alt="" class="card-img-top">
+                <img :src="store.getImageUrl" :alt="store.getActiveOpponent.name" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text"></p>
@@ -49,15 +49,8 @@ export default class GameComponent extends Vue {
 
     private store!: GameModule;
 
-    private static readonly GAME_SP: string = 'VS AI';
-    private static readonly GAME_RANKED: string = 'Ranked Multiplayer';
-    private static readonly GAME_MP: string = 'Multiplayer;'
-
     @Action
     public initialize!: (game: GameInterface) => void;
-
-    private stateHash: string = '';
-    private currentImage : string = '';
 
     created() {
         this.startGame();
@@ -76,18 +69,6 @@ export default class GameComponent extends Vue {
         this.store = getModule(GameModule, this.$store);
         this.initialize(this.initialGame);
     }
-
-    // get gameType(): string {
-    //     if (this.game.against_ai) {
-    //         return GameComponent.GAME_SP;
-    //     }
-    //
-    //     if (this.game.ranked) {
-    //         return GameComponent.GAME_RANKED;
-    //     }
-    //
-    //     return GameComponent.GAME_MP;
-    // }
 
     // public testSend(): void {
     //     Axios.put('/demo/sync', {
@@ -110,47 +91,6 @@ export default class GameComponent extends Vue {
     //     }).catch((e: any) => {
     //        console.error(e);
     //     });
-    // }
-    //
-    // /**
-    //  * Set the current fighter based on a numerical ID.
-    //  *
-    //  * @param {Number} fighterId
-    //  * @protected
-    //  * @return void
-    //  */
-    // protected setCurrentFighter(fighterId: number): void {
-    //     let fighter : FighterInterface | null;
-    //
-    //     switch (fighterId) {
-    //         case 2:
-    //             fighter = this.game.firstPlayer.secondFighter;
-    //             break;
-    //         case 3:
-    //             fighter = this.game.firstPlayer.thirdFighter;
-    //             break;
-    //         default:
-    //             fighter = this.game.firstPlayer.firstFighter;
-    //             break;
-    //     }
-    //
-    //     if (fighter) {
-    //         this.fighter = fighter;
-    //     }
-    // }
-    //
-    // /**
-    //  * Build an image URL.
-    //  *
-    //  * @param {String} character
-    //  * @param {String|null} ability
-    //  * @protected
-    //  * @return string
-    //  */
-    // protected buildImageUrl(character: string, ability: string | null = null): string {
-    //     const action = ability ?? character;
-    //
-    //     return `/images/fighters/${character}/${action}.gif`;
     // }
 }
 </script>

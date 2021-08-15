@@ -1,5 +1,7 @@
+import AbilityInterface from './ability.interface';
+
 export default interface FighterInterface extends Record<string, unknown> {
-  abilities: Record<string, unknown>;
+  abilities: AbilityInterface[];
   attack: number;
   code: string;
   defense: number;
