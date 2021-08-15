@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes;
+namespace App\Classes\Game;
 
 use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Action.
  *
- * @package App\Classes
+ * @package App\Classes\Game
  */
 class Action
 {

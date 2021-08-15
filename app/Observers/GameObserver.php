@@ -2,11 +2,11 @@
 
 namespace App\Observers;
 
-use App\Classes\State;
+use App\Classes\Game\State;
 use App\Models\Game;
 
 /**
- * Class GameObserver
+ * Class GameObserver.
  *
  * @package App\Observers
  */

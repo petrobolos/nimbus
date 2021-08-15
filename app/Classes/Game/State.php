@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes;
+namespace App\Classes\Game;
 
 use App\Models\Player;
 use Tailflow\DataTransferObjects\CastableDataTransferObject;
@@ -8,7 +8,7 @@ use Tailflow\DataTransferObjects\CastableDataTransferObject;
 /**
  * Class State.
  *
- * @package App\Classes
+ * @package App\Classes\Game
  */
 class State extends CastableDataTransferObject
 {

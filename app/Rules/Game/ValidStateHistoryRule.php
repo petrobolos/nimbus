@@ -2,7 +2,7 @@
 
 namespace App\Rules\Game;
 
-use App\Classes\Action;
+use App\Classes\Game\Action;
 use Illuminate\Contracts\Validation\Rule;
 
 /**

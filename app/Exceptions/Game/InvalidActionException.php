@@ -7,7 +7,7 @@ use Exception;
 /**
  * Class InvalidActionException.
  *
- * @mixin \App\Classes\Action
+ * @mixin \App\Classes\Game\Action
  * @package App\Exceptions
  */
 class InvalidActionException extends Exception
