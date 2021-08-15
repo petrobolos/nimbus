@@ -20,6 +20,8 @@ class Game extends Model
 
     use SoftDeletes;
 
+    public const REGEX_FOR_BCRYPT_GAME_HASHES = '^\$2[ayb]\$.{56}$^';
+
     public const STATUS_IN_PROGRESS = 'in-progress';
 
     public const STATUS_CONCLUDED = 'concluded';
