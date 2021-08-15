@@ -14,13 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Action
 {
-    protected int $actorNumber;
+    public int $actorNumber;
 
-    protected int $id;
+    public int $id;
 
-    protected string $type;
+    public string $type;
 
-    protected ?Model $model;
+    public ?Model $model;
 
     /**
      * Action constructor.
