@@ -11,9 +11,9 @@
                     <p class="card-text"></p>
                 </div>
             </div>
-            <game-stats-component></game-stats-component>
-            <button>Test</button>
-            <game-abilities-component></game-abilities-component>
+            <game-stats-component :player="store.getActiveFighter" :opponent="store.getActiveOpponent" />
+            <button @click="test">Test</button>
+            <game-abilities-component :player="store.getActiveFighter" />
         </div>
 
         <aside class="col-md-4">
@@ -36,6 +36,7 @@ import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
 import GameInterface from '../../interfaces/game.interface';
 import GameModule from '../../modules/game.module';
+import FighterInterface from '../../interfaces/fighter.interface';
 
 @Component({
     components: {
@@ -47,15 +48,22 @@ import GameModule from '../../modules/game.module';
 export default class GameComponent extends Vue {
     @Prop({ required: true }) readonly initialGame!: GameInterface;
 
-    private store!: GameModule;
+    public store!: GameModule;
 
     @Action
     public initialize!: (game: GameInterface) => void;
+
+    @Action
+    public switchPlayerFighter!: (fighter: FighterInterface) => void;
 
     created() {
         this.startGame();
     }
 
+    public test(): void {
+        const opponent = this.store.getDummyOpponent;
+        this.switchPlayerFighter(opponent);
+    }
 
     mounted() {
 

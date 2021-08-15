@@ -16,23 +16,23 @@
             <tbody class="table-striped">
             <tr>
                 <th scope="row">You</th>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+                <td>{{ player.hp }}</td>
+                <td>{{ player.sp }}</td>
+                <td>{{ player.attack }}</td>
+                <td>{{ player.defense }}</td>
+                <td>{{ player.speed }}</td>
+                <td>{{ player.special }}</td>
+                <td>{{ player.spirit }}</td>
             </tr>
             <tr>
                 <th scope="row">Opponent</th>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+                <td>{{ opponent.hp }}</td>
+                <td>{{ opponent.sp }}</td>
+                <td>{{ opponent.attack }}</td>
+                <td>{{ opponent.defense }}</td>
+                <td>{{ opponent.speed }}</td>
+                <td>{{ opponent.special }}</td>
+                <td>{{ opponent.spirit }}</td>
             </tr>
             </tbody>
         </table>
@@ -40,8 +40,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import FighterInterface from '../../../interfaces/fighter.interface';
 
 @Component
-export default class GameStatsComponent extends Vue {}
+export default class GameStatsComponent extends Vue {
+    @Prop({ required: true }) readonly player!: FighterInterface;
+    @Prop({ required: true }) readonly opponent!: FighterInterface;
+}
 </script>
