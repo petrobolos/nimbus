@@ -32,6 +32,7 @@ Route::middleware(['guest'])->group(function () {
     Route::prefix('demo')->name('demo.')->group(function () {
         Route::get('', DemoController::class)->name('show');
         Route::put('sync', '\App\Http\Controllers\Api\Game\DemoController@sync')->name('sync');
+        Route::post('heartbeat', '\App\Http\Controllers\Api\Game\DemoController@heartbeat')->name('heartbeat');
     });
 });
 
