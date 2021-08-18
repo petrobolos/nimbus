@@ -40,12 +40,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import FighterInterface from '../../../interfaces/fighter.interface';
 
 @Component
 export default class GameStatsComponent extends Vue {
-    @Prop({ required: true }) readonly player!: FighterInterface;
-    @Prop({ required: true }) readonly opponent!: FighterInterface;
+
 }
 </script>
