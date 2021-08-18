@@ -1,8 +1,8 @@
 {
-    "name": "oliverearl/dbgt",
+    "name": "petrobolos/nimbus",
     "type": "project",
     "description": "A modern interpretation of the DragonBallGT.net / Virtuagame.net webgame.",
-    "keywords": ["game", "dragon ball", "laravel"],
+    "keywords": ["game", "game engine", "laravel", "vuejs"],
     "license": "MIT",
     "require": {
         "php": "^8.0",
@@ -40,6 +40,7 @@
         },
         "files": [
             "app/Helpers/datetime.php",
+            "app/Helpers/filesystem.php",
             "app/Helpers/json.php"
         ]
     },
