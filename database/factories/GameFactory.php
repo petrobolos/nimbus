@@ -23,7 +23,7 @@ class GameFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => $this->faker->uuid,
+            'uuid' => $this->faker->uuid(),
             'player_1' => static fn (): int => Player::factory()->create()->id,
             'player_2' => static fn (): int => Player::factory()->create()->id,
             'status' => $this->faker->randomElement(Game::STATUSES),
