@@ -33,7 +33,7 @@ class FighterResource extends JsonResource
             'description' => $this->description,
             'race' => new RaceResource($this->whenLoaded('race')),
             'last_form' => new self($this->whenLoaded('lastForm')),
-            'abilities' => $this->abilities->map(static fn ($ability): AbilityResource => new AbilityResource($ability)),
+            'abilities' => AbilityResource::collection($this->abilities),
         ];
     }
 }
