@@ -23,13 +23,6 @@ return new class() extends Migration {
                 ->unsignedBigInteger('current_sp')
                 ->after('current_hp')
                 ->default(Fighter::SP_MAX);
-
-            $table
-                ->uuid('uuid')
-                ->index()
-                ->nullable()
-                ->unique()
-                ->after('id');
         });
     }
 
@@ -37,7 +30,7 @@ return new class() extends Migration {
     {
         Schema::table('fighters', function (Blueprint $table)
         {
-            $table->dropColumn(['uuid', 'current_sp', 'current_hp', 'is_paralyzed']);
+            $table->dropColumn(['current_sp', 'current_hp', 'is_paralyzed']);
         });
     }
 };

@@ -38,7 +38,6 @@ class Fighter extends Model
     protected $fillable = [
         'name',
         'code',
-        'uuid',
         'race_id',
         'is_boss',
         'is_paralyzed',
@@ -61,7 +60,6 @@ class Fighter extends Model
      * @var array
      */
     protected $casts = [
-        'uuid' => 'string',
         'is_paralyzed' => 'boolean',
         'is_boss' => 'boolean',
         'current_hp' => 'integer',
@@ -85,6 +83,16 @@ class Fighter extends Model
     protected $with = [
         'abilities',
     ];
+
+    /**
+     * Generate a UUID for a particular fighter instance. Mainly used client side.
+     *
+     * @return string
+     */
+    public function getUuidAttriibute(): string
+    {
+        return Str::uuid();
+    }
 
     /**
      * A fighter will belong to many abilities.
@@ -144,21 +152,6 @@ class Fighter extends Model
         } while ($currentNode->lastForm !== null);
 
         return collect($this->traverseNodesForForms($currentNode));
-    }
-
-    /**
-     * Bootstrap the model and its traits.
-     *
-     * @inheritDoc
-     * @return void
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(static function ($fighter): void {
-            $fighter->uuid = Str::uuid();
-        });
     }
 
     /**
