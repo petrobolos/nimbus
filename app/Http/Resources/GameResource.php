@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class GameResource
+ * Class GameResource.
  *
  * @mixin \App\Models\Game
  * @package App\Http\Resources
@@ -20,6 +20,7 @@ class GameResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'status' => $this->status,
             'ranked' => $this->ranked,
             'against_ai' => $this->against_ai,
