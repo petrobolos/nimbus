@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class Fighter.
@@ -143,6 +144,21 @@ class Fighter extends Model
         } while ($currentNode->lastForm !== null);
 
         return collect($this->traverseNodesForForms($currentNode));
+    }
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @inheritDoc
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(static function ($fighter): void {
+            $fighter->uuid = Str::uuid();
+        });
     }
 
     /**
