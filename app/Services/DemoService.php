@@ -49,6 +49,9 @@ class DemoService
             if ($game && $game->inProgress()) {
                 return $game;
             }
+
+            // Reset the difficulty if the game was abandoned, or completed without update.
+            $this->setDemoDifficulty(Difficulty::EASY);
         }
 
         $newGame = $this->generateDemoGame();
