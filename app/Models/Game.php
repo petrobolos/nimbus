@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use JsonException;
 
 /**
@@ -158,5 +159,20 @@ class Game extends Model
     public function concluded(): bool
     {
         return $this->status === self::STATUS_CONCLUDED;
+    }
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @inheritDoc
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(static function ($game): void {
+            $game->uuid = Str::uuid();
+        });
     }
 }
