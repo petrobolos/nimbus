@@ -29,8 +29,12 @@ class FighterFactory extends Factory
         return [
             'name' => $name,
             'code' => Str::slug($name),
+            'uuid' => $this->faker->uuid(),
             'race_id' => static fn (): int => Race::factory()->create()->id,
+            'current_hp' => Fighter::HEALTH_MAX,
+            'current_sp' => Fighter::SP_MAX,
             'is_boss' => $this->faker->boolean(),
+            'is_paralyzed' => $this->faker->boolean(),
             'hp' => $this->faker->randomNumber($statDigits),
             'attack' => $this->faker->randomNumber($statDigits),
             'defense' => $this->faker->randomNumber($statDigits),

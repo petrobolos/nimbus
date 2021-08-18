@@ -20,9 +20,13 @@ class FighterResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'code' => $this->code,
+            'current_hp' => $this->current_hp,
+            'current_sp' => $this->current_sp,
             'is_boss' => $this->is_boss,
+            'is_paralyzed' => $this->is_paralyzed,
             'hp' => $this->hp,
             'sp' => $this->sp,
             'attack' => $this->attack,

@@ -21,6 +21,14 @@ class Fighter extends Model
 
     public const IMPORT_SHEET = 'game/Fighters.xlsx';
 
+    public const HEALTH_MAX = 100;
+
+    public const HEALTH_MIN = 0;
+
+    public const SP_MAX = 100;
+
+    public const SP_MIN = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,8 +37,12 @@ class Fighter extends Model
     protected $fillable = [
         'name',
         'code',
+        'uuid',
         'race_id',
         'is_boss',
+        'is_paralyzed',
+        'current_hp',
+        'current_sp',
         'last_form_id',
         'hp',
         'sp',
@@ -48,7 +60,11 @@ class Fighter extends Model
      * @var array
      */
     protected $casts = [
+        'uuid' => 'string',
+        'is_paralyzed' => 'boolean',
         'is_boss' => 'boolean',
+        'current_hp' => 'integer',
+        'current_sp' => 'integer',
         'hp' => 'integer',
         'sp' => 'integer',
         'attack' => 'integer',
