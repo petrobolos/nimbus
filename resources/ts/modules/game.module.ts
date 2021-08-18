@@ -4,6 +4,7 @@ import FighterInterface from '../interfaces/fighter.interface';
 import PlayerInterface from '../interfaces/player.interface';
 import StateInterface from '../interfaces/state.interface';
 import { FighterUpdate } from '../types/fighter-update.type';
+import AbilityInterface from '../interfaces/ability.interface';
 
 @Module({
   name: 'GameModule',
@@ -17,6 +18,10 @@ export default class GameModule extends VuexModule {
   public activeOpponent!: FighterInterface;
 
   public imageUrl: string = '';
+
+  get getGame(): GameInterface {
+    return this.game;
+  }
 
   get getPlayer(): PlayerInterface {
     return this.game.firstPlayer;
@@ -34,12 +39,13 @@ export default class GameModule extends VuexModule {
     return this.activeOpponent;
   }
 
+  // This is just for testing.
   get getDummyOpponent(): FighterInterface {
-    if (this.game.firstPlayer.secondFighter !== null) {
-      return this.game.firstPlayer.secondFighter
+    if (this.getOpponent.secondFighter !== null) {
+      return this.getOpponent.secondFighter;
     }
 
-    return this.game.firstPlayer.firstFighter;
+    return this.getOpponent.firstFighter;
   }
 
   get getGameId(): number {
@@ -138,13 +144,13 @@ export default class GameModule extends VuexModule {
 
   @Action({ rawError: true })
   public switchPlayerFighter(fighter: FighterInterface): void {
-    const fighterStorage: FighterInterface = this.activeFighter;
+    const fighterStorage: FighterInterface = this.getActiveFighter;
 
-    if (this.game.firstPlayer.firstFighter.id === fighter.id) {
+    if (this.getPlayer.firstFighter.id === fighter.id) {
       this.context.commit('SET_PLAYER_FIRST_FIGHTER', fighterStorage);
-    } else if (this.game.firstPlayer.secondFighter?.id === fighter.id) {
+    } else if (this.getPlayer.secondFighter?.id === fighter.id) {
       this.context.commit('SET_PLAYER_SECOND_FIGHTER', fighterStorage);
-    } else if (this.game.firstPlayer.thirdFighter?.id === fighter.id) {
+    } else if (this.getPlayer.thirdFighter?.id === fighter.id) {
       this.context.commit('SET_PLAYER_THIRD_FIGHTER', fighterStorage);
     }
 
@@ -155,23 +161,37 @@ export default class GameModule extends VuexModule {
   public switchOpponentFighter(fighter: FighterInterface): void {
     const opponentStorage: FighterInterface = this.activeOpponent;
 
-    if (this.game.secondPlayer.firstFighter.id === fighter.id) {
+    if (this.getOpponent.firstFighter.id === fighter.id) {
       this.context.commit('SET_OPPONENT_FIRST_FIGHTER', opponentStorage);
-    } else if (this.game.secondPlayer.secondFighter?.id === fighter.id) {
+    } else if (this.getOpponent.secondFighter?.id === fighter.id) {
       this.context.commit('SET_OPPONENT_SECOND_FIGHTER', opponentStorage);
-    } else if (this.game.secondPlayer.thirdFighter?.id === fighter.id) {
+    } else if (this.getOpponent.thirdFighter?.id === fighter.id) {
       this.context.commit('SET_OPPONENT_THIRD_FIGHTER', opponentStorage);
     }
 
     this.context.commit('SET_ACTIVE_OPPONENT', fighter);
+
+    // Fire off other actions after committing final state.
+    this.switchOpponentImage(fighter, null);
+  }
+
+  @Action({ rawError: true })
+  public switchOpponentImage(opponent: FighterInterface, ability: AbilityInterface|null): void {
+    const action = ability ? ability?.code : opponent.code;
+    const url = `/images/fighters/${opponent.code}/${action}.gif`;
+
+    this.context.commit('UPDATE_OPPONENT_IMAGE', url);
   }
 
   @Action
   public initialize(game: GameInterface): void {
     if (this.game === undefined) {
       this.resetGame(game);
+
       this.context.commit('SET_ACTIVE_FIGHTER', game.firstPlayer.firstFighter);
       this.context.commit('SET_ACTIVE_OPPONENT', game.secondPlayer.firstFighter);
+
+      this.switchOpponentImage(game.secondPlayer.firstFighter, null);
     }
   }
 

@@ -7,8 +7,8 @@
                 </div>
                 <img :src="store.getImageUrl" :alt="store.getActiveOpponent.name" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text"></p>
+                    <h5 class="card-title">{{ store.getActiveOpponent.name }}</h5>
+                    <p class="card-text">{{ store.getActiveOpponent.description }}</p>
                 </div>
             </div>
             <game-stats-component :player="store.getActiveFighter" :opponent="store.getActiveOpponent" />
@@ -54,7 +54,7 @@ export default class GameComponent extends Vue {
     public initialize!: (game: GameInterface) => void;
 
     @Action
-    public switchPlayerFighter!: (fighter: FighterInterface) => void;
+    public switchOpponentFighter!: (fighter: FighterInterface) => void;
 
     created() {
         this.startGame();
@@ -62,7 +62,7 @@ export default class GameComponent extends Vue {
 
     public test(): void {
         const opponent = this.store.getDummyOpponent;
-        this.switchPlayerFighter(opponent);
+        this.switchOpponentFighter(opponent);
     }
 
     mounted() {
