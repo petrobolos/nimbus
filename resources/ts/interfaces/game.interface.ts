@@ -15,4 +15,5 @@ export default interface GameInterface extends Record<string, unknown>{
   status: string;
   time_elapsed: number;
   updated_at: string;
+  uuid: string;
 };

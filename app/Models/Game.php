@@ -40,6 +40,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'player_1',
         'player_2',
         'status',
@@ -54,6 +55,7 @@ class Game extends Model
      * @var array
      */
     protected $casts = [
+        'uuid' => 'string',
         'player_1' => 'integer',
         'player_2' => 'integer',
         'ranked' => 'boolean',
