@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use JsonException;
 
 /**
  * Class Game.
@@ -36,18 +35,12 @@ class Game extends Model
     ];
 
     /**
-     * The attributes that are mass assignable.
+     * Attributes to include in the serialisations of this model.
      *
-     * @var array
+     * @var string[]
      */
-    protected $fillable = [
-        'uuid',
-        'player_1',
-        'player_2',
-        'status',
-        'ranked',
-        'against_ai',
-        'state',
+    protected $appends = [
+        'time_elapsed',
     ];
 
     /**
@@ -68,12 +61,18 @@ class Game extends Model
     ];
 
     /**
-     * Attributes to include in the serialisations of this model.
+     * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $appends = [
-        'time_elapsed',
+    protected $fillable = [
+        'uuid',
+        'player_1',
+        'player_2',
+        'status',
+        'ranked',
+        'against_ai',
+        'state',
     ];
 
     /**
@@ -85,6 +84,21 @@ class Game extends Model
         'firstPlayer',
         'secondPlayer',
     ];
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @inheritDoc
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(static function ($game): void {
+            $game->uuid = Str::uuid();
+        });
+    }
 
     /**
      * Get the first player of the match.
@@ -123,7 +137,7 @@ class Game extends Model
     /**
      * Get the hash for the state JSON.
      *
-     * @throws JsonException
+     * @throws \JsonException
      * @return string
      */
     public function getStateHashAttribute(): string
@@ -214,20 +228,5 @@ class Game extends Model
     public function concluded(): bool
     {
         return $this->status === self::STATUS_CONCLUDED;
-    }
-
-    /**
-     * Bootstrap the model and its traits.
-     *
-     * @inheritDoc
-     * @return void
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(static function ($game): void {
-            $game->uuid = Str::uuid();
-        });
     }
 }

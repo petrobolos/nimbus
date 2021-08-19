@@ -2,7 +2,6 @@
 
 namespace App\Support\Linting;
 
-use Tighten\TLint\Linters\AlphabeticalImports;
 use Tighten\TLint\Linters\ApplyMiddlewareInRoutes;
 use Tighten\TLint\Linters\ArrayParametersOverViewWith;
 use Tighten\TLint\Linters\ClassThingsOrder;
@@ -44,7 +43,6 @@ final class TlintPreset implements PresetInterface
     public function getLinters(): array
     {
         return [
-            AlphabeticalImports::class,
             ApplyMiddlewareInRoutes::class,
             ArrayParametersOverViewWith::class,
             ClassThingsOrder::class,

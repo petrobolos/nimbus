@@ -6,8 +6,8 @@ use App\Enums\Difficulty;
 use App\Models\Game;
 use Exception;
 use Illuminate\Support\Str;
-use function Spatie\array_rand_value;
 use stdClass;
+use function Spatie\array_rand_value;
 
 /**
  * Class DemoService.
@@ -38,7 +38,7 @@ class DemoService
     /**
      * Returns demo data.
      *
-     * @throws Exception
+     * @throws \Exception
      * @return stdClass
      */
     public function getDemoInformation(): stdClass
@@ -55,7 +55,7 @@ class DemoService
     /**
      * Starts or resumes an in-progress game.
      *
-     * @throws Exception
+     * @throws \Exception
      * @return \App\Models\Game
      */
     public function startOrResumeDemo(): Game
@@ -82,7 +82,7 @@ class DemoService
     /**
      * Generates and provides a Player vs AI demo game.
      *
-     * @throws Exception
+     * @throws \Exception
      * @return \App\Models\Game
      */
     public function generateDemoGame(): Game
@@ -96,7 +96,7 @@ class DemoService
     /**
      * Determines what team to provide the AI player in the demo with.
      *
-     * @throws Exception
+     * @throws \Exception
      * @return array
      */
     public function determineDemoTeam(): array
@@ -142,7 +142,7 @@ class DemoService
     /**
      * Gets the demo difficulty from the sessions. Sets it to easy if unset.
      *
-     * @throws Exception
+     * @throws \Exception
      * @return string
      */
     public function getDemoDifficulty(): string
@@ -163,7 +163,7 @@ class DemoService
      * Sets the demo difficulty.
      *
      * @param string $difficulty
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function setDemoDifficulty(string $difficulty): void
