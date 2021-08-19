@@ -148,7 +148,12 @@ class DemoService
     public function getDemoDifficulty(): string
     {
         if (! session()->has($this->difficultyKey)) {
-            $this->setDemoDifficulty(Difficulty::EASY);
+            // We set the environment to difficult in local because it's easier to test with.
+            if (isProduction()) {
+                $this->setDemoDifficulty(Difficulty::EASY);
+            } else {
+                $this->setDemoDifficulty(Difficulty::HARD);
+            }
         }
 
         return session()->get($this->difficultyKey);
