@@ -1,11 +1,10 @@
 @extends('layouts.game')
 
-@section('title', "Game {$game->id}")
+@section('title', $game->description)
 
 @section('meta-robots', 'noindex,nofollow')
 
-{{-- TODO: Insert game description --}}
-@section('meta-description', 'Description')
+@section('meta-description', $game->description)
 
 @section('content')
     <div class="container">
