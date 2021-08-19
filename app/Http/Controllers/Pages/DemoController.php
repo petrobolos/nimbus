@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\GameResource;
 use App\Services\DemoService;
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 /**
@@ -38,7 +37,7 @@ class DemoController extends Controller
     {
         return view('pages.game.demo', [
             'game' => new GameResource($this->demoService->startOrResumeDemo()),
-            'difficulty' => Str::ucfirst($this->demoService->getDemoDifficulty()),
+            'demo' => $this->demoService->getDemoInformation(),
         ]);
     }
 }

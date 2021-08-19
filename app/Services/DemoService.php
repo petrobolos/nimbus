@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Enums\Difficulty;
 use App\Models\Game;
 use Exception;
+use Illuminate\Support\Str;
 use function Spatie\array_rand_value;
+use stdClass;
 
 /**
  * Class DemoService.
@@ -31,6 +33,23 @@ class DemoService
         $this->difficultyKey = config('demo.difficulty_key');
         $this->completionKey = config('demo.completion_key');
         $this->roster = config('demo.roster');
+    }
+
+    /**
+     * Returns demo data.
+     *
+     * @throws Exception
+     * @return stdClass
+     */
+    public function getDemoInformation(): stdClass
+    {
+        $data = new stdClass();
+
+        $data->demo_id = $this->getDemoGame();
+        $data->difficulty = Str::ucfirst($this->getDemoDifficulty());
+        $data->completion = $this->getDemoCompletion();
+
+        return $data;
     }
 
     /**
