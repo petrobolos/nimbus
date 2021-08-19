@@ -4,12 +4,12 @@ import StateInterface from './state.interface';
 export default interface GameInterface extends Record<string, unknown>{
   against_ai: boolean;
   created_at: string;
-  firstPlayer: PlayerInterface;
+  game_type: string;
   id: number;
   player_1: number;
   player_2: number;
+  players: PlayerInterface[];
   ranked: boolean;
-  secondPlayer: PlayerInterface;
   state: StateInterface;
   state_hash: string;
   status: string;

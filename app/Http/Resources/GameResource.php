@@ -21,21 +21,25 @@ class GameResource extends JsonResource
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
+            'game_type' => $this->game_type,
             'status' => $this->status,
-            'ranked' => $this->ranked,
-            'against_ai' => $this->against_ai,
+            'description' => $this->description,
+            'ranked' => $this->isRanked(),
+            'against_ai' => $this->againstAi(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'time_elapsed' => $this->time_elapsed,
 
-            'state' => $this->state,
-            'state_hash' => $this->stateHash,
-
             'player_1' => $this->player_1,
             'player_2' => $this->player_2,
 
-            'firstPlayer' => new PlayerResource($this->whenLoaded('firstPlayer')),
-            'secondPlayer' => new PlayerResource($this->whenLoaded('secondPlayer')),
+            'state' => $this->state,
+            'state_hash' => $this->stateHash,
+
+            'players' => [
+                new PlayerResource($this->whenLoaded('firstPlayer')),
+                new PlayerResource($this->whenLoaded('secondPlayer')),
+            ],
         ];
     }
 }

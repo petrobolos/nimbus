@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 
-import GameChatComponent from './Shared/GameChatComponent.vue';
+import FighterInterface from '../../interfaces/fighter.interface';
 import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
-import GameStatsComponent from './Shared/GameStatsComponent.vue';
+import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameInterface from '../../interfaces/game.interface';
 import GameModule from '../../modules/game.module';
-import FighterInterface from '../../interfaces/fighter.interface';
+import GameStatsComponent from './Shared/GameStatsComponent.vue';
 
 @Component({
     components: {
@@ -47,6 +47,7 @@ import FighterInterface from '../../interfaces/fighter.interface';
 })
 export default class GameComponent extends Vue {
     @Prop({ required: true }) readonly initialGame!: GameInterface;
+    @Prop({ required: false }) readonly demoInformation!: unknown;
 
     public store!: GameModule;
 
@@ -56,7 +57,7 @@ export default class GameComponent extends Vue {
     @Action
     public switchOpponentFighter!: (fighter: FighterInterface) => void;
 
-    created() {
+    public created(): void {
         this.startGame();
     }
 
@@ -65,7 +66,7 @@ export default class GameComponent extends Vue {
         this.switchOpponentFighter(opponent);
     }
 
-    mounted() {
+    public mounted(): void {
 
         //this.currentImage = this.buildImageUrl(this.opponent.code);
 

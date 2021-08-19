@@ -24,11 +24,11 @@ export default class GameModule extends VuexModule {
   }
 
   get getPlayer(): PlayerInterface {
-    return this.game.firstPlayer;
+    return this.game.players[0];
   }
 
   get getOpponent(): PlayerInterface {
-    return this.game.secondPlayer;
+    return this.game.players[1];
   }
 
   get getActiveFighter(): FighterInterface {
@@ -57,15 +57,7 @@ export default class GameModule extends VuexModule {
   }
 
   get getGameType(): string {
-    if (this.game.against_ai) {
-      return 'Single Player';
-    }
-
-    if (this.game.ranked) {
-      return 'Ranked Multiplayer';
-    }
-
-    return 'Multiplayer';
+    return this.game.game_type;
   }
 
   @Mutation
@@ -85,32 +77,32 @@ export default class GameModule extends VuexModule {
 
   @Mutation
   public SET_PLAYER_FIRST_FIGHTER(fighter: FighterInterface): void {
-    this.game.firstPlayer.firstFighter = fighter;
+    this.getPlayer.firstFighter = fighter;
   }
 
   @Mutation
   public SET_PLAYER_SECOND_FIGHTER(fighter: FighterInterface): void {
-    this.game.firstPlayer.secondFighter = fighter;
+    this.getPlayer.secondFighter = fighter;
   }
 
   @Mutation
   public SET_PLAYER_THIRD_FIGHTER(fighter: FighterInterface): void {
-    this.game.firstPlayer.thirdFighter = fighter;
+    this.getPlayer.thirdFighter = fighter;
   }
 
   @Mutation
   public SET_OPPONENT_FIRST_FIGHTER(fighter: FighterInterface): void {
-    this.game.secondPlayer.firstFighter = fighter;
+    this.getOpponent.firstFighter = fighter;
   }
 
   @Mutation
   public SET_OPPONENT_SECOND_FIGHTER(fighter: FighterInterface): void {
-    this.game.secondPlayer.secondFighter = fighter;
+    this.getOpponent.secondFighter = fighter;
   }
 
   @Mutation
   public SET_OPPONENT_THIRD_FIGHTER(fighter: FighterInterface): void {
-    this.game.secondPlayer.thirdFighter = fighter;
+    this.getOpponent.thirdFighter = fighter;
   }
 
   @Mutation
@@ -157,7 +149,7 @@ export default class GameModule extends VuexModule {
     this.context.commit('SET_ACTIVE_FIGHTER', fighter);
   }
 
-  @Action
+  @Action({ rawError: true })
   public switchOpponentFighter(fighter: FighterInterface): void {
     const opponentStorage: FighterInterface = this.activeOpponent;
 
@@ -188,10 +180,10 @@ export default class GameModule extends VuexModule {
     if (this.game === undefined) {
       this.resetGame(game);
 
-      this.context.commit('SET_ACTIVE_FIGHTER', game.firstPlayer.firstFighter);
-      this.context.commit('SET_ACTIVE_OPPONENT', game.secondPlayer.firstFighter);
+      this.context.commit('SET_ACTIVE_FIGHTER', this.getPlayer.firstFighter);
+      this.context.commit('SET_ACTIVE_OPPONENT', this.getOpponent.firstFighter);
 
-      this.switchOpponentImage(game.secondPlayer.firstFighter, null);
+      this.switchOpponentImage(this.getOpponent.firstFighter, null);
     }
   }
 

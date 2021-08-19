@@ -16,23 +16,23 @@
             <tbody class="table-striped">
             <tr>
                 <th scope="row">You</th>
-                <td>{{ player.hp }}</td>
-                <td>{{ player.sp }}</td>
-                <td>{{ player.attack }}</td>
-                <td>{{ player.defense }}</td>
-                <td>{{ player.speed }}</td>
-                <td>{{ player.special }}</td>
-                <td>{{ player.spirit }}</td>
+                <td>{{ getActiveFighter.hp }}</td>
+                <td>{{ getActiveFighter.sp }}</td>
+                <td>{{ getActiveFighter.attack }}</td>
+                <td>{{ getActiveFighter.defense }}</td>
+                <td>{{ getActiveFighter.speed }}</td>
+                <td>{{ getActiveFighter.special }}</td>
+                <td>{{ getActiveFighter.spirit }}</td>
             </tr>
             <tr>
                 <th scope="row">Opponent</th>
-                <td>{{ opponent.hp }}</td>
-                <td>{{ opponent.sp }}</td>
-                <td>{{ opponent.attack }}</td>
-                <td>{{ opponent.defense }}</td>
-                <td>{{ opponent.speed }}</td>
-                <td>{{ opponent.special }}</td>
-                <td>{{ opponent.spirit }}</td>
+                <td>{{ getActiveOpponent.hp }}</td>
+                <td>{{ getActiveOpponent.sp }}</td>
+                <td>{{ getActiveOpponent.attack }}</td>
+                <td>{{ getActiveOpponent.defense }}</td>
+                <td>{{ getActiveOpponent.speed }}</td>
+                <td>{{ getActiveOpponent.special }}</td>
+                <td>{{ getActiveOpponent.spirit }}</td>
             </tr>
             </tbody>
         </table>
@@ -41,10 +41,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
+import { getModule } from 'vuex-module-decorators';
+
 import FighterInterface from '../../../interfaces/fighter.interface';
+import GameModule from '../../../modules/game.module';
 
 @Component
 export default class GameStatsComponent extends Vue {
+    public store!: GameModule;
 
+    @Getter
+    public getActiveFighter!: () => FighterInterface;
+
+    @Getter
+    public getActiveOpponent!: () => FighterInterface;
+
+    public created(): void {
+        this.store = getModule(GameModule, this.$store);
+    }
 }
 </script>
