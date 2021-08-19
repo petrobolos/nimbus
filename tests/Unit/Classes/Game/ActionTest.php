@@ -6,6 +6,7 @@ use App\Classes\Game\Action;
 use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
 use App\Models\Fighter;
+use App\Models\Player;
 use Closure;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCaseWithDatabase;
@@ -25,7 +26,7 @@ final class ActionTest extends TestCaseWithDatabase
         $model = $factory();
 
         try {
-            $action = new Action(1, $model->id, $type);
+            $action = new Action(Player::FIGHTER_FIRST, $model->id, $type);
         } catch (InvalidActionException $exception) {
             $this->fail($exception);
         }
@@ -71,7 +72,7 @@ final class ActionTest extends TestCaseWithDatabase
     {
         try {
             return new Action(
-                1,
+                Player::FIGHTER_FIRST,
                 Ability::factory()->create()->id,
                 Action::TYPE_ABILITY,
             );
