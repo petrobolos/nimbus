@@ -132,6 +132,61 @@ class Game extends Model
     }
 
     /**
+     * Build a description attribute for the current game.
+     *
+     * @return string
+     */
+    public function getDescriptionAttribute(): string
+    {
+        $firstPlayer = $this->firstPlayer?->user?->username ?? 'Guest';
+        $secondPlayer = $this->secondPlayer?->user?->username ?? 'AI';
+
+        return "{$firstPlayer} vs. {$secondPlayer} | {$this->gameType}";
+    }
+
+    /**
+     * Get the current game type.
+     *
+     * @return string
+     */
+    public function getGameTypeAttribute(): string
+    {
+        if ($this->againstAi()) {
+            if (auth()->check()) {
+                return 'Against AI';
+            }
+
+            return 'Demo';
+        }
+
+        if ($this->isRanked()) {
+            return 'Ranked Multiplayer';
+        }
+
+        return 'Unranked Multiplayer';
+    }
+
+    /**
+     * Return whether the game is against an AI opponent.
+     *
+     * @return bool
+     */
+    public function againstAi(): bool
+    {
+        return $this->against_ai && $this->secondPlayer->isCPU();
+    }
+
+    /**
+     * Return whether the game is ranked.
+     *
+     * @return bool
+     */
+    public function isRanked(): bool
+    {
+        return $this->ranked;
+    }
+
+    /**
      * Return whether this game is in-progress.
      *
      * @return bool
