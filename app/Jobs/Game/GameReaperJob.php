@@ -5,23 +5,26 @@ namespace App\Jobs\Game;
 use App\Models\Game;
 use App\Repositories\GameRepository;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
- * Class GameReaperJob
+ * Class GameReaperJob.
  *
  * @package App\Jobs\Game
  */
 class GameReaperJob implements ShouldQueue
 {
     use Dispatchable;
+
     use InteractsWithQueue;
+
     use Queueable;
+
     use SerializesModels;
 
     public int $tries = 3;

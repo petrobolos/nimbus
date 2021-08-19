@@ -2,12 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Fighter;
 use App\Models\Player;
 use App\Repositories\FighterRepository;
 
 /**
- * Class PlayerService
+ * Class PlayerService.
  *
  * @package App\Services;
  */
