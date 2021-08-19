@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Action
 {
+    public const TYPE_ABILITY = 'ability';
+
+    public const TYPE_SKIP = 'skip';
+
+    public const TYPE_SWITCH = 'switch';
+
     public int $actorNumber;
 
     public int $id;
@@ -37,9 +43,9 @@ class Action
         $this->type = $actionType;
 
         $this->model = match ($actionType) {
-            'ability' => Ability::find($actionId),
-            'skip' => Ability::where('code', 'skip')->first(),
-            'switch' => Fighter::find($actionId),
+            self::TYPE_ABILITY => Ability::find($actionId),
+            self::TYPE_SKIP => Ability::where('code', 'skip')->first(),
+            self::TYPE_SWITCH => Fighter::find($actionId),
             default => null,
         };
 
@@ -76,7 +82,7 @@ class Action
     public function type(): ?string
     {
         if (is_object($this->model)) {
-            return $this->model;
+            return $this->model::class;
         }
 
         return null;
