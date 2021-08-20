@@ -60,17 +60,17 @@ class GameFactory extends Factory
         $game->state->history = [
             [
                 'actor' => Game::PLAYER_FIRST,
-                'id' => static fn (): int => Ability::factory()->create()->id,
+                'id' => Ability::factory()->create()->id,
                 'type' => Action::TYPE_ABILITY,
             ],
             [
                 'actor' => Game::PLAYER_SECOND,
-                'id' => static fn (): int => Ability::factory()->create()->id,
+                'id' => Ability::factory()->create()->id,
                 'type' => Action::TYPE_ABILITY,
             ],
             [
                 'actor' => Game::PLAYER_FIRST,
-                'id' => static fn (): int => Ability::factory()->create()->id,
+                'id' => Ability::factory()->create()->id,
                 'type' => Action::TYPE_ABILITY,
             ],
         ];
