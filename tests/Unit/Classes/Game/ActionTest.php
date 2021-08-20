@@ -10,6 +10,7 @@ use App\Models\Player;
 use Closure;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCaseWithDatabase;
+use Tests\Utils\Factories\ActionFactory;
 
 /**
  * Class ActionTest
@@ -34,20 +35,11 @@ final class ActionTest extends TestCaseWithDatabase
         self::assertInstanceOf(Action::class, $action);
     }
 
+    /** @throws \App\Exceptions\Game\InvalidActionException */
     public function test_convert_method_will_compile_an_array_of_actions_into_full_action_objects(): void
     {
         for ($i = 0; $i < 5; $i++) {
-            $coinFlip = $this->faker->boolean();
-
-            $actionsArray[] = [
-                'actor' => $this->faker->randomNumber(2),
-                'id' => $coinFlip
-                    ? Ability::factory()->create()->id
-                    : Fighter::factory()->create()->id,
-                'type' => $coinFlip
-                    ? Action::TYPE_ABILITY
-                    : Action::TYPE_SWITCH,
-            ];
+            $actionsArray[] = ActionFactory::factory()->toArray();
         }
 
         $convertedActions = Action::convert($actionsArray);
@@ -56,29 +48,12 @@ final class ActionTest extends TestCaseWithDatabase
         self::assertContainsOnlyInstancesOf(Action::class, $convertedActions);
     }
 
+    /** @throws \App\Exceptions\Game\InvalidActionException */
     public function test_type_will_return_what_kind_of_action_the_instance_is(): void
     {
-        $action = $this->actionFactory();
+        $action = ActionFactory::factory();
 
-        self::assertEquals(Ability::class, $action->type());
-    }
-
-    /**
-     * Returns a generated action for testing purposes.
-     *
-     * @return \App\Classes\Game\Action
-     */
-    public function actionFactory(): Action
-    {
-        try {
-            return new Action(
-                Player::FIGHTER_FIRST,
-                Ability::factory()->create()->id,
-                Action::TYPE_ABILITY,
-            );
-        } catch (InvalidActionException $exception) {
-            $this->fail($exception);
-        }
+        self::assertEquals(Fighter::class, $action->type());
     }
 
     /**
