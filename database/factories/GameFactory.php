@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Classes\Game\Action;
+use App\Models\Ability;
 use App\Models\Game;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -45,5 +47,36 @@ class GameFactory extends Factory
                 'against_ai' => true,
             ];
         });
+    }
+
+    /**
+     * Generate some state and add it to the game.
+     *
+     * @param \App\Models\Game $game
+     * @return \App\Models\Game
+     */
+    public static function addState(Game $game): Game
+    {
+        $game->state->history = [
+            [
+                'actor' => Game::PLAYER_FIRST,
+                'id' => static fn (): int => Ability::factory()->create()->id,
+                'type' => Action::TYPE_ABILITY,
+            ],
+            [
+                'actor' => Game::PLAYER_SECOND,
+                'id' => static fn (): int => Ability::factory()->create()->id,
+                'type' => Action::TYPE_ABILITY,
+            ],
+            [
+                'actor' => Game::PLAYER_FIRST,
+                'id' => static fn (): int => Ability::factory()->create()->id,
+                'type' => Action::TYPE_ABILITY,
+            ],
+        ];
+
+        $game->state->currentPlayer = Game::PLAYER_SECOND;
+
+        return $game;
     }
 }
