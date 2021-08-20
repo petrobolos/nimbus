@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Classes\Game;
 
+use App\Classes\Game\Action;
 use App\Models\Game;
 use App\Models\Player;
+use Database\Factories\GameFactory;
 use Tests\TestCaseWithDatabase;
 
 final class StateTest extends TestCaseWithDatabase
@@ -31,12 +33,24 @@ final class StateTest extends TestCaseWithDatabase
 
     public function test_get_first_turn_will_return_the_first_turn_from_state(): void
     {
-        $this->markTestIncomplete();
+        $game = GameFactory::addState(Game::factory()->create());
+
+        $firstTurn = $game->state->getFirstTurn();
+
+        self::assertArrayHasKey('id', $firstTurn);
+        self::assertArrayHasKey('actor', $firstTurn);
+        self::assertArrayHasKey('type', $firstTurn);
     }
 
     public function test_get_last_turn_will_return_the_last_turn_from_state(): void
     {
-        $this->markTestIncomplete();
+        $game = GameFactory::addState(Game::factory()->create());
+
+        $firstTurn = $game->state->getLastTurn();
+
+        self::assertArrayHasKey('id', $firstTurn);
+        self::assertArrayHasKey('actor', $firstTurn);
+        self::assertArrayHasKey('type', $firstTurn);
     }
 
     public function test_has_game_started_will_return_false_if_the_state_is_yet_to_contain_any_actions(): void
@@ -51,11 +65,17 @@ final class StateTest extends TestCaseWithDatabase
 
     public function test_turns_will_return_the_count_of_turns_if_the_game_has_started(): void
     {
-        $this->markTestIncomplete();
+        $game = GameFactory::addState(Game::factory()->create());
+
+        self::assertEquals(3, $game->state->turns());
     }
 
     public function test_compile_will_build_the_state_array_into_a_full_set_of_objects(): void
     {
-        $this->markTestIncomplete();
+        $game = GameFactory::addState(Game::factory()->create());
+
+        $compiledState = $game->state->compile();
+
+        self::assertContainsOnlyInstancesOf(Action::class, $compiledState['history']);
     }
 }
