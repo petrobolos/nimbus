@@ -2,6 +2,7 @@
 
 namespace App\Classes\Game;
 
+use App\Models\Game;
 use App\Models\Player;
 use Tailflow\DataTransferObjects\CastableDataTransferObject;
 
@@ -12,9 +13,9 @@ use Tailflow\DataTransferObjects\CastableDataTransferObject;
  */
 class State extends CastableDataTransferObject
 {
-    public array $history;
+    public array $history = [];
 
-    public int $currentPlayer;
+    public int $currentPlayer = Game::PLAYER_FIRST;
 
     /**
      * Set the initial state.

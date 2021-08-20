@@ -87,4 +87,18 @@ class Action
 
         return null;
     }
+
+    /**
+     * Convert the object into the array notation used in the front-end.
+     *
+     * @return string[]
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'actor' => $this->actorNumber,
+            'type' => $this->type,
+        ];
+    }
 }

@@ -22,6 +22,10 @@ class Game extends Model
 
     public const REGEX_FOR_BCRYPT_GAME_HASHES = '^\$2[ayb]\$.{56}$^';
 
+    public const PLAYER_FIRST = 1;
+
+    public const PLAYER_SECOND = 2;
+
     public const STATUS_IN_PROGRESS = 'in-progress';
 
     public const STATUS_CONCLUDED = 'concluded';
