@@ -37,7 +37,7 @@ class State extends CastableDataTransferObject
      */
     public function getFirstTurn(): array
     {
-        return collect($this->history['state'])->first() ?? [];
+        return collect($this->history)->first() ?? [];
     }
 
     /**
@@ -47,7 +47,7 @@ class State extends CastableDataTransferObject
      */
     public function getLastTurn(): array
     {
-        return collect($this->history['state'])->last() ?? [];
+        return collect($this->history)->last() ?? [];
     }
 
     /**
@@ -57,7 +57,7 @@ class State extends CastableDataTransferObject
      */
     public function hasGameStarted(): bool
     {
-        return ! empty($this->history['state']);
+        return ! empty($this->history);
     }
 
     /**
@@ -68,7 +68,7 @@ class State extends CastableDataTransferObject
     public function turns(): int
     {
         if ($this->hasGameStarted()) {
-            return count($this->history['state']);
+            return count($this->history);
         }
 
         return 0;
