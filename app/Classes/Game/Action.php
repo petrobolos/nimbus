@@ -82,11 +82,9 @@ class Action
      */
     public function type(): ?string
     {
-        if (is_object($this->model)) {
-            return $this->model::class;
-        }
-
-        return null;
+        return is_object($this->model)
+            ? $this->model::class
+            : null;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Classes\Game\Action;
 use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
 use App\Models\Fighter;
+use App\Models\Game;
 use App\Models\Player;
 use Closure;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -54,6 +55,37 @@ final class ActionTest extends TestCaseWithDatabase
         $action = ActionFactory::factory();
 
         self::assertEquals(Fighter::class, $action->type());
+    }
+
+    /** @throws \App\Exceptions\Game\InvalidActionException */
+    public function test_type_will_return_null_if_for_whatever_reason_the_action_is_nullified(): void
+    {
+        $action = ActionFactory::factory();
+        $action->model = null;
+
+        self::assertNull($action->type());
+    }
+
+    public function test_an_action_will_throw_an_exception_if_the_model_does_not_exist(): void
+    {
+        $this->expectException(InvalidActionException::class);
+
+        (new Action(
+            Game::PLAYER_FIRST,
+            1, // Not persisted to database.
+            Action::TYPE_ABILITY,
+        ));
+    }
+
+    public function test_an_action_will_throw_an_exception_if_an_invalid_type_is_provided(): void
+    {
+        $this->expectException(InvalidActionException::class);
+
+        (new Action(
+            Game::PLAYER_FIRST,
+            Ability::factory()->create()->id,
+            'Not a valid ability',
+        ));
     }
 
     /**
