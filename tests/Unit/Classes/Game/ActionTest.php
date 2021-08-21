@@ -9,6 +9,7 @@ use App\Models\Fighter;
 use App\Models\Game;
 use App\Models\Player;
 use Closure;
+use Exception;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCaseWithDatabase;
 use Tests\Utils\Factories\ActionFactory;
@@ -86,6 +87,20 @@ final class ActionTest extends TestCaseWithDatabase
             Ability::factory()->create()->id,
             'Not a valid ability',
         ));
+    }
+
+    public function test_an_actions_context_from_the_exception_can_be_retrieved(): void
+    {
+        try {
+            (new Action(
+                Game::PLAYER_FIRST,
+                Ability::factory()->create()->id,
+                'Not a valid ability',
+            ));
+        } catch (Exception $exception) {
+            self::assertInstanceOf(InvalidActionException::class, $exception);
+            self::assertIsArray($exception->context());
+        }
     }
 
     /**
