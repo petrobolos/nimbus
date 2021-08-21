@@ -24,7 +24,7 @@ class FighterFactory extends Factory
     public function definition(): array
     {
         $statDigits = 3;
-        $name = $this->faker->userName();
+        $name = $this->faker->userName() . microtime(true);
 
         return [
             'name' => $name,
