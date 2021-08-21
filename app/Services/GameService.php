@@ -49,11 +49,13 @@ class GameService
      */
     public function abandon(Game $game): bool
     {
-        if (! $game->concluded()) {
-            // Only update the status if the game is still in-progress and out-of-time.
-            if ($game->inProgress() && $game->updated_at->addHour() <= now()) {
-                $game->update(['status' => Game::STATUS_ABANDONED]);
-            }
+        if ($game->abandoned()) {
+            return true;
+        }
+
+        // Only update the status if the game is still in-progress and out-of-time.
+        if ($game->inProgress() && $game->updated_at->addHour() <= now()) {
+            $game->update(['status' => Game::STATUS_ABANDONED]);
 
             return true;
         }
