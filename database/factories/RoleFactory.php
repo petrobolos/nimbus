@@ -24,6 +24,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'key' => $this->faker->randomDigitNotNull(),
             'description' => $this->faker->text,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

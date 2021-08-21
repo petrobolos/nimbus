@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Role;
 use App\Models\User;
 use Tests\TestCaseWithDatabase;
 
@@ -16,8 +17,12 @@ final class RoleTest extends TestCaseWithDatabase
 
     public function test_all_users_of_a_given_role_can_be_retrieved(): void
     {
-        $users = User::factory(self::NUMBER_OF_USERS)->create();
+        $role = Role::factory()->create();
 
-        self::assertContainsOnlyInstancesOf(User::class, $users);
+        User::factory(self::NUMBER_OF_USERS)->create([
+            'role_id' => $role->id,
+        ]);
+
+        self::assertContainsOnlyInstancesOf(User::class, $role->users);
     }
 }
