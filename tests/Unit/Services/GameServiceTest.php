@@ -7,6 +7,11 @@ use App\Services\DemoService;
 use App\Services\GameService;
 use Tests\TestCaseWithImportedData;
 
+/**
+ * Class GameServiceTest
+ *
+ * @package Tests\Unit\Services
+ */
 final class GameServiceTest extends TestCaseWithImportedData
 {
     protected GameService $gameService;
