@@ -8,6 +8,11 @@ use App\Models\Player;
 use Database\Factories\GameFactory;
 use Tests\TestCaseWithDatabase;
 
+/**
+ * Class StateTest
+ *
+ * @package Tests\Unit\Classes\Game
+ */
 final class StateTest extends TestCaseWithDatabase
 {
     protected Game $game;

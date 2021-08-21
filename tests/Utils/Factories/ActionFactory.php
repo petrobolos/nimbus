@@ -7,6 +7,11 @@ use App\Models\Ability;
 use App\Models\Fighter;
 use App\Models\Game;
 
+/**
+ * Class ActionFactory
+ *
+ * @package Tests\Utils\Factories
+ */
 final class ActionFactory
 {
     /**

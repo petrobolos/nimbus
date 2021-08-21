@@ -5,6 +5,11 @@ namespace Tests\Unit\Helpers;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
+/**
+ * Class DatetimeTest
+ *
+ * @package Tests\Unit\Helpers
+ */
 final class DatetimeTest extends TestCase
 {
     public function test_human_readable_datetime_returns_a_formatted_string(): void
