@@ -23,6 +23,12 @@ class ImportGameDataCommand extends Command
 
     protected $description = 'Import game data from a series of Excel spreadsheets.';
 
+    /**
+     * Execute the console command.
+     *
+     * @throws \Throwable
+     * @return void|never-return
+     */
     public function handle(): void
     {
         try {
@@ -41,19 +47,21 @@ class ImportGameDataCommand extends Command
                 ->import(config('game.imports.dir') . Ability::IMPORT_SHEET);
 
             $this->output->success('Import successful!');
-        } catch (Throwable $exception) {
-            report($exception);
+        } catch (Throwable $throwable) {
+            report($throwable);
 
-            if ($exception instanceof ValidationException) {
-                foreach ($exception->failures() as $failure) {
+            if ($throwable instanceof ValidationException) {
+                foreach ($throwable->failures() as $failure) {
                     $this->output->info($failure->row());
                     $this->output->info($failure->attribute());
                     $this->output->info($failure->errors());
                     $this->output->info($failure->values());
                 }
             } else {
-                $this->output->error($exception->getMessage());
+                $this->output->error($throwable->getMessage());
             }
+
+            throw $throwable;
         }
     }
 }
