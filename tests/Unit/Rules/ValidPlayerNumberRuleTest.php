@@ -4,7 +4,6 @@ namespace Tests\Unit\Rules;
 
 use App\Models\Game;
 use App\Rules\Game\ValidPlayerNumberRule;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCaseWithDatabase;
 
 /**
@@ -14,8 +13,6 @@ use Tests\TestCaseWithDatabase;
  */
 final class ValidPlayerNumberRuleTest extends TestCaseWithDatabase
 {
-    use WithFaker;
-
     protected ValidPlayerNumberRule $rule;
 
     /**
