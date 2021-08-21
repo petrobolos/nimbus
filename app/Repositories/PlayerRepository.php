@@ -21,7 +21,7 @@ class PlayerRepository
     {
         return Player::where([
             ['user_id', '=', null],
-            ['created_at', '<=', now()->subHour()],
+            ['updated_at', '<=', now()->subHour()],
         ]);
     }
 }
