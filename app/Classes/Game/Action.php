@@ -5,6 +5,7 @@ namespace App\Classes\Game;
 use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
 use App\Models\Fighter;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -67,7 +68,7 @@ class Action
                 static fn (array $action): Action => new self($action['actor'], $action['id'], $action['type']),
                 $actions
             );
-        } catch (InvalidActionException $exception) {
+        } catch (Exception $exception) {
             report($exception);
         }
 
