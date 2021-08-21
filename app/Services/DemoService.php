@@ -85,7 +85,7 @@ class DemoService
      * @throws \Exception
      * @return \App\Models\Game
      */
-    public function generateDemoGame(): Game
+    protected function generateDemoGame(): Game
     {
         return app(GameService::class)->demo(
             $this->getPlayerDemoTeam(),
@@ -99,7 +99,7 @@ class DemoService
      * @throws \Exception
      * @return array
      */
-    public function determineDemoTeam(): array
+    protected function determineDemoTeam(): array
     {
         if ($this->getDemoCompletion()) {
             return array_rand_value($this->roster);
