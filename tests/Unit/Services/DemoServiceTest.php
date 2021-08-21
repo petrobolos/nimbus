@@ -79,6 +79,29 @@ final class DemoServiceTest extends TestCaseWithImportedData
     }
 
     /** @throws \Exception */
+    public function test_retrieve_the_demo_team_for_use_of_the_ai(): void
+    {
+        $difficulty = $this->demoService->getDemoDifficulty();
+
+        $roster = $this->demoService->determineDemoTeam();
+
+        self::assertEquals(
+            config("demo.roster.{$difficulty}"),
+            $roster,
+        );
+    }
+
+    /** @throws \Exception */
+    public function test_retrieve_a_random_demo_team_for_the_ai_after_the_demo_is_completed(): void
+    {
+        $this->demoService->setDemoCompletion();
+
+        $roster = $this->demoService->determineDemoTeam();
+
+        self::assertContains($roster, config('demo.roster'));
+    }
+
+    /** @throws \Exception */
     public function test_get_demo_game_returns_a_demo_if_one_is_in_progress(): void
     {
         $demo = $this->demoService->startOrResumeDemo();

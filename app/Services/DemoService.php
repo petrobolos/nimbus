@@ -99,7 +99,7 @@ class DemoService
      * @throws \Exception
      * @return array
      */
-    protected function determineDemoTeam(): array
+    public function determineDemoTeam(): array
     {
         if ($this->getDemoCompletion()) {
             return array_rand_value($this->roster);
