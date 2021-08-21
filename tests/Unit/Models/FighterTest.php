@@ -6,6 +6,7 @@ use App\Models\Ability;
 use App\Models\Fighter;
 use App\Models\Pivots\FighterAbility;
 use App\Models\Race;
+use App\Support\RegularExpressions;
 use Tests\TestCaseWithDatabase;
 
 /**
@@ -62,6 +63,13 @@ final class FighterTest extends TestCaseWithDatabase
         self::assertContainsOnlyInstancesOf(Fighter::class, $nextForms);
         self::assertCount($numberOfNextForms, $nextForms);
         self::assertEquals($fighter->id, $nextForms->first()->last_form_id);
+    }
+
+    public function test_a_fighter_instance_can_get_a_unique_uuid_to_be_given_to_the_frontend(): void
+    {
+        $fighter = Fighter::factory()->create();
+
+        self::assertMatchesRegularExpression(RegularExpressions::VALID_UUID, $fighter->uuid);
     }
 
     public function test_get_all_forms_returns_a_tree_of_fighters_both_above_and_below_the_current_fighter(): void

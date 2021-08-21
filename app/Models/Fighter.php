@@ -89,7 +89,7 @@ class Fighter extends Model
      *
      * @return string
      */
-    public function getUuidAttriibute(): string
+    public function getUuidAttribute(): string
     {
         return Str::uuid();
     }
