@@ -33,3 +33,4 @@ public/js/
 .code-workspace
 .eslintcache
 tlint_output.txt
+/coverage/
