@@ -2,6 +2,7 @@
 
 namespace App\Rules\Game;
 
+use App\Models\Game;
 use Illuminate\Contracts\Validation\Rule;
 
 /**
@@ -20,7 +21,7 @@ class ValidPlayerNumberRule implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return $value === 1 || $value === 2;
+        return $value === Game::PLAYER_FIRST || $value === Game::PLAYER_SECOND;
     }
 
     /**
