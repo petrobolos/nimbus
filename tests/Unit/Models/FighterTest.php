@@ -64,8 +64,11 @@ final class FighterTest extends TestCaseWithDatabase
         self::assertEquals($fighter->id, $nextForms->first()->last_form_id);
     }
 
-    public function get_all_forms_returns_a_tree_of_fighters_both_above_and_below_the_current_fighter(): void
+    public function test_get_all_forms_returns_a_tree_of_fighters_both_above_and_below_the_current_fighter(): void
     {
+        // FIXME: Fix this test along with the methods involved.
+        $this->markTestIncomplete('This still needs to be fixed!');
+
         $previousForm = Fighter::factory()->create();
         $fighter = Fighter::factory()->create(['last_form_id' => $previousForm->id]);
         $nextForm = Fighter::factory()->create(['last_form_id' => $fighter->id]);

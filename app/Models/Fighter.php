@@ -141,6 +141,8 @@ class Fighter extends Model
     /**
      * Returns the entire form tree of a given fighter, starting at its most base form.
      *
+     * FIXME: Fix these methods.
+     *
      * @return \Illuminate\Support\Collection
      */
     public function getAllForms(): Collection
@@ -166,6 +168,7 @@ class Fighter extends Model
 
         if ($currentFighter->nextForms->count() !== 0) {
             foreach ($currentFighter->nextForms as $fighterForm) {
+                /** @var \App\Models\Fighter $fighterForm */
                 $fighters[$fighterForm->code] = $fighterForm->withoutRelations();
                 $fighters[$fighterForm->code]['forms'] = $this->traverseNodesForForms($fighterForm);
             }
