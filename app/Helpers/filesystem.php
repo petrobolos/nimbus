@@ -24,15 +24,7 @@ if (! function_exists('copyrightNotice')) {
             throw new CopyrightNoticeMissingException();
         }
 
-        $content = fopen($file, 'rb');
-        $textContent = '';
-
-        while (! feof($content)) {
-            $textContent .= fgets($content);
-        }
-
-        fclose($content);
-        $textContent = strip_tags($textContent);
+        $textContent = strip_tags(file_get_contents($file));
 
         cache()->set($key, $textContent, now()->addDay());
 
