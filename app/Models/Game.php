@@ -20,8 +20,6 @@ class Game extends Model
 
     use SoftDeletes;
 
-    public const REGEX_FOR_BCRYPT_GAME_HASHES = '^\$2[ayb]\$.{56}$^';
-
     public const PLAYER_FIRST = 1;
 
     public const PLAYER_SECOND = 2;

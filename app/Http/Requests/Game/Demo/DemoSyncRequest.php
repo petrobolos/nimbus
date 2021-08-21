@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Game\Demo;
 
-use App\Models\Game;
 use App\Rules\Game\Demo\DemoGameExistsRule;
 use App\Rules\Game\ValidPlayerNumberRule;
 use App\Rules\Game\ValidStateHistoryRule;
+use App\Support\RegularExpressions;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -33,7 +33,7 @@ class DemoSyncRequest extends FormRequest
             'stateHash' => [
                 'required',
                 'string',
-                'regex:' . Game::REGEX_FOR_BCRYPT_GAME_HASHES,
+                'regex:' . RegularExpressions::VALID_BCRYPT_HASH,
             ],
 
             'state' => [
