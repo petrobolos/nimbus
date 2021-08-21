@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('isLocalEnv')) {
+if (! function_exists('isProduction')) {
     /**
      * Returns whether the environment is currently in production.
      *
@@ -8,6 +8,6 @@ if (! function_exists('isLocalEnv')) {
      */
     function isProduction(): bool
     {
-        return app()->environment() === 'production';
+        return App::environment() === 'production';
     }
 }
