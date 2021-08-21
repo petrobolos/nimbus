@@ -30,6 +30,7 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
         "roave/security-advisories": "dev-latest",
+        "sempro/phpunit-pretty-print": "^1.4",
         "tightenco/tlint": "^v6.0.3"
     },
     "autoload": {
