@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Classes\Game\State;
+use App\Enums\GameType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -130,10 +131,10 @@ class Game extends Model
     public function getTimeElapsedAttribute(): int
     {
         if ($this->inProgress()) {
-            return now()->diffInSeconds($this->created_at);
+            return now()->diffInSeconds($this->created_at, true);
         }
 
-        return $this->updated_at->diffInSeconds($this->created_at);
+        return $this->created_at->diffInSeconds($this->updated_at, true);
     }
 
     /**
@@ -168,18 +169,18 @@ class Game extends Model
     public function getGameTypeAttribute(): string
     {
         if ($this->againstAi()) {
-            if (auth()->check()) {
-                return 'Against AI';
+            if ($this->firstPlayer->isCPU()) {
+                return GameType::DEMO;
             }
 
-            return 'Demo';
+            return GameType::AGAINST_AI;
         }
 
         if ($this->isRanked()) {
-            return 'Ranked Multiplayer';
+            return GameType::RANKED;
         }
 
-        return 'Unranked Multiplayer';
+        return GameType::UNRANKED;
     }
 
     /**
