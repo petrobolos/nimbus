@@ -32,6 +32,11 @@ final class ValidPlayerNumberRuleTest extends TestCaseWithDatabase
         self::assertEquals($expectedResult, $this->rule->passes('number', $playerNumber));
     }
 
+    public function test_valid_player_number_rule_has_a_message_set(): void
+    {
+        self::assertNotEmpty($this->rule->message());
+    }
+
     /**
      * Provide a player number and the expected result.
      *

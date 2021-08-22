@@ -40,4 +40,9 @@ final class DemoGameActiveInSessionRuleTest extends TestCaseWithImportedData
 
         self::assertTrue($this->rule->passes('gameId', $game->id));
     }
+
+    public function test_demo_game_active_in_session_rule_has_a_message_set(): void
+    {
+        self::assertNotEmpty($this->rule->message());
+    }
 }

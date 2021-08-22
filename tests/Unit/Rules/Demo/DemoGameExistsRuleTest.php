@@ -45,4 +45,9 @@ final class DemoGameExistsRuleTest extends TestCaseWithImportedData
 
         self::assertFalse($this->rule->passes('id', $game->id));
     }
+
+    public function test_demo_game_exists_rule_has_a_message_set(): void
+    {
+        self::assertNotEmpty($this->rule->message());
+    }
 }

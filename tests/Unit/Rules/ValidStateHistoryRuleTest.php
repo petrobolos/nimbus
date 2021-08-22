@@ -61,4 +61,9 @@ final class ValidStateHistoryRuleTest extends TestCaseWithDatabase
 
         self::assertFalse($this->rule->passes('actions', $invalidStateHistory));
     }
+
+    public function test_valid_state_history_rule_has_a_message_set(): void
+    {
+        self::assertNotEmpty($this->rule->message());
+    }
 }

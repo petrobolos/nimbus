@@ -35,6 +35,11 @@ final class InProgressRuleTest extends TestCaseWithDatabase
         self::assertEquals($expectedResult, $this->rule->passes('id', $game->id));
     }
 
+    public function test_in_progress_rule_has_a_message_set(): void
+    {
+        self::assertNotEmpty($this->rule->message());
+    }
+
     /**
      * Provide a generated game with a different status and the expected result.
      *
