@@ -45,12 +45,7 @@ class OrphanedPlayerReaper implements ShouldQueue
      */
     public function handle(): void
     {
-        try {
-            $playerCount = $this->playerRepository->expiredGuestOrAiPlayers()->delete();
-            Log::info("A total of {$playerCount} orphaned AI or guest players have been reaped.");
-        } catch (Throwable $throwable) {
-            report($throwable);
-            $this->fail($throwable);
-        }
+        $playerCount = $this->playerRepository->expiredGuestOrAiPlayers()->delete();
+        Log::info("A total of {$playerCount} orphaned AI or guest players have been reaped.");
     }
 }
