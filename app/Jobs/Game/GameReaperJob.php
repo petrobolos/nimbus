@@ -46,15 +46,10 @@ class GameReaperJob implements ShouldQueue
      */
     public function handle(): void
     {
-        try {
-            $gamesAbandoned = $this->gameRepository->inactiveGames()->update(['status' => Game::STATUS_ABANDONED]);
-            Log::info("A total of {$gamesAbandoned} have been marked as freshly abandoned.");
+        $gamesAbandoned = $this->gameRepository->inactiveGames()->update(['status' => Game::STATUS_ABANDONED]);
+        Log::info("A total of {$gamesAbandoned} have been marked as freshly abandoned.");
 
-            $gameCount = $this->gameRepository->abandonedOrConcludedGames()->delete();
-            Log::info("A total of {$gameCount} games have been reaped.");
-        } catch (Throwable $throwable) {
-            report($throwable);
-            $this->fail($throwable);
-        }
+        $gameCount = $this->gameRepository->abandonedOrConcludedGames()->delete();
+        Log::info("A total of {$gameCount} games have been reaped.");
     }
 }
