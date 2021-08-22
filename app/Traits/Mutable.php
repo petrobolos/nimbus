@@ -30,15 +30,11 @@ trait Mutable
      */
     public function mute(?string $until = null): void
     {
-        try {
-            if (empty($until)) {
-                $until = now()->addWeek()->toDateTimeString();
-            }
-
-            $this->muted_until = Carbon::parse($until);
-        } catch (Throwable $throwable) {
-            report($throwable);
+        if (empty($until)) {
+            $until = now()->addWeek()->toDateTimeString();
         }
+
+        $this->muted_until = Carbon::parse($until);
     }
 
     /**
@@ -48,10 +44,6 @@ trait Mutable
      */
     public function unmute(): void
     {
-        try {
-            self::update(['muted_until' => null]);
-        } catch (Throwable $throwable) {
-            report($throwable);
-        }
+        self::update(['muted_until' => null]);
     }
 }

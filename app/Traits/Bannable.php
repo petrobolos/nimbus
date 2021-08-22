@@ -41,15 +41,11 @@ trait Bannable
      */
     public function ban(?string $until = null): void
     {
-        try {
-            if (empty($until)) {
-                $until = now()->addWeek()->toDateTimeString();
-            }
-
-            self::update(['banned_until' => Carbon::parse($until)]);
-        } catch (Throwable $throwable) {
-            report($throwable);
+        if (empty($until)) {
+            $until = now()->addWeek()->toDateTimeString();
         }
+
+        self::update(['banned_until' => Carbon::parse($until)]);
     }
 
     /**
@@ -59,11 +55,7 @@ trait Bannable
      */
     public function unban(): void
     {
-        try {
-            self::update(['banned_until' => null]);
-        } catch (Throwable $throwable) {
-            report($throwable);
-        }
+        self::update(['banned_until' => null]);
     }
 
     /**
