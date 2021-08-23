@@ -39,15 +39,6 @@ export default class GameModule extends VuexModule {
     return this.activeOpponent;
   }
 
-  // This is just for testing.
-  public get getDummyOpponent(): FighterInterface {
-    if (this.getOpponent.secondFighter !== null) {
-      return this.getOpponent.secondFighter;
-    }
-
-    return this.getOpponent.firstFighter;
-  }
-
   public get getGameId(): number {
     return this.game.id;
   }

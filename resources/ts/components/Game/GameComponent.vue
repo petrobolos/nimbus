@@ -3,17 +3,16 @@
         <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-header">
-                    <span><strong>{{ store.getGameType }} | No: {{ store.getGameId }} </strong></span>
+                    <span><strong>{{ getGameType }} | No: {{ getGameId }} </strong></span>
                 </div>
-                <img :src="store.getImageUrl" :alt="store.getActiveOpponent.name" class="card-img-top">
+                <img :src="getImageUrl" :alt="getActiveOpponent.name" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">{{ store.getActiveOpponent.name }}</h5>
-                    <p class="card-text">{{ store.getActiveOpponent.description }}</p>
+                    <h5 class="card-title">{{ getActiveOpponent.name }}</h5>
+                    <p class="card-text">{{ getActiveOpponent.description }}</p>
                 </div>
             </div>
-            <game-stats-component :player="store.getActiveFighter" :opponent="store.getActiveOpponent" />
-            <button @click="test">Test</button>
-            <game-abilities-component :player="store.getActiveFighter" />
+            <game-stats-component />
+            <game-abilities-component />
         </div>
 
         <aside class="col-md-4">
@@ -27,10 +26,11 @@
 </template>
 
 <script lang="ts">
-import { Action } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 
+import { DemoInformation } from '../../types/demo/demo-information.type';
 import FighterInterface from '../../interfaces/fighter.interface';
 import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
 import GameChatComponent from './Shared/GameChatComponent.vue';
@@ -46,37 +46,40 @@ import GameStatsComponent from './Shared/GameStatsComponent.vue';
     }
 })
 export default class GameComponent extends Vue {
-    @Prop({ required: true }) readonly initialGame!: GameInterface;
-    @Prop({ required: false }) readonly demoInformation!: unknown;
+    @Prop({ required: true, type: Object }) private readonly initialGame!: GameInterface;
+    @Prop({ required: false, type: Object }) private readonly demoInformation!: DemoInformation;
 
-    public store!: GameModule;
+    @Action private initialize!: (game: GameInterface) => void;
+    @Action private switchOpponentFighter!: (fighter: FighterInterface) => void;
 
-    @Action
-    public initialize!: (game: GameInterface) => void;
+    @Getter private getGameId!: () => number;
+    @Getter private getGameType!: () => string;
+    @Getter private getImageUrl!: () => string;
+    @Getter private getActiveFighter!: () => FighterInterface;
+    @Getter private getActiveOpponent!: () => FighterInterface;
 
-    @Action
-    public switchOpponentFighter!: (fighter: FighterInterface) => void;
+    private gameStore: GameModule;
 
-    public created(): void {
-        this.startGame();
+    constructor() {
+        super();
+        this.gameStore = getModule(GameModule, this.$store);
+        this.initialize(this.initialGame);
     }
 
-    public test(): void {
-        const opponent = this.store.getDummyOpponent;
-        this.switchOpponentFighter(opponent);
-    }
+
+    //
+    // public created(): void {
+    //     this.gameStore = getModule(GameModule, this.$store);
+    //     this.initialize(this.initialGame);
+    // }
+
+    // public test(): void {
+    //     const opponent = this.gameStore.getDummyOpponent;
+    //     this.switchOpponentFighter(opponent);
+    // }
 
     public mounted(): void {
-
-        //this.currentImage = this.buildImageUrl(this.opponent.code);
-
         // window.setInterval(this.heartbeat, 30000);
-    }
-
-    public startGame(): void {
-        // Configures initial centralised state.
-        this.store = getModule(GameModule, this.$store);
-        this.initialize(this.initialGame);
     }
 
     // public testSend(): void {

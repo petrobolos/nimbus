@@ -49,15 +49,13 @@ import GameModule from '../../../modules/game.module';
 
 @Component
 export default class GameStatsComponent extends Vue {
-    public store!: GameModule;
+    @Getter private getActiveFighter!: () => FighterInterface;
+    @Getter private getActiveOpponent!: () => FighterInterface;
 
-    @Getter
-    public getActiveFighter!: () => FighterInterface;
+    private store!: GameModule;
 
-    @Getter
-    public getActiveOpponent!: () => FighterInterface;
-
-    public created(): void {
+    constructor() {
+        super();
         this.store = getModule(GameModule, this.$store);
     }
 }
