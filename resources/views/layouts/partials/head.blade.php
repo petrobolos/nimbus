@@ -3,6 +3,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="application-name" content="{{ config('app.name', 'Nimbus') }}" />
     <meta name="author" content="Petrobolos Games" />
     <meta name="description" content="@yield('meta-description')" />
     <meta name="robots" content="@yield('meta-robots')" />
@@ -11,6 +12,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <!-- Analytics -->
+    <meta name="server-time" content="{{ ceil((microtime(true) - LARAVEL_START)) }}" />
 
     <title>@yield('title') | {{ config('app.name', 'Nimbus') }}</title>
 
