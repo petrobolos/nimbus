@@ -28,8 +28,7 @@ return new class() extends Migration {
 
     public function down(): void
     {
-        Schema::table('fighters', function (Blueprint $table)
-        {
+        Schema::table('fighters', function (Blueprint $table) {
             $table->dropColumn(['current_sp', 'current_hp', 'is_paralyzed']);
         });
     }
