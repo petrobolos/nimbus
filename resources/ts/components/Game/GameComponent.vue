@@ -29,6 +29,8 @@
 import { Action, Getter } from 'vuex-class';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import { DemoInformation } from '../../types/demo/demo-information.type';
 import FighterInterface from '../../interfaces/fighter.interface';
@@ -37,6 +39,8 @@ import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameInterface from '../../interfaces/game.interface';
 import GameModule from '../../modules/game.module';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
+
+Vue.use(Loading);
 
 @Component({
     components: {
@@ -59,11 +63,39 @@ export default class GameComponent extends Vue {
     @Getter private getActiveOpponent!: () => FighterInterface;
 
     private gameStore: GameModule;
+    private isLoading: boolean = true;
 
     constructor() {
         super();
+        this.loading(true);
+
         this.gameStore = getModule(GameModule, this.$store);
         this.initialize(this.initialGame);
+    }
+
+    /**
+     * Start the loading sequence.
+     *
+     * @param {Boolean} initial
+     * @protected
+     * @return void
+     */
+    protected loading(initial: boolean): void {
+        this.isLoading = true;
+        const loader = this.$loading.show({
+            transition: 'bounce',
+            opacity: initial ? 1 : 0.6,
+            loader: 'dots',
+            isFullPage: true,
+            enforceFocus:true,
+            canCancel: false,
+        });
+
+        // This is temporary.
+        setTimeout(() => {
+            loader.hide();
+            this.isLoading = false;
+        }, 5000);
     }
 
 
@@ -77,10 +109,6 @@ export default class GameComponent extends Vue {
     //     const opponent = this.gameStore.getDummyOpponent;
     //     this.switchOpponentFighter(opponent);
     // }
-
-    public mounted(): void {
-        // window.setInterval(this.heartbeat, 30000);
-    }
 
     // public testSend(): void {
     //     Axios.put('/demo/sync', {
@@ -106,3 +134,25 @@ export default class GameComponent extends Vue {
     // }
 }
 </script>
+
+<style lang="css">
+.bounce-enter-active {
+    animation: bounce-in .5s;
+}
+
+.bounce-leave-active {
+    animation: bounce-in .5s reverse;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+</style>
