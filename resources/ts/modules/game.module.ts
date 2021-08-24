@@ -39,6 +39,22 @@ export default class GameModule extends VuexModule {
     return this.activeOpponent;
   }
 
+  public get getPlayerFirstFighter(): FighterInterface | null {
+    return this.getPlayer.firstFighter;
+  }
+
+  public get getPlayerSecondFighter(): FighterInterface | null {
+    return this.getPlayer.secondFighter;
+  }
+
+  public get getPlayerThirdFighter(): FighterInterface | null {
+    return this.getPlayer.thirdFighter;
+  }
+
+  public get getAbilities(): AbilityInterface[] {
+    return this.getActiveFighter.abilities;
+  }
+
   public get getGameId(): number {
     return this.game.id;
   }

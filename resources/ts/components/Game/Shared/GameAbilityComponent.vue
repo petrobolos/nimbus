@@ -1,16 +1,22 @@
 <template>
     <li class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-            <div class="fw-bold">Ability Name</div>
-            Ability description
+        <div class="ms-2 me-auto text-align-left">
+            <div class="fw-bold">{{ ability.name }}</div>
+            {{ ability.description }}
         </div>
-        <span class="badge bg-primary rounded-pill">Cost</span>
+        <span class="badge bg-primary rounded-pill">{{ freeOrValue(ability.cost) }}</span>
     </li>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
+
+import AbilityInterface from '../../../interfaces/ability.interface';
+import GameMixin from '../../../mixins/game.mixin';
+
 
 @Component
-export default class GameAbilityComponent extends Vue {}
+export default class GameAbilityComponent extends Mixins<GameMixin>(GameMixin) {
+    @Prop({required: true, type: Object}) private ability!: AbilityInterface;
+}
 </script>
