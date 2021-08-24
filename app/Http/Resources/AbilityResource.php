@@ -23,6 +23,7 @@ class AbilityResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
+            'cost' => $this->cost,
             'type' => $this->type,
             'description' => $this->description,
         ];

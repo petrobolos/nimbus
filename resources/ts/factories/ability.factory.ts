@@ -7,6 +7,7 @@ export default Factory.define<AbilityInterface>(({ sequence }) => ({
   id: sequence,
   name: Faker.random.words(2),
   code: Faker.random.word(),
+  cost: Faker.datatype.number(100),
   type: Faker.datatype.boolean() ? 'physical' : 'special',
   description: Faker.lorem.sentences(2),
 }));
