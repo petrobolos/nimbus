@@ -2,69 +2,86 @@
 
 use App\Http\Controllers\Account\BannedController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Api\Game\DemoController as ApiDemoController;
 use App\Http\Controllers\Pages\DemoController;
 use App\Http\Controllers\Pages\FaqController;
 use App\Http\Controllers\Pages\FeedController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Resources\AbilityController;
+use App\Http\Controllers\Resources\FighterController;
+use App\Http\Controllers\Resources\GameController as ResourceGameController;
+use App\Http\Controllers\Resources\PerkController;
+use App\Http\Controllers\Resources\PlayerController;
+use App\Http\Controllers\Resources\RaceController;
+use App\Http\Controllers\Resources\StatController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+//======================================================================
+// Special Laravel or third-party library routes go here.
+//======================================================================
 Auth::routes();
 
-/*
- * Routes for guests.
- */
+
+//======================================================================
+// Routes for guests only - pages and demo routines.
+//======================================================================
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', HomeController::class)->name('pages.home');
-    Route::get('faqs', FaqController::class)->name('pages.faqs');
+    Route::name('pages.')->group(function () {
+        Route::get('/', HomeController::class)->name('home');
+        Route::get('/faqs', FaqController::class)->name('faqs');
+    });
 
-    Route::prefix('demo')->name('demo.')->group(function () {
-        Route::get('', DemoController::class)->name('show');
-        Route::put('sync', '\App\Http\Controllers\Api\Game\DemoController@sync')->name('sync');
-        Route::post('heartbeat', '\App\Http\Controllers\Api\Game\DemoController@heartbeat')->name('heartbeat');
+    Route::name('demo.')->group(function () {
+        Route::get('/demo', DemoController::class)->name('show');
+
+        Route::name('ajax.')->group(function () {
+            Route::put('/demo/sync', [ApiDemoController::class, 'sync'])->name('sync');
+            Route::post('/demo/heartbeat', [ApiDemoController::class, 'heartbeat'])->name('heartbeat');
+        });
     });
 });
 
-/*
- * Routes for authorised users regardless of ban status.
- */
+
+//======================================================================
+// Routes for authorised users - irrespective of ban status.
+//======================================================================
 Route::middleware(['auth'])->group(function () {
-    Route::get('feed', FeedController::class)->name('pages.feed');
-});
-
-/*
- * Routes for banned authorised users.
- */
-Route::middleware(['auth', 'banned'])->group(function () {
-    Route::get('banned', BannedController::class)->name('account.banned');
-});
-
-/*
- * Routes for unbanned authorised users.
- */
-Route::middleware(['auth', 'unbanned'])->group(function () {
-    Route::prefix('game')->name('game.')->group(function () {
-        Route::get('', '\App\Http\Controllers\GamesController@index')->name('show');
+    Route::name('pages.')->group(function () {
+        Route::get('/feed', FeedController::class)->name('feed');
     });
 });
 
-/*
- * Routes for administrators.
- */
+
+//======================================================================
+// Routes for authorised users, who have been banned, only.
+//======================================================================
+Route::middleware(['auth', 'banned'])->group(function () {
+    Route::name('account.')->group(function () {
+        Route::get('/banned', BannedController::class)->name('banned');
+    });
+});
+
+//======================================================================
+// Routes for administrators only.
+//======================================================================
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::resource('abilities', AbilityController::class);
+    Route::name('dashboard.')->group(function () {
+        Route::get('/dashboard', DashboardController::class)->name('show');
+        Route::resource('/dashboard/abilities', AbilityController::class);
+        Route::resource('/dashboard/fighters', FighterController::class);
+        Route::resource('/dashboard/games', ResourceGameController::class);
+        Route::resource('/dashboard/perks', PerkController::class);
+        Route::resource('/dashboard/players', PlayerController::class);
+        Route::resource('/dashboard/races', RaceController::class);
+        Route::resource('/dashboard/stats', StatController::class);
+    });
+});
+
+//======================================================================
+// Routes for authorised users who are not banned - most routes will go here.
+//======================================================================
+Route::middleware(['auth', 'unbanned'])->group(function () {
+    Route::name('game.')->group(function () {
+        // Game routes will go here.
     });
 });

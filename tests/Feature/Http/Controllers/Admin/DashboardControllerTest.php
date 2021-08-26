@@ -13,7 +13,7 @@ final class DashboardControllerTest extends TestCaseWithDatabase
 
         $this->actingAs($admin);
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('dashboard.show'));
 
         $response->assertOk();
         $response->assertSeeText('Dashboard');
@@ -25,14 +25,14 @@ final class DashboardControllerTest extends TestCaseWithDatabase
 
         $this->actingAs($nonAdmin);
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('dashboard.show'));
 
         $response->assertRedirect();
     }
 
     public function test_dashboard_is_not_visible_by_guests(): void
     {
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('dashboard.show'));
 
         $response->assertRedirect();
     }

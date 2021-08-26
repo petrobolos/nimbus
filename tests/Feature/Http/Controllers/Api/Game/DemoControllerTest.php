@@ -39,7 +39,7 @@ final class DemoControllerTest extends TestCaseWithImportedData
         $demo = $this->demoService->startOrResumeDemo();
 
         // Post a heartbeat to the controller and evaluate its response.
-        $response = $this->postJson(route('demo.heartbeat'), [
+        $response = $this->postJson(route('demo.ajax.heartbeat'), [
             'gameId' => $demo->id,
             'heartbeat' => Heartbeat::DEMO,
         ]);
@@ -56,7 +56,7 @@ final class DemoControllerTest extends TestCaseWithImportedData
         $user = User::factory()->create();
         $this->be($user);
 
-        $response = $this->postJson(route('demo.heartbeat'), [
+        $response = $this->postJson(route('demo.ajax.heartbeat'), [
            'gameId' => Game::factory()->create()->id,
            'heartbeat' => Heartbeat::DEMO,
         ]);
@@ -71,7 +71,7 @@ final class DemoControllerTest extends TestCaseWithImportedData
         $this->be($user);
 
         $game = Game::factory()->create();
-        $response = $this->putJson(route('demo.sync'), [
+        $response = $this->putJson(route('demo.ajax.sync'), [
             'gameId' => $game->id,
             'stateHash' => $game->state_hash,
             'state' => [
@@ -90,7 +90,7 @@ final class DemoControllerTest extends TestCaseWithImportedData
         $this->get(route('demo.show'))->assertOk();
         $demo = $this->demoService->startOrResumeDemo();
 
-        $response = $this->putJson(route('demo.sync'), [
+        $response = $this->putJson(route('demo.ajax.sync'), [
             'gameId' => $demo->id,
             'stateHash' => $demo->state_hash,
             'state' => [
