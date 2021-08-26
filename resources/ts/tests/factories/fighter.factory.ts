@@ -3,7 +3,7 @@ import { Factory } from 'fishery';
 import slugify from 'slugify';
 import * as Faker from 'faker';
 
-import FighterInterface from '../interfaces/fighter.interface';
+import FighterInterface from '../../interfaces/fighter.interface';
 
 const name = Faker.company.companyName();
 export default Factory.define<FighterInterface>(({ sequence }) => ({
