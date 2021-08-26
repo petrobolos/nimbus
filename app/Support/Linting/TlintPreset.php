@@ -54,7 +54,6 @@ final class TlintPreset implements PresetInterface
             NoDatesPropertyOnModels::class,
             NoDump::class,
             NoDocBlocksForMigrationUpDown::class,
-            NoLeadingSlashesOnRoutePaths::class,
             NoSpaceAfterBladeDirectives::class,
             NoStringInterpolationWithoutBraces::class,
             NoUnusedImports::class,
