@@ -42,7 +42,7 @@ class DemoSyncRequest extends FormRequest
             ],
 
             'state.history' => [
-                'required',
+                'present',
                 'array',
                 new ValidStateHistoryRule(),
             ],

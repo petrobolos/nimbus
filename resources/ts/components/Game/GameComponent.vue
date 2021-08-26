@@ -29,7 +29,7 @@
 import { Action, Getter } from 'vuex-class';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
-import Loading from 'vue-loading-overlay';
+import Loading, { LoaderComponent } from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 import { DemoInformation } from '../../types/demo/demo-information.type';
@@ -55,6 +55,7 @@ export default class GameComponent extends Vue {
 
     @Action private initialize!: (game: GameInterface) => void;
     @Action private switchOpponentFighter!: (fighter: FighterInterface) => void;
+    @Action private syncDemo!: () => unknown;
 
     @Getter private getGameId!: () => number;
     @Getter private getGameType!: () => string;
@@ -63,14 +64,19 @@ export default class GameComponent extends Vue {
     @Getter private getActiveOpponent!: () => FighterInterface;
 
     private gameStore: GameModule;
+    private loader: null | LoaderComponent = null;
     private isLoading: boolean = true;
 
     constructor() {
         super();
-        this.loading(true);
+        //this.loading(true);
 
         this.gameStore = getModule(GameModule, this.$store);
         this.initialize(this.initialGame);
+
+        setTimeout(() => {
+            this.sync();
+        }, 5000);
     }
 
     /**
@@ -80,9 +86,10 @@ export default class GameComponent extends Vue {
      * @protected
      * @return void
      */
-    protected loading(initial: boolean): void {
+    protected loading(initial: boolean = false): void {
         this.isLoading = true;
-        const loader = this.$loading.show({
+
+        this.loader = this.$loading.show({
             transition: 'bounce',
             opacity: initial ? 1 : 0.6,
             loader: 'dots',
@@ -90,12 +97,19 @@ export default class GameComponent extends Vue {
             enforceFocus:true,
             canCancel: false,
         });
+    }
 
-        // This is temporary.
-        setTimeout(() => {
-            loader.hide();
-            this.isLoading = false;
-        }, 5000);
+    protected stopLoading(): void {
+        this.isLoading = false;
+
+        this.loader?.hide();
+        this.loader = null;
+    }
+
+    protected async sync() {
+        this.loading();
+
+        await this.syncDemo();
     }
 
 

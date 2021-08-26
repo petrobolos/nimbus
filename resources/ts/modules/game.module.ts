@@ -1,4 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import Axios from 'axios';
+
 import GameInterface from '../interfaces/game.interface';
 import FighterInterface from '../interfaces/fighter.interface';
 import PlayerInterface from '../interfaces/player.interface';
@@ -197,5 +199,19 @@ export default class GameModule extends VuexModule {
   @Action
   public resetGame(game: GameInterface): void {
     this.context.commit('UPDATE_GAME', game);
+  }
+
+  @Action({ rawError: true})
+  public async syncDemo(): Promise<void> {
+    return Axios.put('/demo/sync', {
+      'gameId': this.getGameId,
+      'state': this.getGame.state,
+      'state_hash': this.getGame.state_hash,
+    })
+      .then((response) => {
+        console.log(response.data);
+      }).catch((error) => {
+        console.error(error.response.data);
+      });
   }
 }
