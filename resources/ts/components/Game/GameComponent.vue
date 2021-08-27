@@ -81,6 +81,12 @@ export default class GameComponent extends Vue {
     }
 
 
+    /**
+     * Register any event listeners on the component.
+     *
+     * @returns void
+     * @protected
+     */
     protected registerEventListeners(): void {
         EventBus.$on('switch-event', this.act);
         EventBus.$on('ability-event', this.act);
@@ -90,8 +96,8 @@ export default class GameComponent extends Vue {
      * Start the loading sequence.
      *
      * @param {Boolean} initial
+     * @returns void
      * @protected
-     * @return void
      */
     protected loading(initial: boolean = false): void {
         this.isLoading = true;
@@ -106,6 +112,12 @@ export default class GameComponent extends Vue {
         });
     }
 
+    /**
+     * Stop the loading sequence.
+
+     * @returns void
+     * @protected
+     */
     protected stopLoading(): void {
         this.isLoading = false;
 
@@ -113,50 +125,28 @@ export default class GameComponent extends Vue {
         this.loader = null;
     }
 
-    protected async act(model: AbilityInterface | FighterInterface) {
+    /**
+     * Fires an action to the server.
+     *
+     * @param {AbilityInterface | FighterInterface} model
+     * @returns {Promise<void>}
+     * @protected
+     */
+    protected async act(model: AbilityInterface | FighterInterface): Promise<void> {
         console.log(model);
     }
 
-    protected async sync() {
+    /**
+     * Synchronises game state.
+     *
+     * @returns {Promise<void>}
+     * @protected
+     */
+    protected async sync(): Promise<void> {
         this.loading();
 
         await this.syncDemo();
     }
-
-
-    //
-    // public created(): void {
-    //     this.gameStore = getModule(GameModule, this.$store);
-    //     this.initialize(this.initialGame);
-    // }
-
-    // public test(): void {
-    //     const opponent = this.gameStore.getDummyOpponent;
-    //     this.switchOpponentFighter(opponent);
-    // }
-
-    // public testSend(): void {
-    //     Axios.put('/demo/sync', {
-    //         state: this.state,
-    //         stateHash: this.stateHash,
-    //         gameId: this.game.id,
-    //     }).then((response: any) => {
-    //         console.log(response);
-    //     }).catch((e: any) => {
-    //         console.error(e);
-    //     });
-    // }
-    //
-    // public heartbeat(): void {
-    //     Axios.post('/demo/heartbeat', {
-    //         gameId: this.game.id,
-    //         heartbeat: 'heartbeat_demo',
-    //     }).then((response: any) => {
-    //         console.log(response);
-    //     }).catch((e: any) => {
-    //        console.error(e);
-    //     });
-    // }
 }
 </script>
 
