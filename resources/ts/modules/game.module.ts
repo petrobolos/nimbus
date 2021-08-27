@@ -1,12 +1,12 @@
-import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import Axios from 'axios';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 
-import GameInterface from '../interfaces/game.interface';
+import AbilityInterface from '../interfaces/ability.interface';
 import FighterInterface from '../interfaces/fighter.interface';
+import GameInterface from '../interfaces/game.interface';
 import PlayerInterface from '../interfaces/player.interface';
 import StateInterface from '../interfaces/state.interface';
 import { FighterUpdate } from '../types/fighter-update.type';
-import AbilityInterface from '../interfaces/ability.interface';
 
 @Module({
   name: 'GameModule',

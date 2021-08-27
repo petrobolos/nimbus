@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { EventBus } from '../../../bus';
 
+import { EventBus } from '../../../bus';
 import FighterInterface from '../../../interfaces/fighter.interface';
 
 @Component

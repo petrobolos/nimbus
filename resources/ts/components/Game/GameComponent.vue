@@ -12,10 +12,7 @@
                 </div>
             </div>
             <game-stats-component />
-            <game-abilities-component
-                @ability-event="act"
-                @switch-event="act"
-            />
+            <game-abilities-component />
         </div>
 
         <aside class="col-md-4">
@@ -23,27 +20,27 @@
                 <button class="btn btn-warning btn-block" type="button">Report Issue</button>
                 <button class="btn btn-danger btn-block" type="button">Disconnect</button>
             </div>
-            <game-chat-component></game-chat-component>
+            <game-chat-component />
         </aside>
     </div>
 </template>
 
 <script lang="ts">
-import { Action, Getter } from 'vuex-class';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { EventBus } from '../../bus';
-import { getModule } from 'vuex-module-decorators';
 import Loading, { LoaderComponent } from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Action, Getter } from 'vuex-class';
+import { getModule } from 'vuex-module-decorators';
 
-import { DemoInformation } from '../../types/demo/demo-information.type';
+import { EventBus } from '../../bus';
+import AbilityInterface from '../../interfaces/ability.interface';
 import FighterInterface from '../../interfaces/fighter.interface';
-import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
-import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameInterface from '../../interfaces/game.interface';
 import GameModule from '../../modules/game.module';
+import { DemoInformation } from '../../types/demo/demo-information.type';
+import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
+import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
-import AbilityInterface from '../../interfaces/ability.interface';
 
 Vue.use(Loading);
 

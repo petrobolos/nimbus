@@ -27,11 +27,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
 import { getModule } from 'vuex-module-decorators';
 
+import AbilityInterface from '../../../interfaces/ability.interface';
+import FighterInterface from '../../../interfaces/fighter.interface';
+import GameModule from '../../../modules/game.module';
 import GameAbilityComponent from './GameAbilityComponent.vue';
 import GameSwitchComponent from './GameSwitchComponent.vue';
-import GameModule from '../../../modules/game.module';
-import FighterInterface from '../../../interfaces/fighter.interface';
-import AbilityInterface from '../../../interfaces/ability.interface';
 
 @Component({
     components: {

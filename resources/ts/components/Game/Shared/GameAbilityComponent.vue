@@ -11,8 +11,8 @@
 
 <script lang="ts">
 import { Component, Mixins, Prop } from 'vue-property-decorator';
-import { EventBus } from '../../../bus';
 
+import { EventBus } from '../../../bus';
 import AbilityInterface from '../../../interfaces/ability.interface';
 import GameMixin from '../../../mixins/game.mixin';
 
