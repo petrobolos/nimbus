@@ -12,7 +12,10 @@
                 </div>
             </div>
             <game-stats-component />
-            <game-abilities-component />
+            <game-abilities-component
+                @ability-event="act"
+                @switch-event="act"
+            />
         </div>
 
         <aside class="col-md-4">
@@ -28,6 +31,7 @@
 <script lang="ts">
 import { Action, Getter } from 'vuex-class';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { EventBus } from '../../bus';
 import { getModule } from 'vuex-module-decorators';
 import Loading, { LoaderComponent } from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
@@ -39,6 +43,7 @@ import GameChatComponent from './Shared/GameChatComponent.vue';
 import GameInterface from '../../interfaces/game.interface';
 import GameModule from '../../modules/game.module';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
+import AbilityInterface from '../../interfaces/ability.interface';
 
 Vue.use(Loading);
 
@@ -69,14 +74,19 @@ export default class GameComponent extends Vue {
 
     constructor() {
         super();
-        //this.loading(true);
 
+        this.loading(true);
         this.gameStore = getModule(GameModule, this.$store);
         this.initialize(this.initialGame);
 
-        setTimeout(() => {
-            this.sync();
-        }, 5000);
+        this.registerEventListeners();
+        this.stopLoading();
+    }
+
+
+    protected registerEventListeners(): void {
+        EventBus.$on('switch-event', this.act);
+        EventBus.$on('ability-event', this.act);
     }
 
     /**
@@ -104,6 +114,10 @@ export default class GameComponent extends Vue {
 
         this.loader?.hide();
         this.loader = null;
+    }
+
+    protected async act(model: AbilityInterface | FighterInterface) {
+        console.log(model);
     }
 
     protected async sync() {
