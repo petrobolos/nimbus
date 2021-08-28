@@ -1,8 +1,4 @@
 import axios from 'axios';
-import * as _ from 'lodash';
-import jQuery from 'jquery';
-import * as Popper from 'popper.js';
-import 'bootstrap';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
