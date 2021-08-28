@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // Special Laravel or third-party library routes go here.
 //======================================================================
 Auth::routes();
-
+Route::get('/gametest', fn () => view('pages.gametest'));
 
 //======================================================================
 // Routes for guests only - pages and demo routines.
