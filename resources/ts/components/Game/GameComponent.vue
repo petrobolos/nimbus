@@ -1,21 +1,25 @@
 <template>
     <div class="row">
-        <div class="col-md-8">
+        <!-- Left component -->
+        <game-abilities-component />
+
+        <!-- Centre component -->
+        <div class="col-md-6">
             <div class="card text-center">
                 <div class="card-header">
                     <span><strong>{{ getGameType }} | No: {{ getGameId }} </strong></span>
                 </div>
-                <img :src="getImageUrl" :alt="getActiveOpponent.name" class="card-img-top">
+                <img :src="getImageUrl" :alt="getActiveOpponent.name" class="img-fluid card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ getActiveOpponent.name }}</h5>
-                    <p class="card-text">{{ getActiveOpponent.description }}</p>
+                    <game-stat-bar-component />
                 </div>
             </div>
             <game-stats-component />
-            <game-abilities-component />
         </div>
 
-        <aside class="col-md-4">
+        <!-- Right component -->
+        <aside class="col-md-3">
             <div class="d-grid gap-2 mb-3">
                 <button class="btn btn-warning btn-block" type="button">Report Issue</button>
                 <button class="btn btn-danger btn-block" type="button">Disconnect</button>
@@ -40,6 +44,7 @@ import GameModule from '../../modules/game.module';
 import { DemoInformation } from '../../types/demo/demo-information.type';
 import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
 import GameChatComponent from './Shared/GameChatComponent.vue';
+import GameStatBarComponent from './Shared/GameStatBarComponent.vue';
 import GameStatsComponent from './Shared/GameStatsComponent.vue';
 
 Vue.use(Loading);
@@ -48,6 +53,7 @@ Vue.use(Loading);
     components: {
         'game-abilities-component': GameAbilitiesComponent,
         'game-chat-component': GameChatComponent,
+        'game-stat-bar-component': GameStatBarComponent,
         'game-stats-component': GameStatsComponent,
     }
 })

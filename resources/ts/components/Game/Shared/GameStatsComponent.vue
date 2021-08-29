@@ -4,8 +4,8 @@
             <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">HP</th>
-                <th scope="col">SP</th>
+                <th scope="col">Bonus HP</th>
+                <th scope="col">Bonus SP</th>
                 <th scope="col">Attack</th>
                 <th scope="col">Defense</th>
                 <th scope="col">Speed</th>

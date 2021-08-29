@@ -5,7 +5,41 @@
         <!-- Game Component Start -->
 
         <div class="row">
-            <div class="col-md-8">
+            <aside class="col-3">
+                <h4>Abilities:</h4>
+                <div class="col d-flex align-items-start">
+                    <div class="btn-group-vertical me-3 gap-1">
+                        <button class="btn btn-sm btn-primary me-3" type="button">Use</button>
+                        <button class="btn btn-sm btn-secondary me-3" type="button">Info</button>
+                    </div>
+                    <div>
+                        <div class="d-flex align-content-between">
+                            <h4 class="fw-bold mb-0"><abbr title="An extended description of what this does.">Title</abbr></h4>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">HP</span>
+                        <span class="badge bg-primary rounded-pill">SP</span>
+                        <p>Paragraph text</p>
+                    </div>
+                </div>
+                <hr />
+                <h4>Switch:</h4>
+                <div class="col d-flex align-items-start">
+                    <div class="btn-group-vertical me-3 gap-1">
+                        <button class="btn btn-sm btn-primary me-3" type="button">Use</button>
+                        <button class="btn btn-sm btn-secondary me-3" type="button">Info</button>
+                    </div>
+                    <div>
+                        <div class="d-flex align-content-between">
+                            <h4 class="fw-bold mb-0">Title</h4>
+                        </div>
+                        <span class="badge bg-danger rounded-pill">HP</span>
+                        <span class="badge bg-primary rounded-pill">SP</span>
+                        <p>Paragraph text</p>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="col-md-6">
                 <div class="card text-center">
                     <div class="card-header">
                         <span>
@@ -19,9 +53,30 @@
                         <h5 class="card-title">
                             Goku
                         </h5>
-                        <p class="card-text">
-                            Goku description
-                        </p>
+                        <div class="progress">
+                            <div
+                                class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                                role="progressbar"
+                                aria-valuenow="75"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 75%"
+                            >
+                                HP: 75%
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div
+                                class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                role="progressbar"
+                                aria-valuenow="75"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 75%"
+                            >
+                                SP: 75%
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -31,8 +86,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">HP</th>
-                                <th scope="col">SP</th>
+                                <th scope="col">HP Bonus</th>
+                                <th scope="col">SP Bonus</th>
                                 <th scope="col">Attack</th>
                                 <th scope="col">Defense</th>
                                 <th scope="col">Speed</th>
@@ -69,7 +124,7 @@
                 <!-- Game Abilities Component Start -->
             </div>
 
-            <aside class="col-md-4">
+            <aside class="col-md-3">
                 <div class="d-grid gap-2 mb-3">
                     <button class="btn btn-warning btn-block" type="button">Report Issue</button>
                     <button class="btn btn-danger btn-block" type="button">Disconnect</button>
@@ -107,32 +162,6 @@
                 </div>
                 <!-- Game Chat Component End -->
             </aside>
-        </div>
-
-        <div class="row">
-            <div class="col-9">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
-                    <!-- Ability -->
-                    <div class="col d-flex align-items-start">
-                        <div class="btn-group-vertical me-3 gap-1">
-                            <button class="btn btn-sm btn-primary me-3" type="button">Use</button>
-                            <button class="btn btn-sm btn-secondary me-3" type="button">Info</button>
-                        </div>
-                        <div>
-                            <div class="d-flex align-content-between">
-                                <h4 class="fw-bold mb-0">Title</h4>
-                                <span class="badge rounded-pill bg-danger">HP</span>
-                                <span class="badge rounded-pill bg-primary">SP</span>
-                            </div>
-                            <p>Paragraph text</p>
-                        </div>
-                    </div>
-                    <!-- Ability -->
-                </div>
-            </div>
-            <div class="col-3">
-
-            </div>
         </div>
         <!-- Game Component End -->
     </div>

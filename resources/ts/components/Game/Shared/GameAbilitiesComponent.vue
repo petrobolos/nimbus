@@ -1,25 +1,14 @@
 <template>
-    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-around">
-        <section>
-            <h5>Abilities:</h5>
-            <ol class="list-group list-group-numbered">
-                <game-ability-component v-for="ability in getAbilities" :key="ability.id" :ability="ability" />
-            </ol>
-        </section>
-        <section>
-            <h5>Switch:</h5>
-            <ol class="list-group list-group-numbered">
-                <!-- First -->
-                <game-switch-component :fighter="getPlayerFirstFighter" />
+    <aside class="col-3">
+        <h4>Abilities:</h4>
+        <game-ability-component v-for="ability in getAbilities" :key="ability.id" :ability="ability" />
+        <hr />
 
-                <!-- Second -->
-                <game-switch-component :fighter="getPlayerSecondFighter" />
-
-                <!-- Third -->
-                <game-switch-component :fighter="getPlayerThirdFighter" />
-            </ol>
-        </section>
-    </div>
+        <h4>Switch:</h4>
+        <game-switch-component :fighter="getPlayerFirstFighter" />
+        <game-switch-component :fighter="getPlayerSecondFighter" />
+        <game-switch-component :fighter="getPlayerThirdFighter" />
+    </aside>
 </template>
 
 <script lang="ts">

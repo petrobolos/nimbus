@@ -1,12 +1,19 @@
 <template>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto text-align-left">
-            <div class="fw-bold">{{ ability.name }}</div>
-            {{ ability.description }}
+    <div class="col d-flex align-items-start">
+        <div class="btn-group-vertical me-3 gap-1">
+            <button class="btn btn-sm btn-primary me-3">Use</button>
+            <button class="btn btn-sm btn-secondary me-3">Info</button>
         </div>
-        <span class="badge bg-primary rounded-pill">{{ freeOrValue(ability.cost) }}</span>
-        <button type="button" @click="use(ability)">Use</button>
-    </li>
+        <div>
+            <div class="d-flex align-content-between">
+                <h4 class="fw-bold mb-0">
+                    <abbr :title="''">Title</abbr>
+                </h4>
+            </div>
+            <span class="badge bg-danger rounded-pill">Cost</span>
+            <p>Short text</p>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
