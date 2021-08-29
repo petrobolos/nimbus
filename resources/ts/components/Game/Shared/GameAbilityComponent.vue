@@ -7,11 +7,11 @@
         <div>
             <div class="d-flex align-content-between">
                 <h4 class="fw-bold mb-0">
-                    <abbr :title="''">Title</abbr>
+                    <abbr :title="ability.description">{{  ability.name  }}</abbr>
                 </h4>
             </div>
-            <span class="badge bg-danger rounded-pill">Cost</span>
-            <p>Short text</p>
+            <span class="badge bg-danger rounded-pill">{{ freeOrValue(ability.cost) }}</span>
+            <p>{{ ucFirst(ability.type) }}</p>
         </div>
     </div>
 </template>

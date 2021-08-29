@@ -4,7 +4,7 @@
         <div class="progress">
             <div
                 class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                :style="getActiveOpponent.current_hp !== 0 ? (getActiveOpponent.total_hp / getActiveOpponent.current_hp) * 100 : 0"
+                :style="getActiveOpponent.current_hp !== 0 ? 'width:' + (getActiveOpponent.total_hp / getActiveOpponent.current_hp) * 100 + '%' : 'width' + 0 + '%'"
                 role="progressbar"
                 :aria-valuenow="getActiveOpponent.current_hp"
                 :aria-valuemax="getActiveOpponent.total_hp"
@@ -17,7 +17,7 @@
         <div class="progress">
             <div
                 class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                :style="getActiveOpponent.current_sp !== 0 ? (getActiveOpponent.total_sp / getActiveOpponent.current_sp) * 100 : 0"
+                :style="getActiveOpponent.current_sp !== 0 ? 'width:' + (getActiveOpponent.total_sp / getActiveOpponent.current_sp) * 100 + '%' : 'width' + 0 + '%'"
                 role="progressbar"
                 :aria-valuenow="getActiveOpponent.current_sp"
                 :aria-valuemax="getActiveOpponent.total_sp"

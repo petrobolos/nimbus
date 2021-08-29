@@ -16,4 +16,14 @@ export default class GameMixin extends Vue {
 
     return value;
   }
+
+  /**
+   * Converts the first letter of the string to uppercase.
+   *
+   * @param {string} string
+   * @returns {string}
+   */
+  public ucFirst(string: string): string {
+    return string[0].toUpperCase() + string.slice(1);
+  }
 }

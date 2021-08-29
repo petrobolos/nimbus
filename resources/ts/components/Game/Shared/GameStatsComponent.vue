@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive text-center">
-        <table class="table table-sm table-bordered align-middle">
+        <table class="table table-striped table-sm table-bordered align-middle">
             <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
@@ -13,16 +13,16 @@
                 <th scope="col">Spirit</th>
             </tr>
             </thead>
-            <tbody class="table-striped">
+            <tbody>
             <tr>
                 <th scope="row">You</th>
-                <td>{{ getActiveFighter.hp }}</td>
-                <td>{{ getActiveFighter.sp }}</td>
-                <td>{{ getActiveFighter.attack }}</td>
-                <td>{{ getActiveFighter.defense }}</td>
-                <td>{{ getActiveFighter.speed }}</td>
-                <td>{{ getActiveFighter.special }}</td>
-                <td>{{ getActiveFighter.spirit }}</td>
+                <td :class="compareStyling(getActiveFighter.hp, getActiveOpponent.hp)">{{ getActiveFighter.hp }}</td>
+                <td :class="compareStyling(getActiveFighter.sp, getActiveOpponent.sp)">{{ getActiveFighter.sp }}</td>
+                <td :class="compareStyling(getActiveFighter.attack, getActiveOpponent.attack)">{{ getActiveFighter.attack }}</td>
+                <td :class="compareStyling(getActiveFighter.defense, getActiveOpponent.defense)">{{ getActiveFighter.defense }}</td>
+                <td :class="compareStyling(getActiveFighter.speed, getActiveOpponent.speed)">{{ getActiveFighter.speed }}</td>
+                <td :class="compareStyling(getActiveFighter.special, getActiveOpponent.special)">{{ getActiveFighter.special }}</td>
+                <td :class="compareStyling(getActiveFighter.spirit, getActiveOpponent.spirit)">{{ getActiveFighter.spirit }}</td>
             </tr>
             <tr>
                 <th scope="row">Opponent</th>
@@ -57,6 +57,28 @@ export default class GameStatsComponent extends Vue {
     constructor() {
         super();
         this.store = getModule(GameModule, this.$store);
+    }
+
+    /**
+     * Add specific styling depending on how you and your opponent's stats match up.
+     *
+     * @param {number} ownAttribute
+     * @param {number} enemyAttribute
+     * @returns {string}
+     * @protected
+     */
+    protected compareStyling(ownAttribute: number, enemyAttribute: number): string {
+        const sharedClasses = 'text-uppercase';
+
+        if (ownAttribute > enemyAttribute) {
+            return sharedClasses + 'table-success';
+        }
+
+        if (ownAttribute < enemyAttribute) {
+            return sharedClasses + 'table-danger';
+        }
+
+        return sharedClasses;
     }
 }
 </script>
