@@ -23,7 +23,7 @@
                     placeholder="Chat with your opponent here.">
                 </textarea>
             </div>
-            <div class="mb-3">
+            <div class="d-grid gap-2 mb-3">
                 <button class="btn btn-primary btn-block" type="submit">Chat</button>
                 <button class="btn btn-secondary btn-block" type="reset">Clear</button>
             </div>
