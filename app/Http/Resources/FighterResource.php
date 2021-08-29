@@ -35,6 +35,8 @@ class FighterResource extends JsonResource
             'special' => $this->special,
             'spirit' => $this->special,
             'description' => $this->description,
+            'total_hp' => $this->totalHp,
+            'total_sp' => $this->totalSp,
             'race' => new RaceResource($this->whenLoaded('race')),
             'last_form' => new self($this->whenLoaded('lastForm')),
             'abilities' => AbilityResource::collection($this->abilities),

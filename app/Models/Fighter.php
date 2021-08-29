@@ -95,6 +95,26 @@ class Fighter extends Model
     }
 
     /**
+     * Return total fighter HP.
+     *
+     * @return int
+     */
+    public function getTotalHpAttribute(): int
+    {
+        return self::HEALTH_MAX + $this->hp;
+    }
+
+    /**
+     * Return total fighter SP.
+     *
+     * @return int
+     */
+    public function getTotalSpAttribute(): int
+    {
+        return self::SP_MAX + $this->sp;
+    }
+
+    /**
      * A fighter will belong to many abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

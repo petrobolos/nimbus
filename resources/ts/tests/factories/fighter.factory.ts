@@ -5,7 +5,10 @@ import * as Faker from 'faker';
 
 import FighterInterface from '../../interfaces/fighter.interface';
 
-const name = Faker.company.companyName();
+const name: string = Faker.company.companyName();
+const hp: number = Faker.datatype.number(100);
+const sp: number = Faker.datatype.number(100);
+
 export default Factory.define<FighterInterface>(({ sequence }) => ({
   // TODO: Add in the ability to generate multiple abilities.
   abilities: [],
@@ -15,8 +18,8 @@ export default Factory.define<FighterInterface>(({ sequence }) => ({
   current_sp: 100,
   defense: Faker.datatype.number(100),
   description: Faker.lorem.sentences(5),
-  hp: Faker.datatype.number(100),
-  sp: Faker.datatype.number(100),
+  hp: hp,
+  sp: sp,
   id: sequence,
   is_boss: Faker.datatype.boolean(),
   is_paralyzed: Faker.datatype.boolean(),
@@ -24,5 +27,7 @@ export default Factory.define<FighterInterface>(({ sequence }) => ({
   special: Faker.datatype.number(100),
   speed: Faker.datatype.number(100),
   spirit: Faker.datatype.number(100),
+  total_hp: hp + 100,
+  total_sp: sp + 100,
   uuid: Faker.datatype.uuid(),
 }));

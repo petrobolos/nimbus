@@ -17,5 +17,7 @@ export default interface FighterInterface extends Record<string, unknown> {
   special: number;
   speed: number;
   spirit: number;
+  total_hp: number;
+  total_sp: number;
   uuid: string;
 }
