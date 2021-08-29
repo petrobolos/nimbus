@@ -19,7 +19,7 @@ class AbilitiesData extends Import
             'name' => $row['name'],
             'code' => mb_strtolower($row['code']),
             'cost' => $row['cost'],
-            'type' => Ability::TYPES[mb_strtolower($row['type'])] ?? Ability::TYPE_SPECIAL,
+            'type' => mb_strtolower($row['type']) ?? Ability::TYPE_SPECIAL,
             'description' => $row['description'],
         ]);
     }
