@@ -25,6 +25,10 @@ export default class GameModule extends VuexModule {
     return this.game;
   }
 
+  public get getState(): StateInterface {
+    return this.game.state;
+  }
+
   public get getPlayer(): PlayerInterface {
     return this.game.players[0];
   }
@@ -55,6 +59,10 @@ export default class GameModule extends VuexModule {
 
   public get getAbilities(): AbilityInterface[] {
     return this.getActiveFighter.abilities;
+  }
+
+  public get getGameStateHash(): string {
+    return this.game.state_hash;
   }
 
   public get getGameId(): number {
@@ -199,6 +207,19 @@ export default class GameModule extends VuexModule {
   @Action
   public resetGame(game: GameInterface): void {
     this.context.commit('UPDATE_GAME', game);
+  }
+
+  @Action
+  public async act(model: FighterInterface | AbilityInterface, player: PlayerInterface, type: string): Promise<void> {
+    return Axios.put('/demo/act', {
+      'game_id': this.getGameId,
+      'state_hash': this.getGameStateHash,
+      'action': {
+        'id': model.id,
+        'actor_number': player.id,
+        'actor_type': type,
+      }
+    });
   }
 
   @Action({ rawError: true})

@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import { AxiosResponse } from 'axios';
 import Loading, { LoaderComponent } from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -40,6 +41,8 @@ import { EventBus } from '../../bus';
 import AbilityInterface from '../../interfaces/ability.interface';
 import FighterInterface from '../../interfaces/fighter.interface';
 import GameInterface from '../../interfaces/game.interface';
+import PlayerInterface from '../../interfaces/player.interface';
+import StateInterface from '../../interfaces/state.interface';
 import GameModule from '../../modules/game.module';
 import { DemoInformation } from '../../types/demo/demo-information.type';
 import GameAbilitiesComponent from './Shared/GameAbilitiesComponent.vue';
@@ -62,9 +65,12 @@ export default class GameComponent extends Vue {
     @Prop({ required: false, type: Object }) private readonly demoInformation!: DemoInformation;
 
     @Action private initialize!: (game: GameInterface) => void;
-    @Action private switchOpponentFighter!: (fighter: FighterInterface) => void;
+    @Action private act!: (model: AbilityInterface | FighterInterface, type: string) => Promise<AxiosResponse<any>>;
     @Action private syncDemo!: () => unknown;
 
+    @Getter private getPlayer!: () => PlayerInterface;
+    @Getter private getGameState!: () => StateInterface;
+    @Getter private getGameStateHash!: () => string;
     @Getter private getGameId!: () => number;
     @Getter private getGameType!: () => string;
     @Getter private getImageUrl!: () => string;
@@ -86,7 +92,6 @@ export default class GameComponent extends Vue {
         this.stopLoading();
     }
 
-
     /**
      * Register any event listeners on the component.
      *
@@ -94,8 +99,8 @@ export default class GameComponent extends Vue {
      * @protected
      */
     protected registerEventListeners(): void {
-        EventBus.$on('switch-event', this.act);
-        EventBus.$on('ability-event', this.act);
+        EventBus.$on('switch-event', this.submitAction);
+        EventBus.$on('ability-event', this.submitAction);
     }
 
     /**
@@ -138,8 +143,23 @@ export default class GameComponent extends Vue {
      * @returns {Promise<void>}
      * @protected
      */
-    protected async act(model: AbilityInterface | FighterInterface): Promise<void> {
-        console.log(model);
+    protected async submitAction(model: AbilityInterface | FighterInterface): Promise<void> {
+        if (this.isLoading || this.getGameState().currentPlayer !== this.getPlayer().id) {
+            // Possible need for re-sync?
+            return;
+        }
+        this.loading();
+
+        const type: string = model.uuid !== undefined ? 'fighter' : 'ability';
+        await this.act(model, type)
+            .then((response) => {
+                // Apply state
+                // Change scene
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
     }
 
     /**
@@ -148,7 +168,7 @@ export default class GameComponent extends Vue {
      * @returns {Promise<void>}
      * @protected
      */
-    protected async sync(): Promise<void> {
+    protected async submitSync(): Promise<void> {
         this.loading();
 
         await this.syncDemo();
