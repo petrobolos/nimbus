@@ -217,7 +217,7 @@ export default class GameModule extends VuexModule {
       'action': {
         'id': model.id,
         'actor_number': player.id,
-        'actor_type': type,
+        'type': type,
       }
     });
   }

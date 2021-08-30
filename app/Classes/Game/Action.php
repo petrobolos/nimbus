@@ -21,6 +21,12 @@ class Action
 
     public const TYPE_SWITCH = 'switch';
 
+    public const TYPES = [
+        'ability',
+        'skip',
+        'switch',
+    ];
+
     public int $actorNumber;
 
     public int $id;

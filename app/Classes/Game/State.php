@@ -31,6 +31,31 @@ class State extends CastableDataTransferObject
     }
 
     /**
+     * Add a new item of state to the history.
+     *
+     * @param \App\Classes\Game\Action $action
+     * @return void
+     */
+    public function addToState(Action $action): void
+    {
+        $this->history[] = $action->toArray();
+    }
+
+    /**
+     * Toggle the current player and return the number.
+     *
+     * @return int
+     */
+    public function switchCurrentPlayer(): int
+    {
+        $this->currentPlayer = $this->currentPlayer === Game::PLAYER_FIRST
+            ? Game::PLAYER_SECOND
+            : Game::PLAYER_FIRST;
+
+        return $this->currentPlayer;
+    }
+
+    /**
      * Get the first turn from the state.
      *
      * @return array
