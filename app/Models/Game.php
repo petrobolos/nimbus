@@ -149,6 +149,30 @@ class Game extends Model
     }
 
     /**
+     * Return the current attacking player.
+     *
+     * @return \App\Models\Player
+     */
+    public function getCurrentPlayerAttribute(): Player
+    {
+        return $this->state->currentPlayer === self::PLAYER_FIRST
+            ? $this->firstPlayer
+            : $this->secondPlayer;
+    }
+
+    /**
+     * Return the current defending player.
+     *
+     * @return \App\Models\Player
+     */
+    public function getCurrentOpponentAttribute(): Player
+    {
+        return $this->state->currentPlayer !== self::PLAYER_FIRST
+            ? $this->firstPlayer
+            : $this->secondPlayer;
+    }
+
+    /**
      * Build a description attribute for the current game.
      *
      * @return string
