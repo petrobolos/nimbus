@@ -106,6 +106,20 @@ class Player extends Model
     }
 
     /**
+     * Return the current fighter.
+     *
+     * @return null|\App\Models\Fighter
+     */
+    public function getFighterAttribute(): ?Fighter
+    {
+        return match ($this->current_fighter) {
+            self::FIGHTER_FIRST => $this->current_fighter->firstFighter,
+            self::FIGHTER_SECOND => $this->current_fighter->secondFighter,
+            self::FIGHTER_THIRD => $this->current_fighter->thirdFighter,
+        };
+    }
+
+    /**
      * The player is an AI-controlled player if there's no attached user.
      *
      * @return bool
