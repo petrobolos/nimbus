@@ -27,6 +27,8 @@ class Ability extends Model
     public const TYPE_SPECIAL = 'special';
     public const TYPE_RECOVERY = 'recovery';
 
+    public const SKIP = 'skip';
+
     public const TYPES = [
         self::TYPE_PHYSICAL,
         self::TYPE_SPECIAL,

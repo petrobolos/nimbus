@@ -51,7 +51,7 @@ class Action
 
         $this->model = match ($actionType) {
             self::TYPE_ABILITY => Ability::find($actionId),
-            self::TYPE_SKIP => Ability::where('code', 'skip')->first(),
+            self::TYPE_SKIP => Ability::where('code', Ability::SKIP)->first(),
             self::TYPE_SWITCH => Fighter::find($actionId),
             default => null,
         };
@@ -79,18 +79,6 @@ class Action
         }
 
         return [];
-    }
-
-    /**
-     * Return what type the action is.
-     *
-     * @return null|string
-     */
-    public function type(): ?string
-    {
-        return is_object($this->model)
-            ? $this->model::class
-            : null;
     }
 
     /**

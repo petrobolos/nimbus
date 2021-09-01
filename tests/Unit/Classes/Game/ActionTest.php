@@ -50,23 +50,6 @@ final class ActionTest extends TestCaseWithDatabase
         self::assertContainsOnlyInstancesOf(Action::class, $convertedActions);
     }
 
-    /** @throws \App\Exceptions\Game\InvalidActionException */
-    public function test_type_will_return_what_kind_of_action_the_instance_is(): void
-    {
-        $action = ActionFactory::factory();
-
-        self::assertEquals(Fighter::class, $action->type());
-    }
-
-    /** @throws \App\Exceptions\Game\InvalidActionException */
-    public function test_type_will_return_null_if_for_whatever_reason_the_action_is_nullified(): void
-    {
-        $action = ActionFactory::factory();
-        $action->model = null;
-
-        self::assertNull($action->type());
-    }
-
     public function test_an_action_will_throw_an_exception_if_the_model_does_not_exist(): void
     {
         $this->expectException(InvalidActionException::class);
