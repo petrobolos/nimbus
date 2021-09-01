@@ -115,6 +115,16 @@ class Fighter extends Model
     }
 
     /**
+     * Is this fighter a boss fighter, with the defense amplifiers?
+     *
+     * @return bool
+     */
+    public function isBoss(): bool
+    {
+        return $this->is_boss;
+    }
+
+    /**
      * A fighter will belong to many abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

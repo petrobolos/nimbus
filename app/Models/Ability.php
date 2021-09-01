@@ -72,4 +72,14 @@ class Ability extends Model
             ->as(__FUNCTION__)
             ->withTimestamps();
     }
+
+    /**
+     * Return whether this is a skip turn ability.
+     *
+     * @return bool
+     */
+    public function isSkip(): bool
+    {
+        return $this->code === self::SKIP;
+    }
 }
