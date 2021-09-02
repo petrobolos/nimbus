@@ -30,6 +30,7 @@ class AbilityFactory extends Factory
             'cost' => $this->faker->numberBetween(Ability::MIN_COST, Ability::MAX_COST),
             'type' => $this->faker->randomElement(Ability::TYPES),
             'description' => $this->faker->text(),
+            'effects' => [],
         ];
     }
 }

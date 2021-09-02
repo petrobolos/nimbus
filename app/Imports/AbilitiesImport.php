@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Imports\Sheets\AbilitiesData;
+use App\Imports\Sheets\AbilitiesEffects;
 use App\Imports\Sheets\AbilitiesPivot;
 use App\Models\Ability;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -27,6 +28,7 @@ class AbilitiesImport implements WithMultipleSheets
         return [
             Ability::IMPORT_SHEET_DATA => new AbilitiesData(),
             Ability::IMPORT_SHEET_PIVOT => new AbilitiesPivot(),
+            Ability::IMPORT_SHEET_EFFECTS => new AbilitiesEffects(),
         ];
     }
 }

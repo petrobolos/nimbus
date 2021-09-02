@@ -19,6 +19,7 @@ class Ability extends Model
     public const IMPORT_SHEET = 'game/Abilities.xlsx';
     public const IMPORT_SHEET_DATA = 'Abilities';
     public const IMPORT_SHEET_PIVOT = 'Assignment';
+    public const IMPORT_SHEET_EFFECTS = 'Effects';
 
     public const MIN_COST = 0;
     public const MAX_COST = 10;
@@ -35,6 +36,16 @@ class Ability extends Model
         self::TYPE_RECOVERY,
     ];
 
+    public const EFFECTS = [
+        'recover_hp',
+        'recover_sp',
+        'paralysis',
+        'ohko',
+        'crit_chance',
+        'hp_drain',
+        'pure',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,6 +57,7 @@ class Ability extends Model
         'cost',
         'type',
         'description',
+        'effects',
     ];
 
     /**
@@ -57,6 +69,7 @@ class Ability extends Model
         'cost' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'effects' => 'array',
     ];
 
     /**
