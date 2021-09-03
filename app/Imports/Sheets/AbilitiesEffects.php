@@ -60,37 +60,37 @@ class AbilitiesEffects implements ToCollection, WithHeadingRow, WithProgressBar,
                 'string',
             ],
 
-            'recover_hp' => [
+            Ability::EFFECT_RECOVER_HP => [
                 'nullable',
                 'integer',
             ],
 
-            'recover_sp' => [
+            Ability::EFFECT_RECOVER_SP => [
                 'nullable',
                 'integer',
             ],
 
-            'paralysis' => [
+            Ability::EFFECT_PARALYSIS => [
                 'nullable',
                 'integer',
             ],
 
-            'ohko' => [
+            Ability::EFFECT_OHKO => [
                 'nullable',
                 'integer',
             ],
 
-            'crit_chance' => [
+            Ability::EFFECT_CRIT_CHANCE => [
                 'nullable',
                 'integer',
             ],
 
-            'hp_drain' => [
+            Ability::EFFECT_HP_DRAIN => [
                 'nullable',
                 'boolean',
             ],
 
-            'pure' => [
+            Ability::EFFECT_PURE => [
                 'nullable',
                 'boolean',
             ],

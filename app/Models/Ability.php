@@ -28,6 +28,14 @@ class Ability extends Model
     public const TYPE_SPECIAL = 'special';
     public const TYPE_RECOVERY = 'recovery';
 
+    public const EFFECT_RECOVER_HP = 'recover_hp';
+    public const EFFECT_RECOVER_SP = 'recover_sp';
+    public const EFFECT_PARALYSIS = 'paralysis';
+    public const EFFECT_OHKO = 'ohko';
+    public const EFFECT_CRIT_CHANCE = 'crit_chance';
+    public const EFFECT_HP_DRAIN = 'hp_drain';
+    public const EFFECT_PURE = 'pure';
+
     public const SKIP = 'skip';
 
     public const TYPES = [
@@ -37,13 +45,13 @@ class Ability extends Model
     ];
 
     public const EFFECTS = [
-        'recover_hp',
-        'recover_sp',
-        'paralysis',
-        'ohko',
-        'crit_chance',
-        'hp_drain',
-        'pure',
+        self::EFFECT_RECOVER_HP,
+        self::EFFECT_RECOVER_SP,
+        self::EFFECT_PARALYSIS,
+        self::EFFECT_OHKO,
+        self::EFFECT_CRIT_CHANCE,
+        self::EFFECT_HP_DRAIN,
+        self::EFFECT_PURE,
     ];
 
     /**
