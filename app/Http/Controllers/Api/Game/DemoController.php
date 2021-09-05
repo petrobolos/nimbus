@@ -10,6 +10,7 @@ use App\Http\Resources\GameResource;
 use App\Models\Game;
 use App\Services\ActionService;
 use App\Services\GameService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -28,18 +29,26 @@ class DemoController extends GameController
      */
     public function act(DemoActionRequest $request, ActionService $actionService): JsonResponse
     {
-        $data = $request->validated();
-        $demoGame = Game::findOrFail($data['game_id'] ?? null);
+        try {
+            $data = $request->validated();
+            $demoGame = Game::findOrFail($data['game_id'] ?? null);
 
-        $action = collect(Action::convert([
-            $data['action'],
-        ]))->first();
+            $action = collect(Action::convert([
+                $data['action'],
+            ]))->first();
 
-        $demoGame = $actionService->apply($demoGame, $action);
+            $demoGame = $actionService->apply($demoGame, $action);
 
-        return response()->json([
-            'game' => new GameResource($demoGame),
-        ]);
+            return response()->json([
+                'game' => new GameResource($demoGame),
+            ]);
+        } catch (Exception $exception) {
+            report($exception);
+
+            return response()->json([
+                'error' => $exception->getMessage(),
+            ], $exception->getCode());
+        }
     }
 
     /**
