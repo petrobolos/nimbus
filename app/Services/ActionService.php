@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Classes\Game\Action;
+use App\Exceptions\Game\InsufficientResourceException;
 use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
+use App\Models\Fighter;
 use App\Models\Game;
+use App\Models\Perk;
 use App\Models\Player;
+use App\Services\Game\AbilityService;
 use Exception;
 
 /**
@@ -31,7 +35,7 @@ class ActionService
         $game = match ($action->type) {
             Action::TYPE_ABILITY => $this->attack($game, $game->currentPlayer, $game->currentOpponent, $action->model),
             Action::TYPE_SWITCH => $this->switchFighter($game, $action),
-            Action::TYPE_SKIP => $this->skipTurn($game),
+            Action::TYPE_SKIP => $this->skipTurn(),
         };
 
         // Update the game's state.
@@ -46,121 +50,173 @@ class ActionService
     }
 
     /**
-     * @param \App\Models\Game $game
-     * @param \App\Models\Player $player
-     * @param \App\Models\Player $opponent
+     * Launch a given attack against a defending fighter.
+     *
+     * @param \App\Models\Fighter $attacker
+     * @param \App\Models\Fighter $defender
      * @param \App\Models\Ability $ability
-     * @throws \App\Exceptions\Game\InvalidActionException|\Exception
-     * @return \App\Models\Game
+     * @throws \App\Exceptions\Game\InsufficientResourceException
+     * @return void
      */
-    private function attack(Game $game, Player $player, Player $opponent, Ability $ability): Game
+    private function attack(Fighter $attacker, Fighter $defender, Ability $ability): void
     {
         if ($ability->isSkip()) {
-            throw new InvalidActionException('Skip ability has been inadvertently passed to the attack method.');
+            $this->skipTurn();
+
+            return;
         }
 
-        // For convenience, gather the current attacker and defender on the field.
-        $attacker = $player->fighter;
-        $defender = $opponent->fighter;
-
-        if ($ability->cost > $attacker->current_sp || ($ability->effects[Ability::EFFECT_HP_DRAIN] && ($attacker->current_hp - $ability->cost > 0) && ($ability->cost > $attacker->current_hp))) {
-            throw new Exception('You don\'t have enough SP (or HP) for this move...');
+        if (! $attacker->hasEnoughResource($ability)) {
+            throw new InsufficientResourceException();
         }
 
-        // Abilities that are free have base damage set to 1. We don't want any divisions by zero!
-        $cost = $ability->cost ?: 1;
+        switch ($ability->type) {
+            case Ability::TYPE_PHYSICAL:
+                $this->damageCalculator($attacker, $defender, $ability, $attacker->attack);
+                break;
 
-        if ($ability->type === Ability::TYPE_RECOVERY) {
-            $attacker->current_hp += $ability->effects[Ability::EFFECT_RECOVER_HP];
-            $attacker->current_sp += $ability->effects[Ability::EFFECT_RECOVER_SP];
-        } else {
-            // Attacks that are physical use their attack as their multiplier, and special attacks use the special stat.
-            $multiplier = match ($ability->type) {
-                Ability::TYPE_PHYSICAL => $attacker->attack,
-                Ability::TYPE_SPECIAL => $attacker->special,
-            };
+            case Ability::TYPE_SPECIAL:
+                $this->damageCalculator($attacker, $defender, $ability, $attacker->special);
+                break;
 
-            // Calculate a critical hit chance for the attack, which will double its damage.
-            // If the ability has an elevated crit chance, this is added to the calculation.
-            $elevatedCritChance = is_numeric($ability->effects[Ability::EFFECT_CRIT_CHANCE])
-                ? Ability::EFFECT_CRIT_CHANCE / 2
-                : 0;
+            case Ability::TYPE_RECOVERY:
+                $this->recover($attacker, $ability);
+                break;
+        }
 
-            $criticalChance = ceil(7 + ($attacker->speed / 7) + $elevatedCritChance);
-            $isCriticalHit = $criticalChance >= random_int(0, 100);
+        $this->deductCosts($attacker, $ability);
+    }
 
-            // Calculate a critical hit chance for the defense, which will greatly negate incoming damage.
-            $criticalDefenseChance = ceil(7 + ($defender->spirit / 7));
-            $isPerfectDefend = $criticalDefenseChance >= random_int(0, 255);
+    /**
+     * Calculate damage between fighters with an ability.
+     *
+     * @param \App\Models\Fighter $attacker
+     * @param \App\Models\Fighter $defender
+     * @param \App\Models\Ability $ability
+     * @param int $multiplier
+     * @throws \Exception
+     * @return void
+     */
+    private function damageCalculator(Fighter $attacker, Fighter $defender, Ability $ability, int $multiplier): void
+    {
+        if (! $defender->isImmuneToAbility($attacker->race, $ability)) {
+            $luck = config('battle.calculation_stats.luck');
+            $easyChance = config('battle.calculation_stats.easy_chance');
+            $hardChance = config('battle.calculation_stats.hard_chance');
 
-            // This is the base damage that is to be outputted prior to factoring in critical hits or defense.
-            $initialDamageCalculation = $cost + ($multiplier * 0.9);
+            $attack = $this->calculateOffense($attacker, $defender, $ability, $multiplier);
+            $defense = $this->calculateDefense($attacker, $defender);
 
-            // If the enemy is a boss, we add an extra 10 to the enemy defense.
-            $bossArmour = $defender->isBoss() ? 10 : 0;
+            // Calculate the final amount to be removed.
+            $result = $attack - $defense;
+            $result = $result < 0 ? 0 : $result;
 
-            // Determine final damage and defense quantities before the final calculation, depending on critical hits.
-            $attackCalculation = $isCriticalHit ? $initialDamageCalculation * 2 : $initialDamageCalculation;
-            $defenseCalculation = $bossArmour + ($isPerfectDefend ? ($defender->defense / 2) : ($defender->defense / 4));
+            if (is_numeric($ability[Ability::EFFECT_OHKO])) {
+                $ohkoChance = floor($luck + ($ability->effects[Ability::EFFECT_OHKO]) / $luck);
+                $ohkoRange = $attacker->isBoss() ? $easyChance : $hardChance;
 
-            $finalCalc = $attackCalculation - $defenseCalculation;
-
-            // Calculate OHKO chances if this move uses them.
-            if (is_numeric($ability->effects[Ability::EFFECT_OHKO])) {
-                $ohkoChance = floor(7 + ($ability->effects[Ability::EFFECT_OHKO] / 7));
-
-                // Bosses have a significantly higher chance of scoring an OHKO.
-                $bossOhkoChance = $attacker->isBoss() ? 100 : 255;
-                $isOhko = $ohkoChance >= random_int(0, $bossOhkoChance);
-
-                if ($isOhko) {
-                    $finalCalc += $defender->current_hp;
+                if ($ohkoChance > random_int(0, $ohkoRange)) {
+                    $result += $defender->current_hp;
                 }
             }
 
-            // As we don't want to inadvertently restore health, the minimum damage that can be inflicted is zero.
-            if ($finalCalc < 0) {
-                $finalCalc = 0;
-            }
-
-            // Do the calculation!
-            $defender->current_hp -= $finalCalc;
-
-            // If they're still breathing, do paralysis checks.
-            if ($defender->current_hp > 0 && is_numeric($ability->effects[Ability::EFFECT_PARALYSIS])) {
+            if (is_numeric($ability[Ability::EFFECT_PARALYSIS] && $result >= $defender->current_hp)) {
                 $paralysisChance = ceil($ability->effects[Ability::EFFECT_PARALYSIS] / 2);
-                $paralysisCheck = $paralysisChance >= random_int(0, 100);
 
-                if ($paralysisCheck) {
+                if ($paralysisChance >= random_int(0, $easyChance)) {
                     $defender->is_paralyzed = true;
                 }
             }
-        }
 
-        // Most fighters will use SP to pay for abilities, but abilities with HP drain will cost HP instead.
+            $defender->current_hp -= $result;
+            $defender->current_hp = $defender->current_hp < 0 ? 0 : $defender->current_hp;
+
+            $defender->save();
+        }
+    }
+
+    /**
+     * Calculate the offense of the calculation.
+     *
+     * @param \App\Models\Fighter $attacker
+     * @param \App\Models\Fighter $defender
+     * @param \App\Models\Ability $ability
+     * @param int $multiplier
+     * @throws \Exception
+     * @return float
+     */
+    private function calculateOffense(Fighter $attacker, Fighter $defender, Ability $ability, int $multiplier): float
+    {
+        $baseDamage = config('battle.calculation_stats.damage');
+        $baseLuck = config('battle.calculation_stats.luck');
+        $luckChance = config('battle.calculation_stats.easy_chance');
+        $statBonus = config('battle.calculation_stats.multiplier');
+
+        // Calculate race offense.
+        $superEffectiveAttack = $attacker->compareRace($defender->race, Perk::TYPE_SUPER_EFFECTIVE) ? 1.5 : 1;
+        $ineffectiveAttack = $attacker->compareRace($defender->race, Perk::TYPE_INEFFECTIVE) ? 0.5 : 1;
+
+        // Calculate whether this will be a critical hit.
+        $abilityBonusCriticalChance = is_numeric($ability->effects[Ability::EFFECT_CRIT_CHANCE]) ? Ability::EFFECT_CRIT_CHANCE / 2 : 0;
+        $critMultiplier = ceil($baseLuck + ($attacker->speed / $baseLuck) + $abilityBonusCriticalChance) > random_int(0, $luckChance) ? 2 : 1;
+
+        return floor(((($ability->cost ?: $baseDamage) + ($multiplier * $statBonus) * $superEffectiveAttack) * $ineffectiveAttack) * $critMultiplier);
+    }
+
+    /**
+     * Calculate the defense of the calculation.
+     *
+     * @param \App\Models\Fighter $attacker
+     * @param \App\Models\Fighter $defender
+     * @throws \Exception
+     * @return float
+     */
+    private function calculateDefense(Fighter $attacker, Fighter $defender): float
+    {
+        $baseLuck = config('battle.calculation_stats.luck');
+        $baseChance = config('battle.calculation_stats.hard_chance');
+        $bossArmour = $defender->isBoss() ? config('battle.boss_perks.armour') : 0;
+
+        $isResistant = $defender->compareRace($attacker->race, Perk::TYPE_RESISTANCE) ? 1.5 : 1;
+        $isWeak = $defender->compareRace($attacker->race, Perk::TYPE_WEAKNESS) ? 0.5 : 1;
+        $defense = ceil($baseLuck + ($defender->spirit / $baseLuck)) >= random_int(0, $baseChance) ? 4 : 2;
+
+        return floor(((($defense + $bossArmour) * $isResistant) * $isWeak));
+    }
+
+    /**
+     * Deduct costs accrued from the use of the ability, typically SP.
+     *
+     * @param \App\Models\Fighter $attacker
+     * @param \App\Models\Ability $ability
+     * @return void
+     */
+    private function deductCosts(Fighter $attacker, Ability $ability): void
+    {
         if ($ability->effects[Ability::EFFECT_HP_DRAIN]) {
-            $attacker->current_hp -= $cost;
+            $attacker->current_hp -= $ability->cost;
+            $attacker->current_hp = $attacker->current_hp < 0 ? 0 : $attacker->current_hp;
         } else {
-            $attacker->current_sp -= $cost;
-        }
-
-        // Normalise values to 0 if they have gone negative. (Except for attacker HP, which shouldn't go zero at all.)
-        if ($attacker->current_hp < 0) {
-            $attacker->current_hp = 1;
-        }
-
-        if ($attacker->current_sp < 0) {
-            $attacker->current_sp = 0;
-        }
-
-        if ($defender->current_hp < 0) {
-            $defender->current_hp = 0;
+            $attacker->current_sp -= $ability->cost;
+            $attacker->current_sp = $attacker->current_sp < 0 ? 0 : $attacker->current_sp;
         }
 
         $attacker->save();
-        $defender->save();
+    }
 
-        return $game;
+    /**
+     * Recover resources when the ability is of that type.
+     *
+     * @param \App\Models\Fighter $healer
+     * @param \App\Models\Ability $recoveryAbility
+     * @return void
+     */
+    private function recover(Fighter $healer, Ability $recoveryAbility): void
+    {
+        $healer->current_hp += $recoveryAbility->effects[Ability::EFFECT_RECOVER_HP];
+        $healer->current_sp += $recoveryAbility->effects[Ability::EFFECT_RECOVER_SP];
+
+        $healer->save();
     }
 
     private function switchFighter(Game $game, Action $replacement)
@@ -168,8 +224,8 @@ class ActionService
         return $game;
     }
 
-    private function skipTurn(Game $game)
+    private function skipTurn(): void
     {
-        return $game;
+        return;
     }
 }
