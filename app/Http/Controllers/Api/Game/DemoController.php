@@ -33,9 +33,9 @@ class DemoController extends GameController
             $data = $request->validated();
             $demoGame = Game::findOrFail($data['game_id'] ?? null);
 
-            $action = collect(Action::convert([
+            $action = head(Action::convert([
                 $data['action'],
-            ]))->first();
+            ]));
 
             $demoGame = $actionService->apply($demoGame, $action);
 
