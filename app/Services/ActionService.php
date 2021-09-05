@@ -4,14 +4,11 @@ namespace App\Services;
 
 use App\Classes\Game\Action;
 use App\Exceptions\Game\InsufficientResourceException;
-use App\Exceptions\Game\InvalidActionException;
 use App\Models\Ability;
 use App\Models\Fighter;
 use App\Models\Game;
 use App\Models\Perk;
 use App\Models\Player;
-use App\Services\Game\AbilityService;
-use Exception;
 
 /**
  * Class ActionService
@@ -25,18 +22,24 @@ class ActionService
      *
      * @param \App\Models\Game $game
      * @param \App\Classes\Game\Action $action
-     * @throws \App\Exceptions\Game\InvalidActionException
+     * @throws \App\Exceptions\Game\InsufficientResourceException
      * @return \App\Models\Game
      */
     public function apply(Game $game, Action $action): Game
     {
-        // Pass into an act method where everything is tied together
-        // But first determine what kind of act it is so that it can be passed to the appropriate method
-        $game = match ($action->type) {
-            Action::TYPE_ABILITY => $this->attack($game, $game->currentPlayer, $game->currentOpponent, $action->model),
-            Action::TYPE_SWITCH => $this->switchFighter($game, $action),
-            Action::TYPE_SKIP => $this->skipTurn(),
-        };
+        switch ($action->type) {
+            case Action::TYPE_ABILITY:
+                $this->attack($game->currentPlayer->fighter, $game->currentOpponent->fighter, $action->model);
+                break;
+
+            case Action::TYPE_SWITCH:
+                $this->switchFighter($game->currentPlayer, $action->model);
+                break;
+
+            case Action::TYPE_SKIP:
+                $this->skipTurn($game->currentPlayer->fighter);
+                break;
+        }
 
         // Update the game's state.
         $game->state->addToState($action);
@@ -55,13 +58,13 @@ class ActionService
      * @param \App\Models\Fighter $attacker
      * @param \App\Models\Fighter $defender
      * @param \App\Models\Ability $ability
-     * @throws \App\Exceptions\Game\InsufficientResourceException
+     * @throws \App\Exceptions\Game\InsufficientResourceException|\Exception
      * @return void
      */
     private function attack(Fighter $attacker, Fighter $defender, Ability $ability): void
     {
         if ($ability->isSkip()) {
-            $this->skipTurn();
+            $this->skipTurn($attacker);
 
             return;
         }
@@ -219,12 +222,12 @@ class ActionService
         $healer->save();
     }
 
-    private function switchFighter(Game $game, Action $replacement)
+    private function switchFighter(Player $player, Fighter $replacementFighter): void
     {
-        return $game;
+        return;
     }
 
-    private function skipTurn(): void
+    private function skipTurn(Fighter $skipper): void
     {
         return;
     }
