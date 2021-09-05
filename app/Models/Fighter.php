@@ -125,6 +125,54 @@ class Fighter extends Model
     }
 
     /**
+     * Does this fighter's race have an immunity against the incoming damage type?
+     *
+     * @param \App\Models\Race $enemyRace
+     * @param \App\Models\Ability $ability
+     * @return bool
+     */
+    public function isImmuneToAbility(Race $enemyRace, Ability $ability): bool
+    {
+        return ($ability->type === Ability::TYPE_PHYSICAL && $this->compareRace($enemyRace, Perk::TYPE_PHYSICAL_IMMUNITY)) ||
+            ($ability->type === Ability::TYPE_SPECIAL && $this->compareRace($enemyRace, Perk::TYPE_SPECIAL_IMMUNITY));
+    }
+
+    /**
+     * Returns whether this fighter has enough resource to cast this ability.
+     *
+     * @param \App\Models\Ability $ability
+     * @return bool
+     */
+    public function hasEnoughResource(Ability $ability): bool
+    {
+        if ($ability->cost === 0) {
+            return true;
+        }
+
+        if ($ability->effects[Ability::EFFECT_HP_DRAIN]) {
+            return $ability->cost > $this->current_hp && ($this->current_hp - $ability->cost) > 0;
+        }
+
+        return $ability->cost > $this->current_sp;
+    }
+
+    /**
+     * Check the perks of this fighter against the race of the enemy.
+     *
+     * @param \App\Models\Race $enemyRace
+     * @param string $perkType
+     * @return bool
+     */
+    public function compareRace(Race $enemyRace, string $perkType): bool
+    {
+        return Perk::where([
+            ['for_race', '=', $this->race],
+            ['against_race', '=', $enemyRace],
+            ['type', '=', $perkType],
+        ])->exists();
+    }
+
+    /**
      * A fighter will belong to many abilities.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
