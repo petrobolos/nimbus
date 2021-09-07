@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Classes\Game\Action;
+use App\Exceptions\Game\FighterIsDefeatedException;
 use App\Exceptions\Game\InsufficientResourceException;
+use App\Exceptions\Game\InvalidFighterSwitchException;
 use App\Models\Ability;
 use App\Models\Fighter;
 use App\Models\Game;
@@ -22,7 +24,9 @@ class ActionService
      *
      * @param \App\Models\Game $game
      * @param \App\Classes\Game\Action $action
+     * @throws \App\Exceptions\Game\FighterIsDefeatedException
      * @throws \App\Exceptions\Game\InsufficientResourceException
+     * @throws \App\Exceptions\Game\InvalidFighterSwitchException
      * @return \App\Models\Game
      */
     public function apply(Game $game, Action $action): Game
@@ -37,7 +41,7 @@ class ActionService
                 break;
 
             case Action::TYPE_SKIP:
-                $this->skipTurn($game->currentPlayer->fighter);
+                $this->skipTurn($game->currentPlayer->fighter, $action->model);
                 break;
         }
 
@@ -64,7 +68,7 @@ class ActionService
     private function attack(Fighter $attacker, Fighter $defender, Ability $ability): void
     {
         if ($ability->isSkip()) {
-            $this->skipTurn($attacker);
+            $this->skipTurn($attacker, $ability->s);
 
             return;
         }
@@ -222,13 +226,45 @@ class ActionService
         $healer->save();
     }
 
+    /**
+     * Switch fighter with the selected character.
+     *
+     * @param \App\Models\Player $player
+     * @param \App\Models\Fighter $replacementFighter
+     * @throws \App\Exceptions\Game\FighterIsDefeatedException
+     * @throws \App\Exceptions\Game\InvalidFighterSwitchException
+     * @return void
+     */
     private function switchFighter(Player $player, Fighter $replacementFighter): void
     {
-        return;
+        $fighters = array_filter([
+            $player->firstFighter?->id,
+            $player->secondFighter?->id,
+            $player->thirdFighter?->id,
+        ]);
+        $fighters = array_combine($fighters, $fighters);
+
+        if (! isset($fighters[$replacementFighter->id])) {
+            throw new InvalidFighterSwitchException();
+        }
+
+        if ($fighters[$replacementFighter->id]->current_hp <= 0) {
+            throw new FighterIsDefeatedException();
+        }
+
+        $player->update(['current_fighter' => $replacementFighter->id]);
     }
 
+    /**
+     * Skips a turn. Cures paralysis.
+     *
+     * @param \App\Models\Fighter $skipper
+     * @return void
+     */
     private function skipTurn(Fighter $skipper): void
     {
-        return;
+        if ($skipper->is_paralyzed) {
+            $skipper->update(['is_paralyzed' => false]);
+        }
     }
 }
