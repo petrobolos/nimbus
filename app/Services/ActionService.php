@@ -41,7 +41,7 @@ class ActionService
                 break;
 
             case Action::TYPE_SKIP:
-                $this->skipTurn($game->currentPlayer->fighter, $action->model);
+                $this->skipTurn($game->currentPlayer->fighter);
                 break;
         }
 
@@ -68,7 +68,7 @@ class ActionService
     private function attack(Fighter $attacker, Fighter $defender, Ability $ability): void
     {
         if ($ability->isSkip()) {
-            $this->skipTurn($attacker, $ability->s);
+            $this->skipTurn($attacker);
 
             return;
         }
