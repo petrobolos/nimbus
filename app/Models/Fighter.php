@@ -133,8 +133,13 @@ class Fighter extends Model
      */
     public function isImmuneToAbility(Race $enemyRace, Ability $ability): bool
     {
-        return ($ability->type === Ability::TYPE_PHYSICAL && $this->compareRace($enemyRace, Perk::TYPE_PHYSICAL_IMMUNITY)) ||
-            ($ability->type === Ability::TYPE_SPECIAL && $this->compareRace($enemyRace, Perk::TYPE_SPECIAL_IMMUNITY));
+        $immunityType = match ($ability->type) {
+            Ability::TYPE_PHYSICAL => Perk::TYPE_PHYSICAL_IMMUNITY,
+            Ability::TYPE_SPECIAL => Perk::TYPE_SPECIAL_IMMUNITY,
+            default => null,
+        };
+
+        return $immunityType !== null && $this->compareRace($enemyRace, $immunityType);
     }
 
     /**
@@ -166,8 +171,8 @@ class Fighter extends Model
     public function compareRace(Race $enemyRace, string $perkType): bool
     {
         return Perk::where([
-            ['for_race', '=', $this->race],
-            ['against_race', '=', $enemyRace],
+            ['for_race', '=', $this->race->id],
+            ['against_race', '=', $enemyRace->id],
             ['type', '=', $perkType],
         ])->exists();
     }
