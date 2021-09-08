@@ -27,4 +27,13 @@ final class AbilityTest extends TestCaseWithDatabase
         self::assertInstanceOf(Fighter::class, $ability->fighters->first());
         self::assertEquals($fighter->id, $ability->fighters->first()->id);
     }
+
+    public function test_is_skip_correctly_detects_a_move_as_the_turn_skipper(): void
+    {
+        $skip = Ability::factory()->make(['code' => Ability::SKIP]);
+        $notSkip = Ability::factory()->make();
+
+        self::assertTrue($skip->isSkip());
+        self::assertFalse($notSkip->isSkip());
+    }
 }
