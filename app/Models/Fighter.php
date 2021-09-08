@@ -139,6 +139,10 @@ class Fighter extends Model
             default => null,
         };
 
+        if ($ability->isSkip()) {
+            return false;
+        }
+
         return $immunityType !== null && $this->compareRace($enemyRace, $immunityType);
     }
 

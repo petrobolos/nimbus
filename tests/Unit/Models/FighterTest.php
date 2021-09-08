@@ -49,19 +49,18 @@ final class FighterTest extends TestCaseWithDatabase
 
     public function test_is_immune_to_ability_correctly_determines_if_a_fighter_is_immune_to_a_specific_kind_of_damage(): void
     {
-        $this->withoutExceptionHandling();
         $attacking = Fighter::factory()->create();
         $defending = Fighter::factory()->create();
 
         Perk::factory()->create([
-            'for_race' => $defending,
-            'against_race' => $attacking,
+            'for_race' => $defending->race->id,
+            'against_race' => $attacking->race->id,
             'type' => Perk::TYPE_PHYSICAL_IMMUNITY,
         ]);
 
         Perk::factory()->create([
-            'for_race' => $defending,
-            'against_race' => $attacking,
+            'for_race' => $defending->race->id,
+            'against_race' => $attacking->race->id,
             'type' => Perk::TYPE_SPECIAL_IMMUNITY,
         ]);
 
@@ -71,6 +70,12 @@ final class FighterTest extends TestCaseWithDatabase
         self::assertTrue($defending->isImmuneToAbility($attacking->race, $physicalAbility));
         self::assertTrue($defending->isImmuneToAbility($attacking->race, $specialAbility));
 
+        // There also two circumstances in which should always return false: skips and recovery moves.
+        $recoveryAbility = Ability::factory()->create(['type' => Ability::TYPE_RECOVERY]);
+        $skipAbility = Ability::factory()->create(['code' => Ability::SKIP]);
+
+        self::assertFalse($defending->isImmuneToAbility($attacking->race, $recoveryAbility));
+        self::assertFalse($defending->isImmuneToAbility($attacking->race, $skipAbility));
     }
 
     public function test_a_fighter_can_retrieve_their_previous_form_if_they_have_one(): void
