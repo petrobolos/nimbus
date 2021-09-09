@@ -44,12 +44,13 @@ final class GameTest extends TestCaseWithDatabase
     {
         $game = Game::factory()->create();
 
-        self::assertSame($game->firstPlayer->id, $game->currentPlayer->id);
-        self::assertSame($game->secondPlayer->id, $game->currentOpponent->id);
-
         $game->state->switchCurrentPlayer();
         self::assertSame($game->secondPlayer->id, $game->currentPlayer->id);
         self::assertSame($game->firstPlayer->id, $game->currentOpponent->id);
+
+        $game->state->switchCurrentPlayer();
+        self::assertSame($game->firstPlayer->id, $game->currentPlayer->id);
+        self::assertSame($game->secondPlayer->id, $game->currentOpponent->id);
     }
 
     public function test_a_game_can_be_determined_to_be_in_progress(): void
