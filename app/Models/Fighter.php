@@ -158,11 +158,11 @@ class Fighter extends Model
             return true;
         }
 
-        if ($ability->effects[Ability::EFFECT_HP_DRAIN]) {
-            return $ability->cost > $this->current_hp && ($this->current_hp - $ability->cost) > 0;
+        if ($ability->effects[Ability::EFFECT_HP_DRAIN] ?? false) {
+            return $ability->cost <= $this->current_hp && ($this->current_hp - $ability->cost) > 0;
         }
 
-        return $ability->cost > $this->current_sp;
+        return $this->current_sp >= $ability->cost;
     }
 
     /**
