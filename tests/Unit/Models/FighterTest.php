@@ -8,6 +8,7 @@ use App\Models\Perk;
 use App\Models\Pivots\FighterAbility;
 use App\Models\Race;
 use App\Support\RegularExpressions;
+use Closure;
 use Tests\TestCaseWithDatabase;
 
 /**
@@ -76,6 +77,65 @@ final class FighterTest extends TestCaseWithDatabase
 
         self::assertFalse($defending->isImmuneToAbility($attacking->race, $recoveryAbility));
         self::assertFalse($defending->isImmuneToAbility($attacking->race, $skipAbility));
+    }
+
+    /**
+     * @dataProvider provideFightersAndAbilitiesForTestingResourceChecks
+     * @param \Closure $fighterFactory
+     * @param \Closure $abilityFactory
+     * @param bool $expected
+     */
+    public function test_has_enough_resource_returns_the_correct_result_depending_on_the_fighters_current_sp_or_hp(Closure $fighterFactory, Closure $abilityFactory, bool $expected): void
+    {
+        /**
+         * @var \App\Models\Fighter $fighter
+         * @var \App\Models\Ability $ability
+         */
+
+        $fighter = $fighterFactory();
+        $ability = $abilityFactory();
+
+        self::assertSame($expected, $fighter->hasEnoughResource($ability));
+    }
+
+    /**
+     * Provide fighters, abilities, and the expected output.
+     *
+     * @return array[]
+     */
+    public function provideFightersAndAbilitiesForTestingResourceChecks(): array
+    {
+        return [
+            'Fighter with sufficient SP' => [
+                static fn () => Fighter::factory()->make(['current_sp' => Fighter::SP_MAX]),
+                static fn () => Ability::factory()->make(['cost' => 10]),
+                true,
+            ],
+
+            'Fighter with insufficient SP' => [
+                static fn () => Fighter::factory()->make(['current_sp' => Fighter::SP_MIN]),
+                static fn () => Ability::factory()->make(['cost' => 10]),
+                false,
+            ],
+
+            'Fighter with sufficient HP for an ability with HP drain' => [
+                static fn () => Fighter::factory()->make(['current_hp' => Fighter::HEALTH_MAX]),
+                static fn () => Ability::factory()->make(['cost' => 10, 'effects' => [Ability::EFFECT_HP_DRAIN => true]]),
+                true,
+            ],
+
+            'Fighter with insufficient HP for an ability with HP drain' => [
+                static fn () => Fighter::factory()->make(['current_hp' => 20]),
+                static fn () => Ability::factory()->make(['cost' => 30, 'effects' => [Ability::EFFECT_HP_DRAIN => true]]),
+                false,
+            ],
+
+            'Ability is free regardless of ability type and resource' => [
+                static fn () => Fighter::factory()->make(),
+                static fn () => Ability::factory()->make(['cost' => Ability::MIN_COST]),
+                true,
+            ],
+        ];
     }
 
     public function test_a_fighter_can_retrieve_their_previous_form_if_they_have_one(): void
