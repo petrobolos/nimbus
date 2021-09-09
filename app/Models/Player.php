@@ -113,9 +113,10 @@ class Player extends Model
     public function getFighterAttribute(): ?Fighter
     {
         return match ($this->current_fighter) {
-            self::FIGHTER_FIRST => $this->current_fighter->firstFighter,
-            self::FIGHTER_SECOND => $this->current_fighter->secondFighter,
-            self::FIGHTER_THIRD => $this->current_fighter->thirdFighter,
+            self::FIGHTER_FIRST => $this->firstFighter,
+            self::FIGHTER_SECOND => $this->secondFighter,
+            self::FIGHTER_THIRD => $this->thirdFighter,
+            default => null,
         };
     }
 
