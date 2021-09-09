@@ -40,6 +40,18 @@ final class GameTest extends TestCaseWithDatabase
         self::assertInstanceOf(Player::class, $this->game->secondPlayer);
     }
 
+    public function test_current_player_and_current_opponent_will_correctly_retrieve_players(): void
+    {
+        $game = Game::factory()->create();
+
+        self::assertSame($game->firstPlayer->id, $game->currentPlayer->id);
+        self::assertSame($game->secondPlayer->id, $game->currentOpponent->id);
+
+        $game->state->switchCurrentPlayer();
+        self::assertSame($game->secondPlayer->id, $game->currentPlayer->id);
+        self::assertSame($game->firstPlayer->id, $game->currentOpponent->id);
+    }
+
     public function test_a_game_can_be_determined_to_be_in_progress(): void
     {
         $game = Game::factory()->make(['status' => Game::STATUS_IN_PROGRESS]);
