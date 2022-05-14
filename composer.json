@@ -1,22 +1,35 @@
 {
-    "name": "laravel/laravel",
+    "name": "petrobolos/nimbus",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "A modern interpretation of the DragonBallGT.net / Virtuagame.net webgame.",
+    "keywords": ["game", "game engine", "laravel", "vuejs"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-gd": "*",
+        "ext-pdo": "*",
+        "ext-zip": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "daux/daux.io": "^0.18.1",
+        "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "^2.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^9.5.10",
+        "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
@@ -44,7 +57,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "extra": {
         "laravel": {
@@ -54,7 +69,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
