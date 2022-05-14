@@ -1,0 +1,16 @@
+* text=auto
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+*.css linguist-vendored
+*.scss linguist-vendored
+*.js linguist-vendored
+*.xlsx linguist-language=XML
+*.xlsx linguist-detectable=true
+*.xml linguist-detectable=true
+
+/.github export-ignore
+CHANGELOG.md export-ignore

@@ -1,0 +1,16 @@
+{
+    "title": "DBGT",
+    "tagline": "DBGT Development Documentation",
+    "author": "Oliver Earl",
+    "html": {
+        "theme": "daux-blue",
+        "breadcrumbs": true,
+        "breadcrumb_seperator": "Chevrons",
+        "toggle_code": true,
+        "date_modified": true,
+        "inherit_index": true,
+        "auto_toc": false,
+        "jump_buttons": true,
+        "repo": "oliverearl/dbgt"
+    }
+}
