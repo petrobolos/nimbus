@@ -1,4 +1,4 @@
-name: TypeScript
+name: "Run Jest Tests"
 
 on: [push]
 
