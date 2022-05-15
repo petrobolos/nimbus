@@ -11,15 +11,24 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vue()
+mix.js('resources/js/app.js', 'public/js').vue({version: 3})
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
     ])
     .alias({
-        '@': 'resources/js',
-    });
+        '@' : 'resources/js',
+    })
+    .webpackConfig(require('./webpack.config'))
+    .setPublicPath('public');
 
 if (mix.inProduction()) {
     mix.version();
+} else {
+    mix.browserSync({
+        proxy: 'localhost',
+        open: false,
+    });
 }
+
+mix.disableSuccessNotifications();
