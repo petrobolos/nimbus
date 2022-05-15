@@ -1,3 +1,22 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* Material icon sizes */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-30 { font-size: 30px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Main menu */
+.menu-item {
+    border-bottom: 1px solid #4f4f69;
+    border-right: 0 solid #5350a6;
+}
+.menu-item:hover {
+    border-right: 4px solid #5350a6;
+}
+.menu-item.active {
+    border-right: 8px solid #5350a6;
+}
