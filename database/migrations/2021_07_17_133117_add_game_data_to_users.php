@@ -10,10 +10,12 @@ return new class () extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table
                 ->string('username')
+                ->nullable()
                 ->unique()
                 ->after('name');
             $table
                 ->date('date_of_birth')
+                ->nullable()
                 ->after('email');
             $table
                 ->dateTime('muted_until')
