@@ -14,6 +14,20 @@ class Fighter extends Model
     use HasFactory;
 
     /**
+     * The minimum value that a stat can be.
+     *
+     * @var int
+     */
+    public const STAT_MIN = 0;
+
+    /**
+     * The maximum value that a stat can be.
+     *
+     * @var int
+     */
+    public const STAT_MAX = 100;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
