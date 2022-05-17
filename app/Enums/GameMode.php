@@ -20,6 +20,32 @@ enum GameMode: int
     }
 
     /**
+     * Return an array of the game modes that are single player.
+     *
+     * @return \App\Enums\GameMode[]
+     */
+    public static function singlePlayerModes(): array
+    {
+        return [
+            self::DEMO,
+            self::AGAINST_AI,
+        ];
+    }
+
+    /**
+     * Return an array of the game modes that are multiplayer.
+     *
+     * @return \App\Enums\GameMode[]
+     */
+    public static function multiplayerModes(): array
+    {
+        return [
+            self::RANKED_MULTIPLAYER,
+            self::UNRANKED_MULTIPLAYER,
+        ];
+    }
+
+    /**
      * Pretty-print the game mode.
      *
      * @return string
