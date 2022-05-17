@@ -40,6 +40,20 @@ class PartyMember extends Model
     ];
 
     /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::creating(static function (self $partyMember) {
+            $partyMember->hp = Fighter::STAT_MAX + $partyMember->fighter->base_hp;
+            $partyMember->sp = Fighter::STAT_MAX + $partyMember->fighter->base_sp;
+            $partyMember->is_paralyzed = false;
+        });
+    }
+
+    /**
      * A party member belongs to a fighter.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
