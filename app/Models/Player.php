@@ -19,9 +19,9 @@ class Player extends Model
      */
     protected $fillable = [
         'user_id',
-        'party_member_id_1',
-        'party_member_id_2',
-        'party_member_id_3',
+        'party_member_1_id',
+        'party_member_2_id',
+        'party_member_3_id',
     ];
 
     /**
@@ -51,7 +51,7 @@ class Player extends Model
      */
     public function first(): BelongsTo
     {
-        return $this->belongsTo(PartyMember::class, 'party_member_id_1');
+        return $this->belongsTo(PartyMember::class, 'party_member_1_id');
     }
 
     /**
@@ -61,7 +61,7 @@ class Player extends Model
      */
     public function second(): BelongsTo
     {
-        return $this->belongsTo(PartyMember::class, 'party_member_id_2');
+        return $this->belongsTo(PartyMember::class, 'party_member_2_id');
     }
 
     /**
@@ -71,7 +71,7 @@ class Player extends Model
      */
     public function third(): BelongsTo
     {
-        return $this->belongsTo(PartyMember::class, 'party_member_id_3');
+        return $this->belongsTo(PartyMember::class, 'party_member_3_id');
     }
 
     /**
