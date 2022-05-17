@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GameLogic\PartyMember;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,7 +11,8 @@ return new class () extends Migration {
         Schema::table('players', function (Blueprint $table) {
             $table
                 ->unsignedBigInteger('current_party_member_id')
-                ->after('party_member_id_3')
+                ->after('party_member_3_id')
+                ->default(PartyMember::default())
                 ->index();
         });
     }

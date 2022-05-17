@@ -28,7 +28,8 @@ return new class () extends Migration {
             $table
                 ->boolean('is_admin')
                 ->default(false)
-                ->index();
+                ->index()
+                ->after('profile_photo_path');
             $table
                 ->json('meta')
                 ->nullable()
