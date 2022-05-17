@@ -18,4 +18,19 @@ enum GameMode: int
     {
         return self::DEMO->value;
     }
+
+    /**
+     * Pretty-print the game mode.
+     *
+     * @return string
+     */
+    public function pretty(): string
+    {
+        return match ($this) {
+            self::DEMO => 'Demo',
+            self::AGAINST_AI => 'Single Player',
+            self::UNRANKED_MULTIPLAYER => 'Casual Multiplayer',
+            self::RANKED_MULTIPLAYER => 'Ranked Multiplayer',
+        };
+    }
 }
