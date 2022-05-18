@@ -14,6 +14,20 @@ class Ability extends Model
     use HasFactory;
 
     /**
+     * The maximum amount of SP (or HP) an ability can cost.
+     *
+     * @var int
+     */
+    public const MAX_COST = 100;
+
+    /**
+     * The minimum amount of SP (or HP) an ability can cost.
+     *
+     * @var int
+     */
+    public const MIN_COST = 0;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
