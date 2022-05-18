@@ -2,6 +2,7 @@
 
 namespace App\Models\GameLogic;
 
+use App\Actions\GameLogic\Abilities\AssignUniversalAbilities;
 use App\Models\GameLogic\Pivots\FighterAbility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -55,6 +56,18 @@ class Fighter extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::created(static function (self $fighter) {
+            app(AssignUniversalAbilities::class)->execute($fighter);
+        });
+    }
 
     /**
      * A fighter will belong to many abilities.
