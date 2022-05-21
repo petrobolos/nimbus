@@ -17,7 +17,7 @@ class ValidAbilityTypeRule implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return in_array(Str::lower($value), AbilityType::TYPE_DESCRIPTIONS, true);
+        return Str::contains($value, AbilityType::TYPE_DESCRIPTIONS, true);
     }
 
     /**
