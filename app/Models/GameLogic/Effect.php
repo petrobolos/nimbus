@@ -49,7 +49,7 @@ class Effect extends Model
      *
      * @return bool|int
      */
-    public function getValueAttribute(): bool|int
+    public function getFormattedValueAttribute(): bool|int
     {
         if ($this->is_boolean) {
             return (bool) $this->value;
