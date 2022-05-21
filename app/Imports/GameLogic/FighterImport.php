@@ -3,22 +3,21 @@
 namespace App\Imports\GameLogic;
 
 use App\Imports\BaseImport;
-use App\Models\GameLogic\Race;
+use App\Models\GameLogic\Fighter;
+use App\Rules\GameLogic\ExceedsMinimumStatRule;
+use App\Rules\GameLogic\SubceedsMaximumStatRule;
 
-final class RaceImport extends BaseImport
+final class FighterImport extends BaseImport
 {
     /**
-     * Generates races based on each row of the import sheet.
+     * Generates fighters based on each row of the import sheet.
      *
      * @param array $row
-     * @return null|\App\Models\GameLogic\Race
+     * @return null|\App\Models\GameLogic\Fighter
      */
-    public function model(array $row): ?Race
+    public function model(array $row): ?Fighter
     {
-        return new Race([
-            'name' => $row['name'],
-            'description' => $row['description'],
-        ]);
+
     }
 
     /**
@@ -31,13 +30,77 @@ final class RaceImport extends BaseImport
         return [
             'name' => [
                 'required',
-                'unique:races',
+                'unique:fighters',
                 'string',
+                'min:1',
+                'max:50',
+            ],
+
+            'race' => [
+                'required',
+                'exists:races,name',
+                'string',
+            ],
+
+            'last_form' => [
+                'required',
+                'exists:fighters,name',
+                'string',
+            ],
+
+            'hp' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'sp' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'attack' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'defense' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'speed' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'special' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
+            ],
+
+            'spirit' => [
+                'required',
+                'integer',
+                new ExceedsMinimumStatRule(),
+                new SubceedsMaximumStatRule(),
             ],
 
             'description' => [
                 'nullable',
                 'string',
+                'max:255',
             ],
         ];
     }
