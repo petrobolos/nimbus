@@ -8,8 +8,9 @@ use App\Models\GameLogic\Ability;
 use App\Rules\GameLogic\ExceedsMinimumCostRule;
 use App\Rules\GameLogic\SubceedsMaximumCostRule;
 use App\Rules\GameLogic\ValidAbilityTypeRule;
+use Maatwebsite\Excel\Concerns\HasReferencesToOtherSheets;
 
-final class AbilitySheetImport extends BaseImport
+final class AbilitySheetImport extends BaseImport implements HasReferencesToOtherSheets
 {
     /**
      * Generates abilities based on each row of the import sheet.

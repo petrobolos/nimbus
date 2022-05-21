@@ -9,13 +9,13 @@ if (! function_exists('to_boolean')) {
      * @param mixed $value
      * @return bool
      */
-    function to_boolean(mixed $value)
+    function to_boolean(mixed $value): bool
     {
         if (is_string($value)) {
             $value = Str::lower($value);
         }
 
-        if (in_array($value, config('imports.acceptable_boolean_values.true'), false)) {
+        if (in_array($value, config('imports.acceptable_boolean_values'), false)) {
             return true;
         }
 

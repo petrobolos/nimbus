@@ -4,9 +4,11 @@ namespace App\Imports\GameLogic;
 
 use App\Enums\GameLogic\Abilities\AbilityEffect;
 use App\Models\GameLogic\Ability;
+use App\Models\GameLogic\Effect;
 use App\Rules\GameLogic\ExceedsMinimumStatRule;
 use App\Rules\GameLogic\SubceedsMaximumStatRule;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\HasReferencesToOtherSheets;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
@@ -15,7 +17,7 @@ use Maatwebsite\Excel\Concerns\WithProgressBar;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use RuntimeException;
 
-final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, WithHeadingRow, WithProgressBar, WithValidation
+final class EffectSheetImport implements ToCollection, HasReferencesToOtherSheets, WithCalculatedFormulas, WithHeadingRow, WithProgressBar, WithValidation
 {
     use Importable;
 
@@ -43,7 +45,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['recover_hp'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::RECOVERY_HP,
                     'ability_id' => $abilityId,
                     'value' => $row['recover_hp'],
@@ -52,7 +54,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['recover_sp'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::RECOVERY_SP,
                     'ability_id' => $abilityId,
                     'value' => $row['recover_sp'],
@@ -61,7 +63,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['paralysis'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::PARALYSIS,
                     'ability_id' => $abilityId,
                     'value' => $row['paralysis'],
@@ -70,7 +72,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['ohko_chance'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::OHKO_CHANCE,
                     'ability_id' => $abilityId,
                     'value' => $row['ohko_chance'],
@@ -79,7 +81,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['crit_chance'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::ENHANCED_CRIT_CHANCE,
                     'ability_id' => $abilityId,
                     'value' => $row['crit_chance'],
@@ -88,7 +90,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['hp_drain'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::RECOVERY_SP,
                     'ability_id' => $abilityId,
                     'value' => (int) to_boolean($row['hp_drain']),
@@ -97,7 +99,7 @@ final class EffectSheetImport implements ToCollection, WithCalculatedFormulas, W
             }
 
             if (! empty($row['pure'])) {
-                Ability::create([
+                Effect::create([
                     'ability' => AbilityEffect::PURE,
                     'ability_id' => $abilityId,
                     'value' => (int) to_boolean($row['pure']),

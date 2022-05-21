@@ -2,10 +2,11 @@
 
 namespace App\Imports\GameLogic;
 
+use Maatwebsite\Excel\Concerns\HasReferencesToOtherSheets;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-final class AbilityImport implements WithMultipleSheets
+final class AbilityImport implements WithMultipleSheets, HasReferencesToOtherSheets
 {
     use Importable;
 
@@ -19,7 +20,7 @@ final class AbilityImport implements WithMultipleSheets
         return [
             'Abilities' => new AbilitySheetImport(),
             'Effects' => new EffectSheetImport(),
-            'Assignment' => '',
+            'Assignment' => new FighterAbilitySheetImport(),
         ];
     }
 }

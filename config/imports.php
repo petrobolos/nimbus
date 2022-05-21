@@ -1,8 +1,9 @@
 <?php
 
-use App\Models\GameLogic\Ability;
-use App\Models\GameLogic\Fighter;
-use App\Models\GameLogic\Race;
+use App\Imports\GameLogic\AbilityImport;
+use App\Imports\GameLogic\FighterImport;
+use App\Imports\GameLogic\RaceImport;
+use Maatwebsite\Excel\Excel;
 
 return [
     /*
@@ -13,26 +14,25 @@ return [
     | The location of a class' given spreadsheet import.
     |
     */
-    'files' => [
-        Race::class => database_path('/sheets/Races.ods'),
-        Fighter::class => database_path('/sheets/Fighters.ods'),
-        Ability::class => database_path('/sheets/Abilities.ods'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Class import order
-    |--------------------------------------------------------------------------
-    |
-    | The order in which data will be imported from spreadsheet.
-    | This order is also used for seeder generation. Models that do not have a
-    | corresponding importer file will be ignored.
-    |
-    */
-    'import_order' => [
-        Race::class,
-        Fighter::class,
-        Ability::class,
+    'imports' => [
+        [
+            'name' => 'Races',
+            'importer' => RaceImport::class,
+            'file' => database_path('/sheets/Races.ods'),
+            'type' => Excel::ODS,
+        ],
+        [
+            'name' => 'Fighters',
+            'importer' => FighterImport::class,
+            'file' => database_path('/sheets/Fighters.ods'),
+            'type' => Excel::ODS,
+        ],
+        [
+            'name' => 'Abilities / Effects',
+            'importer' => AbilityImport::class,
+            'file' => database_path('/sheets/Abilities.ods'),
+            'type' => Excel::ODS,
+        ],
     ],
 
     /*

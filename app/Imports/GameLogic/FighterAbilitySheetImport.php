@@ -6,6 +6,7 @@ use App\Models\GameLogic\Ability;
 use App\Models\GameLogic\Fighter;
 use App\Models\GameLogic\Pivots\FighterAbility;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\HasReferencesToOtherSheets;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
@@ -14,7 +15,7 @@ use Maatwebsite\Excel\Concerns\WithProgressBar;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use RuntimeException;
 
-final class FighterAbilitySheetImport implements ToCollection, WithCalculatedFormulas, WithHeadingRow, WithProgressBar, WithValidation
+final class FighterAbilitySheetImport implements ToCollection, HasReferencesToOtherSheets, WithCalculatedFormulas, WithHeadingRow, WithProgressBar, WithValidation
 {
     use Importable;
 
@@ -41,6 +42,36 @@ final class FighterAbilitySheetImport implements ToCollection, WithCalculatedFor
                 throw new RuntimeException('Ability is missing - unable to assign to fighter.');
             }
 
+//            $fighterIds = [];
+//
+//            if (!empty($row['fighter_1'])) {
+//                $fighterIds[] = Fighter::query()->firstWhere('name', $row['fighter_1'])?->id;
+//            }
+//
+//            if (!empty($row['fighter_2'])) {
+//                $fighterIds[] = Fighter::query()->firstWhere('name', $row['fighter_2'])?->id;
+//            }
+//
+//            if (!empty($row['fighter_3'])) {
+//                $fighterIds[] = Fighter::query()->firstWhere('name', $row['fighter_3'])?->id;
+//            }
+//
+//            if (!empty($row['fighter_4'])) {
+//                $fighterIds[] = Fighter::query()->firstWhere('name', $row['fighter_4'])?->id;
+//            }
+//
+//            if (!empty($row['fighter_5'])) {
+//                $fighterIds[] = Fighter::query()->firstWhere('name', $row['fighter_5'])?->id;
+//            }
+//
+//            $fighterIds = array_filter($fighterIds);
+//
+//            foreach ($fighterIds as $fighterId) {
+//                FighterAbility::create([
+//                    'fighter_id' => $fighterId,
+//                    'ability_id' => $abilityId,
+//                ]);
+//            }
             for ($i = 1, $iMax = count($row); $i >= $iMax; $i++) {
                 $columnName = "fighter_{$i}";
 
@@ -71,7 +102,7 @@ final class FighterAbilitySheetImport implements ToCollection, WithCalculatedFor
             'name' => [
                 'required',
                 'string',
-                'exists:fighters,name',
+                'exists:abilities,name',
             ],
         ];
     }
