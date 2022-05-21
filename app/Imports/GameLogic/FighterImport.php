@@ -4,6 +4,7 @@ namespace App\Imports\GameLogic;
 
 use App\Imports\BaseImport;
 use App\Models\GameLogic\Fighter;
+use App\Models\GameLogic\Race;
 use App\Rules\GameLogic\ExceedsMinimumStatRule;
 use App\Rules\GameLogic\SubceedsMaximumStatRule;
 
@@ -17,6 +18,21 @@ final class FighterImport extends BaseImport
      */
     public function model(array $row): ?Fighter
     {
+        return new Fighter([
+            'name' => $row['name'],
+            'race_id' => Race::query()->firstWhere('name', $row['race'])?->id,
+            'last_form_id' => ! empty($row['last_form'])
+                ? Fighter::query()->firstWhere('name', $row['last_form'])?->id
+                : null,
+            'base_hp' => $row['hp'],
+            'base_sp' => $row['sp'],
+            'base_attack' => $row['attack'],
+            'base_defense' => $row['defense'],
+            'base_speed' => $row['speed'],
+            'base_special' => $row['special'],
+            'base_spirit' => $row['spirit'],
+            'description' => $row['description'],
+        ]);
     }
 
     /**
@@ -42,7 +58,7 @@ final class FighterImport extends BaseImport
             ],
 
             'last_form' => [
-                'required',
+                'nullable',
                 'exists:fighters,name',
                 'string',
             ],
