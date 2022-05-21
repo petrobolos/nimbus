@@ -19,6 +19,8 @@ class Effect extends Model
     protected $fillable = [
         'ability',
         'ability_id',
+        'value',
+        'is_boolean',
     ];
 
     /**
@@ -40,5 +42,19 @@ class Effect extends Model
     public function ability(): BelongsTo
     {
         return $this->belongsTo(Ability::class);
+    }
+
+    /**
+     * Cast the value property to an integer or boolean according to its type.
+     *
+     * @return bool|int
+     */
+    public function getValueAttribute(): bool|int
+    {
+        if ($this->is_boolean) {
+            return (bool) $this->value;
+        }
+
+        return $this->value;
     }
 }
