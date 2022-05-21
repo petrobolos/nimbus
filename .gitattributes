@@ -9,7 +9,9 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 *.xlsx linguist-language=XML
+*.ods linguist-language=XML
 *.xlsx linguist-detectable=true
+*.ods linguist-detectable=true
 *.xml linguist-detectable=true
 
 /.github export-ignore
