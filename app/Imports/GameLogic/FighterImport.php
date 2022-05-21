@@ -17,7 +17,6 @@ final class FighterImport extends BaseImport
      */
     public function model(array $row): ?Fighter
     {
-
     }
 
     /**
