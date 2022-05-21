@@ -13,6 +13,13 @@ class PartyMember extends Model
     use HasFactory;
 
     /**
+     * Default party member.
+     *
+     * @var int.
+     */
+    public const DEFAULT_PARTY_MEMBER = 1;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
