@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\GameLogic\Abilities\AssignUniversalAbilities;
+use App\Models\GameLogic\Fighter;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Validators\ValidationException;
+use PhpParser\Node\Expr\Assign;
 use Throwable;
 
 class ImportGameDataCommand extends Command
@@ -33,15 +36,24 @@ class ImportGameDataCommand extends Command
         $this->output->title('Starting import...');
 
         try {
-            $this->withProgressBar(config('imports.imports'), function (array $import) {
+            array_map(function (array $import) {
                 $this->newLine();
                 $this->info("Beginning import for {$import['name']}...");
+
                 app($import['importer'])
                     ->withOutput($this->output)
                     ->import(
                         filePath: $import['file'],
                         readerType: $import['type'],
                     );
+            }, config('imports.imports'));
+
+            $this->newLine();
+            $this->info('Importing universal abilities...');
+
+            $action = app(AssignUniversalAbilities::class);
+            $this->withProgressBar(Fighter::query()->cursor(), static function (Fighter $fighter) use ($action) {
+                $action->execute($fighter);
             });
 
             $this->newLine();
