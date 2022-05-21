@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GameDifficulty;
 use App\Enums\GameLogic\Abilities\AbilityType;
 
 return [
@@ -66,9 +67,21 @@ return [
     */
     'ai' => [
         'difficulties' => [
-            'easy',
-            'medium',
-            'difficult',
+            GameDifficulty::EASY->value => [
+                'Kid Goku',
+                null,
+                null,
+            ],
+            GameDifficulty::NORMAL->value => [
+                'Goku',
+                'Piccolo',
+                null,
+            ],
+            GameDifficulty::HARD->value => [
+                'Kid Goku',
+                'Piccolo',
+                'Frieza',
+            ],
         ],
     ],
 
@@ -83,5 +96,27 @@ return [
     'webgame' => [
         'default_player_name' => 'Guest',
         'default_cpu_name' => 'CPU',
+
+        'calculation_stats' => [
+            'multiplier' => 0.9,
+            'damage' => 1,
+            'luck' => 7,
+            'easy_chance' => 100,
+            'hard_chance' => 255,
+        ],
+
+        'boss_perks' => [
+            'bonus_armor' => 10,
+        ],
+
+        'demo_roster' => [
+            'Kid Goku',
+            'Krillin',
+            'Tien',
+        ],
+
+        'demo_session_key' => 'demo_game',
+        'difficulty_key' => 'demo_last_played',
+        'completion_key' => 'demo_complete',
     ],
 ];
