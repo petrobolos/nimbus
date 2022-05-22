@@ -1,16 +1,20 @@
 <?php
 
 namespace App\Listeners;
+
 use App\Events\UserBannedEvent;
+use App\Notifications\UserBannedNotification;
 
-class UserBannedEventListener{
-    public function __construct()
+class UserBannedEventListener
+{
+    /**
+     * Handle the event.
+     *
+     * @param \App\Events\UserBannedEvent $event
+     * @return void
+     */
+    public function handle(UserBannedEvent $event): void
     {
-        //
-    }
-
-    public function handle(UserBannedEvent $event)
-    {
-
+        $event->user->notify(new UserBannedNotification($event->user));
     }
 }

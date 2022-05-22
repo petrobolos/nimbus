@@ -2,53 +2,79 @@
 
 namespace App\Notifications;
 
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\BroadcastMessage;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class UserUnbannedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct()
+    /**
+     * The unbanned user.
+     *
+     * @var \App\Models\User
+     */
+    protected User $user;
+
+    /**
+     * UserUnbannedNotification constructor.
+     *
+     * @param \App\Models\User $user
+     * @return void
+     */
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
      * @return array
      */
-    public function via($notifiable): array
+    public function via(): array
     {
-        return ['broadcast'];
+        return ['mail', 'broadcast'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail(): MailMessage
+    {
+        return (new MailMessage())
+            ->greeting(sprintf("Your ban has been lifted on %s", config('app.name')))
+            ->line('You may continue playing again.')
+            ->action('For more information, click here.', url('/help'))
+            ->line('Thank you.');
     }
 
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return BroadcastMessage
+     * @return \Illuminate\Notifications\Messages\BroadcastMessage
      */
-    public function toBroadcast($notifiable): BroadcastMessage    {
-        return new BroadcastMessage([
-            //
-        ]);
+    public function toBroadcast(): BroadcastMessage
+    {
+        return new BroadcastMessage($this->toArray());
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable): array
+    public function toArray(): array
     {
         return [
-            //
+            'banned' => false,
+            'until' => null,
         ];
     }
 }

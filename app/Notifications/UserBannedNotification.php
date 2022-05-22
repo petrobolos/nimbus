@@ -2,54 +2,86 @@
 
 namespace App\Notifications;
 
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class UserBannedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct()
+    /**
+     * The user being notified of their ban.
+     *
+     * @var \App\Models\User
+     */
+    protected User $user;
+
+    /**
+     * UserBannedNotification constructor.
+     *
+     * @param \App\Models\User $user
+     * @return void
+     */
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
      * @return array
      */
-    public function via($notifiable): array
+    public function via(): array
     {
-        return ['mail'];
+        return ['mail', 'broadcast'];
     }
 
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return MailMessage
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable): MailMessage    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+    public function toMail(): MailMessage
+    {
+        if ($this->user->isPermabanned()) {
+            $message = 'This ban will not expire';
+        } else {
+            $message = "This ban will expire on: {$this->user->banned_until->toDateTimeString()}";
+        }
+
+        return (new MailMessage())
+            ->greeting(sprintf("You have been banned from playing on %s", config('app.name')))
+            ->line($message)
+            ->action('For more information, click here.', url('/help'))
+            ->line('Thank you.');
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @return \Illuminate\Notifications\Messages\BroadcastMessage
+     */
+    public function toBroadcast(): BroadcastMessage
+    {
+        return new BroadcastMessage($this->toArray());
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable): array
+    public function toArray(): array
     {
         return [
-            //
+            'banned' => true,
+            'until' => $this->user->banned_until,
+            'permaban' => $this->user->isPermabanned(),
         ];
     }
 }

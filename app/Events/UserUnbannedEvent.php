@@ -7,21 +7,21 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserBannedEvent
+class UserUnbannedEvent
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
     /**
-     * The banned user.
+     * The unbanned user.
      *
      * @var \App\Models\User
      */
     public User $user;
 
     /**
-     * UserBannedEvent constructor.
+     * UserUnbannedEvent constructor.
      *
      * @param \App\Models\User $user
      * @return void
