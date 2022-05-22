@@ -2,8 +2,8 @@
 
 namespace App\Actions\GameLogic\PartyMembers;
 
-use App\Models\GameLogic\PartyMember;
 use App\Models\GameLogic\Fighter;
+use App\Models\GameLogic\PartyMember;
 
 class CreatePartyMember
 {
