@@ -152,4 +152,14 @@ class Webgame extends Model
             ->whereNotIn('status', GameStatus::active())
             ->whereNotNull('ended_at');
     }
+
+    /**
+     * Returns whether this game is a demo.
+     *
+     * @return bool
+     */
+    public function isDemo(): bool
+    {
+        return $this->game_type === GameMode::DEMO;
+    }
 }
