@@ -36,6 +36,16 @@ trait Bannable
     }
 
     /**
+     * Return whether a given user is currently not banned.
+     *
+     * @return bool
+     */
+    public function isNotBanned(): bool
+    {
+        return $this->banned_until === null;
+    }
+
+    /**
      * Ban a user.
      *
      * @param null|\DateTimeInterface|string $until
