@@ -36,27 +36,28 @@ class DemoService
     }
 
     /**
-     * Start a new demo game or continue an existing one.
+     * Resume an existing demo game.
+     *
+     * @param string $uuid
+     * @return \App\Models\Webgame
+     */
+    public function getDemoGame(string $uuid): Webgame
+    {
+        return app(WebgameRepository::class)->getActiveDemoGame($uuid);
+    }
+
+    /**
+     * Create a new demo game.
      *
      * @return \App\Models\Webgame
      */
-    public function getDemoGame(): Webgame
+    public function createDemoGame(): Webgame
     {
-        $existingDemoUuid = $this->getActiveDemoUuid();
-
-        if ($existingDemoUuid) {
-            $game = app(WebgameRepository::class)->getActiveDemoGame($existingDemoUuid);
-
-            /*
-             * If the session difficulty is present and the game is not, then we can increment the difficulty
-             * of the demo, either because the player completed or abandoned it.
-             */
-            if ($game === null && Session::has($this->difficultySessionKey)) {
-                $this->incrementDemoDifficulty();
-            }
+        if (Session::has($this->difficultySessionKey)) {
+            $this->incrementDemoDifficulty();
         }
 
-        $game ??= app(CreateDemoGame::class)->create();
+        $game = app(CreateDemoGame::class)->create();
 
         // If the game isn't set as the active demo, each refresh will cause a new demo to be generated.
         $this->setActiveDemo($game->id);
