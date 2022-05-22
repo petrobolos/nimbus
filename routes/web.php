@@ -14,7 +14,7 @@ Route::middleware('guest')->name('guest.')->group(function () {
 
     Route::prefix('demo')->name('demo.')->group(function () {
         Route::get('/', [DemoController::class, 'index'])->name('index');
-        Route::get('/{game}', [DemoController::class, 'show'])->name('show');
+        Route::get('/{webgame}', [DemoController::class, 'show'])->name('show');
     });
 });
 
