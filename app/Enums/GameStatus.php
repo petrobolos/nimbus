@@ -18,4 +18,17 @@ enum GameStatus: int
     {
         return self::INITIALIZED->value;
     }
+
+    /**
+     * Return the statuses where the game is still active and hasn't concluded.
+     *
+     * @return array
+     */
+    public static function active(): array
+    {
+        return [
+            self::INITIALIZED->value,
+            self::IN_PROGRESS->value,
+        ];
+    }
 }
