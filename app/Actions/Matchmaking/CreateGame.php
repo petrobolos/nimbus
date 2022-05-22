@@ -20,8 +20,8 @@ class CreateGame
     {
         return Webgame::create([
             'game_type' => $mode,
-            'status' => GameStatus::INITIALIZED,
-            'player_1_id' => $player,
+            'status' => GameStatus::INITIALIZED->value,
+            'player_1_id' => $player->id,
             'player_2_id' => null,
         ]);
     }

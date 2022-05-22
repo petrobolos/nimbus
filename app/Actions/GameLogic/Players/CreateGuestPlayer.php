@@ -2,11 +2,11 @@
 
 namespace App\Actions\GameLogic\Players;
 
+use App\Actions\GameLogic\PartyMembers\CreatePartyMember;
 use App\Models\GameLogic\Fighter;
-use App\Models\GameLogic\PartyMember;
 use App\Models\Player;
 
-class CreateGuestPlayer
+class CreateGuestPlayer extends CreatePlayer
 {
     /**
      * Creates a guest player for a demo game.
@@ -20,14 +20,16 @@ class CreateGuestPlayer
             config('nimbus.webgame.demo_roster')
         );
 
-        [$first, $second, $third] = $roster;
+        $action = app(CreatePartyMember::class);
+        $roster = array_map(static fn (Fighter $fighter) => $action->create($fighter), $roster);
 
-        return Player::create([
-            'user_id' => null,
-            'party_member_1_id' => $first,
-            'party_member_2_id' => $second,
-            'party_member_3_id' => $third,
-            'current_party_member_id' => PartyMember::DEFAULT_PARTY_MEMBER,
-        ]);
+        [$first, $second, $third] = $roster + [null, null, null];
+
+        return $this->compile(
+            user: null,
+            first: $first?->id,
+            second: $second?->id,
+            third: $third?->id,
+        );
     }
 }

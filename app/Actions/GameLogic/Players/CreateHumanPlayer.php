@@ -4,13 +4,12 @@ namespace App\Actions\GameLogic\Players;
 
 use App\Actions\GameLogic\PartyMembers\CreatePartyMember;
 use App\Models\GameLogic\Fighter;
-use App\Models\GameLogic\PartyMember;
 use App\Models\Player;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use RuntimeException;
 
-class CreateHumanPlayer
+class CreateHumanPlayer extends CreatePlayer
 {
     /**
      * Creates a player for use in-game.
@@ -38,12 +37,11 @@ class CreateHumanPlayer
 
         [$first, $second, $third] = $fighters + [null, null, null];
 
-        return Player::create([
-            'user_id' => $user->id,
-            'party_member_1' => $first?->id,
-            'party_member_2' => $second?->id,
-            'party_member_3' => $third?->id,
-            'current_party_member' => PartyMember::DEFAULT_PARTY_MEMBER,
-        ]);
+        return $this->compile(
+            user: $user->id,
+            first: $first?->id,
+            second: $second?->id,
+            third: $third?->id,
+        );
     }
 }

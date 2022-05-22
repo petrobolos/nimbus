@@ -19,8 +19,8 @@ class JoinGame
     public function join(Webgame $game, Player $player): Webgame
     {
         $game->update([
-            'player_2_id' => $player,
-            'status' => GameStatus::IN_PROGRESS,
+            'player_2_id' => $player->id,
+            'status' => GameStatus::IN_PROGRESS->value,
             'started_at' => Carbon::now(),
         ]);
 
