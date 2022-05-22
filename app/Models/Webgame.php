@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\GameMode;
 use App\Enums\GameStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -113,5 +114,42 @@ class Webgame extends Model
         }
 
         return $this->created_at->diffInSeconds($this->ended_at, true);
+    }
+
+    /**
+     * Scope the query to only games that are demos.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsDemo(Builder $query): Builder
+    {
+        return $query->where('game_type', GameMode::DEMO->value);
+    }
+
+    /**
+     * Scope the query to only games that can be started or continued.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsActive(Builder $query): Builder
+    {
+        return $query
+            ->whereIn('status', GameStatus::active())
+            ->whereNull('ended_at');
+    }
+
+    /**
+     * Scope the query to only games that have concluded.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsInactive(Builder $query): Builder
+    {
+        return $query
+            ->whereNotIn('status', GameStatus::active())
+            ->whereNotNull('ended_at');
     }
 }
