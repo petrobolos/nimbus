@@ -3,6 +3,7 @@
 use App\Http\Controllers\Banned\BannedController;
 use App\Http\Controllers\Guest\WelcomeController;
 use App\Http\Controllers\Pages\DashboardController;
+use App\Http\Controllers\Webgame\Demo\DemoController;
 use Illuminate\Support\Facades\Route;
 
 //======================================================================
@@ -10,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 //======================================================================
 Route::middleware('guest')->name('guest.')->group(function () {
     Route::get('/', WelcomeController::class)->name('welcome');
+
+    Route::prefix('demo')->name('demo.')->group(function () {
+        Route::get('/', [DemoController::class, 'index'])->name('index');
+        Route::get('/{game}', [DemoController::class, 'show'])->name('show');
+    });
 });
 
 //======================================================================
