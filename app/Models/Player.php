@@ -121,9 +121,9 @@ class Player extends Model
     public function party(): Collection
     {
         return collect([
-            $this->first(),
-            $this->second(),
-            $this->third(),
-        ]);
+            $this->first,
+            $this->second,
+            $this->third,
+        ])->filter();
     }
 }
